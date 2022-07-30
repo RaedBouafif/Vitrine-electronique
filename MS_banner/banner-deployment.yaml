@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-banner-service
+  labels:
+    run: market-banner-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-banner-service
+    spec:
+      containers:
+      - name: market-banner-service
+        image: anonyme5/mbsimage:latest
+        ports:
+        - containerPort: 4006

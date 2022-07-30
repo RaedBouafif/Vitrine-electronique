@@ -1,0 +1,107 @@
+pipeline {
+	agent any
+
+	
+    stages {
+        stage('Build') { 
+            when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'B_eureka' }
+            }
+		 agent { docker 'maven:3-alpine' }
+            steps {
+			
+                sh 'mvn -f eureka-server/pom.xml -B -DskipTests  package' 
+				
+				stash includes: 'eureka-server/target/*.jar', name: 'targetfiles'
+            }
+        }
+	
+		
+	stage('Create Image') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'B_eureka' }
+            }
+            steps { 
+            dir ('eureka-server') {
+			   unstash 'targetfiles'
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                    sh "docker network create --driver=bridge  mysubnet || true"
+                        sh 'docker build . -t anonyme5/mesimage:latest'
+                         sh 'docker login -u anonyme5 -p Five12345'
+                        sh 'docker push anonyme5/mesimage:latest'
+                    }
+			   }
+               }
+            }
+        }
+
+    stage('Run Container in DEV Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'B_eureka' }
+            }
+            steps {
+				script {
+				docker.withServer('tcp://35.180.206.6:4243') {
+				        sh 'docker rm --force market-eureka-service || true'
+                        sh 'docker run --restart=always -d -p 8761:8761 --network=mysubnet --network-alias=market-eureka-service  --name=market-eureka-service  anonyme5/mesimage:latest'
+                    }
+		}
+			   
+              
+            }
+        }
+  stage('Run in PRE-PROD Env') {
+        when {
+                
+               beforeAgent true
+                expression { env.gitlabTargetBranch == 'develop' }
+            }
+            agent {
+          kubernetes {
+              cloud "kubernetes"
+           label "kube"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-eureka-service -n jenkins  || true'
+                     sh 'kubectl apply -f  eureka-server/eureka-deployment.yaml '
+                     sh 'kubectl apply -f  eureka-server/eureka-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+        stage('Run in PROD Env') {
+        when {
+                
+               beforeAgent true
+                expression { env.gitlabTargetBranch == 'release' }
+            }
+            agent {
+          kubernetes {
+              cloud "kubernetesProd"
+           label "kubeProd"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-eureka-service -n jenkins  || true'
+                     sh 'kubectl apply -f  eureka-server/eureka-deployment.yaml '
+                     sh 'kubectl apply -f  eureka-server/eureka-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+       		
+    }
+}

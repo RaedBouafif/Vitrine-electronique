@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-article-service
+  labels:
+    run: market-article-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-article-service
+    spec:
+      containers:
+      - name: market-article-service
+        image: anonyme5/masimage:latest
+        ports:
+        - containerPort: 4001

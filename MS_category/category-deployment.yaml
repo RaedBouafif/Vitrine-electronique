@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-category-service
+  labels:
+    run: market-category-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-category-service
+    spec:
+      containers:
+      - name: market-category-service
+        image: anonyme5/mcsimage:latest
+        ports:
+        - containerPort: 4002

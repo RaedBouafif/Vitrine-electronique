@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-eureka-service
+spec:
+  selector:
+    run: market-eureka-service
+  type: NodePort
+  ports:
+    - port: 8761
+      targetPort: 8761
+      nodePort: 30100

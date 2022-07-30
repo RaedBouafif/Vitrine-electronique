@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-articledb
+  labels:
+    run: market-articledb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-articledb
+    spec:
+      containers:
+      - name: market-articledb
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-articledb
+spec:
+  selector:
+    run: market-articledb
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+      nodePort: 32501

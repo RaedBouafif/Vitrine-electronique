@@ -1,0 +1,109 @@
+pipeline {
+
+    agent any
+    
+    stages {
+
+        stage('Build data base') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_article' }
+                
+            }
+            steps { 
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker run -d --restart=always -p 32501:27017 --network=mysubnet --network-alias=market-articledb --name=market-articledb mongo || true'
+                    }
+			 
+               }
+            
+        }
+}
+        stage('Build image Ms User') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_article' }
+            }
+            steps { 
+            dir ('MS_article') {
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker build --build-arg DOCKER_ENV=dev . -t anonyme5/masimage:latest'
+                        sh 'docker login -u anonyme5 -p Five12345'
+                        sh 'docker push anonyme5/masimage:latest'
+                    }
+			 
+               }
+            }
+        }
+}
+    stage('run in dev') {
+          when {
+                
+                expression { env.gitlabTargetBranch == 'B_article' }
+            }
+            steps {
+				script {
+				docker.withServer('tcp://35.180.206.6:4243') {
+				        sh 'docker rm --force market-article-service || true'
+                        sh 'docker run --restart=always -d -p 4001:4001 --network=mysubnet --network-alias=market-article-service --name=market-article-service   anonyme5/masimage:latest'
+                    }
+				}
+			   
+              
+            }
+        }
+     stage('Run in PRE-PROD Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'develop' }
+            }
+            agent {
+          kubernetes {
+              cloud "kubernetes"
+           label "kube"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-article-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_article/articleDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_article/article-deployment.yaml '
+                     sh 'kubectl apply -f  MS_article/article-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+         stage('Run in PROD Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'release' }
+            }
+            agent {
+          kubernetes {
+              cloud "kubernetesProd"
+           label "kubeProd"
+          }
+        }
+            steps { 
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-article-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_article/articleDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_article/article-deployment.yaml '
+                     sh 'kubectl apply -f  MS_article/article-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+
+
+    }
+   
+}

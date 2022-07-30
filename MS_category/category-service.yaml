@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-category-service
+spec:
+  selector:
+    run: market-category-service
+  type: NodePort
+  ports:
+    - port: 4002
+      targetPort: 4002
+      nodePort: 30106

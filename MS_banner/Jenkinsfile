@@ -1,0 +1,109 @@
+pipeline {
+
+    agent any
+    
+    stages {
+
+        stage('Build data base') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_banner' }
+                
+            }
+            steps { 
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker run -d --restart=always -p 32506:27017 --network=mysubnet --network-alias=market-bannerdb --name=market-bannerdb mongo || true'
+                    }
+			 
+               }
+            
+        }
+}
+        stage('Build image Ms User') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_banner' }
+            }
+            steps { 
+            dir ('MS_banner') {
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker build --build-arg DOCKER_ENV=dev . -t anonyme5/mbsimage:latest'
+                        sh 'docker login -u anonyme5 -p Five12345'
+                        sh 'docker push anonyme5/mbsimage:latest'
+                    }
+			 
+               }
+            }
+        }
+}
+    stage('run in dev') {
+          when {
+                
+                expression { env.gitlabTargetBranch == 'B_banner' }
+            }
+            steps {
+				script {
+				docker.withServer('tcp://35.180.206.6:4243') {
+				        sh 'docker rm --force market-banner-service || true'
+                        sh 'docker run --restart=always -d -p 4006:4006 --network=mysubnet --network-alias=market-banner-service --name=market-banner-service   anonyme5/mbsimage:latest'
+                    }
+				}
+			   
+              
+            }
+        }
+     stage('Run in PRE-PROD Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'develop' }
+            }
+            agent {
+          kubernetes {
+            cloud "kubernetes"
+           label "kube"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-banner-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_banner/bannerDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_banner/banner-deployment.yaml '
+                     sh 'kubectl apply -f  MS_banner/banner-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+         stage('Run in PROD Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'release' }
+            }
+            agent {
+          kubernetes {
+            cloud "kubernetesProd"
+           label "kubeProd"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-banner-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_banner/bannerDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_banner/banner-deployment.yaml '
+                     sh 'kubectl apply -f  MS_banner/banner-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+
+
+    }
+   
+}

@@ -1,0 +1,33 @@
+<div
+  class="btn-group btn-block"
+  dropdown
+  placement="bottom right"
+  [dropup]="dropup"
+>
+  <button type="button" class="btn btn-block btn-gray-light">
+    <i class="icon icon-sm rounded-circle mr-3 bg-{{ current.value }}"></i>
+    {{ current.name }}
+  </button>
+
+  <button
+    type="button"
+    dropdownToggle
+    class="btn btn-gray-light dropdown-toggle dropdown-toggle-split"
+    aria-controls="dropdown-split"
+  >
+    <prx-icon [icon]="icons.angleDown"></prx-icon>
+    <span class="sr-only">Split button!</span>
+  </button>
+
+  <div class="dropdown-menu" *dropdownMenu>
+    <a
+      href="javascript:;"
+      class="dropdown-item text-capitalize"
+      (click)="onChange(color)"
+      *ngFor="let color of colors"
+    >
+      <i class="icon icon-sm rounded-circle mr-3 bg-{{ color.value }}"></i>
+      {{ color.name }}
+    </a>
+  </div>
+</div>

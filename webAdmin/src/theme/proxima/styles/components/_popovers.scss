@@ -1,0 +1,12 @@
+.popover {
+  box-shadow: $dropdown-box-shadow;
+
+  .popover-header {
+    font-weight: $font-weight-bold;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .arrow {
+    overflow: hidden;
+  }
+}

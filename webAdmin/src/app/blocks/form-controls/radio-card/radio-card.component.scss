@@ -1,0 +1,40 @@
+@import "import";
+
+label {
+  cursor: pointer;
+  width: 100%;
+}
+
+.check-mark {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  transform: translate3d(50%, -50%, 0);
+}
+
+.form-control {
+  display: none;
+
+  &:checked + label .card-option {
+    border-color: $color-primary;
+  }
+}
+
+:host {
+  @each $i, $color in $theme-colors {
+    &.radio-#{$i} {
+      .form-control:checked + label {
+        .card-option {
+          border-color: #{$color};
+        }
+
+        .check-mark {
+          background-color: #{$color};
+        }
+      }
+    }
+  }
+}

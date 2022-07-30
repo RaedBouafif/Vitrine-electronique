@@ -1,0 +1,52 @@
+@import "import";
+
+:host {
+  display: flex;
+  background-color: $white;
+  height: 100%;
+  overflow: hidden;
+
+  &.email-loaded {
+    .emails-ws {
+      transform: translate3d(-100%, 0, 0);
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        transform: none;
+      }
+    }
+  }
+}
+
+.emails-ws {
+  position: relative;
+  width: 100%;
+  transition: 0.3s ease transform;
+
+  > * {
+    flex-shrink: 0;
+    min-height: 1px;
+  }
+
+  @include media-breakpoint-down($grid-float-breakpoint-max) {
+    display: flex;
+    transform: translate3d(0, 0, 0);
+    transition: 0.3s ease transform;
+
+    > * {
+      flex: 0 0 100%;
+      position: relative;
+    }
+  }
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    @include make-row();
+    margin-right: 0;
+    margin-left: 0;
+
+    /* remove gutters */
+    > * {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-messagingdb
+  labels:
+    run: market-messagingdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-messagingdb
+    spec:
+      containers:
+      - name: market-messagingdb
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-messagingdb
+spec:
+  selector:
+    run: market-messagingdb
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+      nodePort: 32504

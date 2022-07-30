@@ -1,0 +1,46 @@
+<!-- 
+  Use this as a basic wizard navigation, when no validation is required between steps transition. Useful for showcasing features per instance.
+  This component will help you to move forward and backward among the wizard steps.
+  At the end of the wizard you can provide a final URL to navigate to.
+-->
+<footer class="wizard-navigation">
+  <div class="navigation-bullets rounded shadow-sm">
+    <div class="nav-steps-number mr-2" *ngIf="displayStepsNumber">
+      Step {{ selectedIndex + 1 }} of {{ steps.length }}
+    </div>
+
+    <button
+      class="btn btn-light btn-sm btn-circle nav-button mr-2"
+      cdkStepperPrevious
+      [disabled]="selectedIndex === 0"
+    >
+      <fa-icon [icon]="arrowLeft"></fa-icon>
+    </button>
+
+    <div class="nav nav-steps mr-2">
+      <span
+        *ngFor="let step of steps; let i = index"
+        class="bullet"
+        [ngClass]="{ active: selectedIndex == i, done: selectedIndex > i }"
+      >
+        <i class="bullet-dot"></i>
+      </span>
+    </div>
+
+    <button
+      class="btn btn-light btn-sm btn-circle nav-button"
+      cdkStepperNext
+      [disabled]="isLastStep"
+    >
+      <fa-icon [icon]="arrowRight"></fa-icon>
+    </button>
+  </div>
+
+  <a
+    [routerLink]="doneUrl"
+    class="btn btn-primary nav-button"
+    *ngIf="doneText && isLastStep"
+  >
+    {{ doneText | translate }}
+  </a>
+</footer>

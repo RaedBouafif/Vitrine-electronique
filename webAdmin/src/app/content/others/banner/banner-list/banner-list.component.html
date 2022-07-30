@@ -1,0 +1,221 @@
+<prx-page-header pre="Bannières" title="Liste Bannière" [sub]="totalCount">
+  <ng-container page-tools>
+    <ul class="nav">
+      <li class="nav-item mr-2 d-none d-md-inline-flex">
+        <input
+          [(ngModel)]="filter"
+          (keyup)="updateFilter()"
+          type="text"
+          class="form-control"
+          placeholder="Recherche..."
+        />
+      </li>
+      <li class="nav-item mr-2">
+        <a
+          [routerLink]="['/others', 'banner', 'new']"
+          class="btn btn-primary nav-link"
+        >
+          <prx-icon [icon]="icons.add"></prx-icon> Nouveau
+        </a>
+      </li>
+    </ul>
+
+    <input
+      type="text"
+      class="form-control d-md-none mt-2 mt-md-0"
+      placeholder="Search ads..."
+    />
+  </ng-container>
+</prx-page-header>
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body>
+      <ng-container *ngIf="allBanners && allBanners.length; else loading">
+        <ngx-datatable
+          class="table table-with-details"
+          [rows]="banners"
+          [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+          [columnMode]="ColumnMode.force"
+          headerHeight="auto"
+          [rowHeight]="false"
+          footerHeight="auto"
+          [limit]="10"
+        >
+          <!-- Row Detail Template -->
+          <ngx-datatable-row-detail
+            rowHeight="auto"
+            (toggle)="onDetailToggle($event)"
+          >
+            <ng-template
+              let-banner="row"
+              let-expanded="expanded"
+              ngx-datatable-row-detail-template
+            >
+              <div class="row">
+                <div class="col-md-4">
+                  <img class="image" [src]="banner.image" />
+                </div>
+                <div class="col-md-8">
+                  <h3>Description</h3>
+
+                  <p>
+                    {{ banner.description }}
+                  </p>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-row-detail>
+
+          <!-- Column Templates -->
+          <!-- First column is arrow toggle -->
+          <ngx-datatable-column
+            [width]="50"
+            [resizeable]="false"
+            [sortable]="false"
+            [draggable]="false"
+            [canAutoResize]="false"
+          >
+            <ng-template
+              let-banner="row"
+              let-expanded="expanded"
+              ngx-datatable-cell-template
+            >
+              <a
+                href="javascript:void(0)"
+                [class.datatable-icon-right]="!expanded"
+                [class.datatable-icon-down]="expanded"
+                title="Expand/Collapse Row"
+                (click)="toggleExpandRow(banner)"
+              >
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+          <!-- Column Definitions -->
+          <ngx-datatable-column name="Titre">
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Titre</small>
+              {{ banner.title }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Emplacement">
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Emplacement</small>
+              {{ banner.location }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Type">
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Type</small>
+              {{ banner.type }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Lien">
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Lien</small>
+              {{ banner.link }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Date de creation">
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none"
+                >Date de creation"</small
+              >
+              {{ banner.creationDate | date }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actif">
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Actif</small>
+
+              <span *ngIf="banner.active" class="text-capitalize text-success">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Actif
+              </span>
+              <span *ngIf="!banner.active" class="text-capitalize text-danger">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Non Actif
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Actions Column -->
+          <ngx-datatable-column
+            [width]="80"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            cellClass="d-none d-md-flex"
+          >
+            <ng-template
+              let-banner="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <div class="d-flex justify-content-end">
+                <prx-context-menu appendToBody="true">
+                  <a
+                    [routerLink]="['/others', 'banner', 'edit', banner._id]"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Modifier
+                  </a>
+
+                  <div class="divider dropdown-divider"></div>
+                  <a
+                    (click)="delete(banner)"
+                    class="dropdown-item text-danger"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.delete"></prx-icon
+                    ></span>
+                    Supprimer
+                  </a>
+                </prx-context-menu>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #loading>
+        <prx-loader
+          [template]="'table'"
+          [isLoading]="isLoading"
+          [count]="3"
+        ></prx-loader>
+      </ng-template>
+    </prx-card-body>
+  </prx-card>
+</div>

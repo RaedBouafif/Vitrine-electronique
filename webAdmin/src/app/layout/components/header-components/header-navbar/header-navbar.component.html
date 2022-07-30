@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-md">
+    <div class="sidenav-logo">
+      <a class="sidenav-brand" href="javascript:;">
+        <img src="assets/img/logo.svg" alt="Proxima" class="logo" />
+      </a>
+
+      <prx-menu-toggler
+        class="sidenav-toggler"
+        (click)="toggleSidenav()"
+      ></prx-menu-toggler>
+    </div>
+
+    <div class="navbar-collapse">
+      <prx-header-navbar-item
+        class="nav-header-item"
+        *ngFor="let option of navGroups"
+        [option]="option"
+        (onToggle)="option.open = $event"
+        [level]="1"
+      >
+        <ng-container dropdown-icon>
+          <prx-dropdown-icon
+            class="dd-icon d-none d-md-block"
+          ></prx-dropdown-icon>
+          <prx-dropdown-icon
+            class="dd-icon d-block d-md-none"
+            [open]="option.open"
+          ></prx-dropdown-icon>
+        </ng-container>
+      </prx-header-navbar-item>
+    </div>
+  </nav>
+</div>

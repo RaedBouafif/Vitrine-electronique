@@ -1,0 +1,85 @@
+<form [formGroup]="form" class="cozy" novalidate>
+  <ul class="list-group list-group-clean">
+    <li class="list-group-item px-0">
+      <h4 class="small bold text-primary text-uppercase mb-4">
+        Email settings
+      </h4>
+
+      <div class="option">
+        <div class="mr-3">
+          <p class="mb-0 semi-bold">Automatic response</p>
+          <p class="mb-0 small italic text-muted">
+            Configure an automated response. (Experimental)
+          </p>
+        </div>
+
+        <prx-toggle
+          class="tgl-alternate"
+          [id]="'automatic-response'"
+          formControlName="automaticResponse"
+        ></prx-toggle>
+      </div>
+
+      <div class="option">
+        <div class="mr-3">
+          <p class="mb-0 semi-bold">Daily summary emails</p>
+          <p class="mb-0 small italic text-muted">
+            Send me a daily summary of all my activity
+          </p>
+        </div>
+
+        <prx-toggle
+          class="tgl-alternate"
+          [id]="'daily-summary-emails'"
+          formControlName="dailySummaryEmails"
+        ></prx-toggle>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <h4 class="small bold text-primary text-uppercase mb-4">
+        Personal settings
+      </h4>
+
+      <div class="option">
+        <p class="mb-0 mr-3 semi-bold">Other can view my status</p>
+
+        <prx-toggle
+          class="tgl-alternate"
+          [id]="'other-can-view-my-status'"
+          formControlName="otherCanViewMyStatus"
+        ></prx-toggle>
+      </div>
+
+      <div class="option">
+        <p class="mb-0 mr-3 semi-bold">Automatic signing</p>
+
+        <prx-toggle
+          class="tgl-alternate"
+          [id]="'automatic-signing'"
+          formControlName="automaticSigning"
+        ></prx-toggle>
+      </div>
+
+      <div class="option">
+        <p class="mb-0 mr-3 semi-bold">Clear cache on log off</p>
+
+        <prx-toggle
+          class="tgl-alternate"
+          [id]="'clear-cache-on-logoff'"
+          formControlName="clearCacheOnLogoff"
+        ></prx-toggle>
+      </div>
+
+      <div class="option">
+        <p class="mb-0 mr-3 semi-bold">Allow remote access</p>
+
+        <prx-toggle
+          class="tgl-danger"
+          [id]="'allow-remote-access'"
+          formControlName="allowRemoteAccess"
+        ></prx-toggle>
+      </div>
+    </li>
+  </ul>
+</form>

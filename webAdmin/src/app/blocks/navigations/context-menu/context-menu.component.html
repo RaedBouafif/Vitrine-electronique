@@ -1,0 +1,20 @@
+<div
+  class="menu-dropdown"
+  dropdown
+  placement="bottom right"
+  [container]="appendToBody ? 'body' : ''"
+>
+  <prx-nav-link class="dropdown-toggle" dropdownToggle>
+    <div #iconView *ngIf="!iconHidden; else withIcon">
+      <ng-content select="[menu-icon]"></ng-content>
+    </div>
+
+    <ng-template #withIcon>
+      <prx-icon icon="more-horizontal"></prx-icon>
+    </ng-template>
+  </prx-nav-link>
+
+  <div *dropdownMenu class="dropdown-menu dropdown-menu-right py-2">
+    <ng-content></ng-content>
+  </div>
+</div>

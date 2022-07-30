@@ -1,0 +1,20 @@
+<div class="text-center py-md-4">
+  <h1 class="font-weight-thin mb-5">Get Started!</h1>
+
+  <div class="row mt-5">
+    <div class="col-6" *ngFor="let task of tasks">
+      <div class="shadow-hover p-3 rounded text-center">
+        <a [routerLink]="task.route">
+          <figure class="task-figure">
+            <img
+              [src]="'assets/img/home/start/' + task.image"
+              class="img-responsive"
+              alt=""
+            />
+          </figure>
+          <p>{{ task.title }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

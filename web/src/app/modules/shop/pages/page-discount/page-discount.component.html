@@ -1,0 +1,11 @@
+<app-page-header [header]="pageHeader" [breadcrumbs]="breadcrumbs"></app-page-header>
+
+
+
+<ng-container *ngIf="columns > 3">
+    <div class="container">
+        <div class="block">
+            <app-products-view [layout]="viewMode" [grid]="'grid-'+columns+'-full'" offcanvas="always"></app-products-view>
+        </div>
+    </div>
+</ng-container>

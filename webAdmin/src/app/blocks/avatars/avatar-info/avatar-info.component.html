@@ -1,0 +1,19 @@
+<div class="media align-items-center justify-content-center">
+  <!-- <prx-avatar> should be placed inside content -->
+  <ng-content></ng-content>
+
+  <div class="media-body text-truncate title">
+    <p class="media-heading bold user-name text-capitalize mb-0" *ngIf="name">
+      {{ name }}
+    </p>
+    <div
+      class="small user-info text-muted text-truncate"
+      *ngIf="info; else infoContent"
+    >
+      {{ info }}
+    </div>
+    <ng-template #infoContent>
+      <ng-content select="[avatar-info]"></ng-content>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+@import "import";
+@import url("https://fonts.googleapis.com/css?family=Lovers+Quarrel&display=swap");
+
+.signature {
+  font-family: "Lovers Quarrel", cursive;
+  font-size: $font-size-large;
+}
+
+.logo {
+  max-width: 80px;
+  margin-bottom: 2rem;
+}

@@ -1,0 +1,21 @@
+.toggle-group {
+  margin-bottom: 1.5rem;
+  @include center-flex(space-between);
+}
+
+.toggle-text {
+  margin-right: 1.5rem;
+}
+
+.text-group {
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  text-transform: uppercase;
+  font-size: $font-size-sm;
+}
+
+.pre-title {
+  font-weight: $font-weight-semi-bold;
+  text-transform: uppercase;
+  font-size: $font-size-sm;
+}

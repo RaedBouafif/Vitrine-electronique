@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="col-md-3" *ngFor="let metric of metrics">
+    <prx-stat-card [title]="metric.title" [heading]="metric.value" type="icon">
+      <prx-icon [icon]="metric.icon"></prx-icon>
+    </prx-stat-card>
+  </div>
+</div>

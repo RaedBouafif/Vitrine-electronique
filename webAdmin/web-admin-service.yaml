@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-web-admin-service
+spec:
+  selector:
+    run: market-web-admin-service
+  type: NodePort
+  ports:
+    - port: 90
+      targetPort: 90
+      nodePort: 30103

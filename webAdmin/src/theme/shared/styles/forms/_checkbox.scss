@@ -1,0 +1,26 @@
+.form-check-inline + .form-check-inline {
+  margin-left: 0;
+}
+
+.input-group {
+  .checkbox,
+  .radio {
+    .control-label {
+      .check-mark {
+        margin-right: 0;
+      }
+    }
+  }
+
+  + .input-group {
+    margin-top: 10px;
+  }
+}
+
+.form-check-list {
+  .radio,
+  .checkbox,
+  .form-check:not(.form-check-inline) {
+    margin-bottom: 0.5rem;
+  }
+}

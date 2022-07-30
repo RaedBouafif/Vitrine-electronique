@@ -1,0 +1,465 @@
+<prx-page-header pre="" title="Nouveau Article"></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body class="py-5">
+      <prx-alert
+        [hidden]="!error"
+        [scheme]="ColorScheme.Danger"
+        [withIcon]="true"
+        [dismissible]="true"
+      >
+        L'ajout a échoué
+      </prx-alert>
+      <form class="cozy" #form="ngForm">
+        <div class="row">
+          <div class="col-md-10 mx-auto">
+            <prx-wizard-bulleted linear>
+              <prx-wizard-step>
+                <div class="row">
+                  <diV class="col-md-5">
+                    <h4 class="text-group mb-4">Informations</h4>
+                    <div class="form-group">
+                      <label class="control-label">Reference*</label>
+                      <input
+                        [class.is-invalid]="
+                          reference.invalid &&
+                          (reference.dirty || reference.touched)
+                        "
+                        class="form-control"
+                        type="text"
+                        name="reference"
+                        #reference="ngModel"
+                        [(ngModel)]="article.reference"
+                        required
+                      />
+                      <small
+                        *ngIf="
+                          reference.invalid &&
+                          (reference.dirty || reference.touched)
+                        "
+                        class="form-text text-danger"
+                        >Reference requis</small
+                      >
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Titre*</label>
+                      <input
+                        [class.is-invalid]="
+                          title.invalid && (title.dirty || title.touched)
+                        "
+                        class="form-control"
+                        type="text"
+                        name="title"
+                        #title="ngModel"
+                        [(ngModel)]="article.title"
+                        required
+                      />
+                      <small
+                        *ngIf="title.invalid && (title.dirty || title.touched)"
+                        class="form-text text-danger"
+                        >Titre requis</small
+                      >
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Prix*</label>
+                      <input
+                        [class.is-invalid]="
+                          price.invalid && (price.dirty || price.touched)
+                        "
+                        pattern="[0-9.]{1,}$"
+                        type="text"
+                        class="form-control"
+                        required
+                        name="price"
+                        #price="ngModel"
+                        [(ngModel)]="article.price"
+                      />
+                      <div
+                        *ngIf="price.invalid && (price.dirty || price.touched)"
+                      >
+                        <small
+                          *ngIf="price.errors.required"
+                          class="form-text text-danger"
+                          >Prix requis</small
+                        >
+                        <small
+                          *ngIf="price.errors.pattern"
+                          class="form-text text-danger"
+                          >Prix invalide</small
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Taxe*(%)</label>
+                      <input
+                        [class.is-invalid]="
+                          tax.invalid && (tax.dirty || tax.touched)
+                        "
+                        pattern="[0-9.]{1,}$"
+                        type="text"
+                        class="form-control"
+                        required
+                        name="tax"
+                        #tax="ngModel"
+                        [(ngModel)]="article.tax"
+                      />
+                      <div *ngIf="tax.invalid && (tax.dirty || tax.touched)">
+                        <small
+                          *ngIf="tax.errors.required"
+                          class="form-text text-danger"
+                          >valeur requis</small
+                        >
+                        <small
+                          *ngIf="tax.errors.pattern"
+                          class="form-text text-danger"
+                          >Valeur invalide</small
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Quantite*</label>
+                      <input
+                        [class.is-invalid]="
+                          quantity.invalid &&
+                          (quantity.dirty || quantity.touched)
+                        "
+                        pattern="[0-9]{1,}$"
+                        type="text"
+                        class="form-control"
+                        required
+                        name="quantity"
+                        #quantity="ngModel"
+                        [(ngModel)]="article.quantity"
+                      />
+                      <div
+                        *ngIf="
+                          quantity.invalid &&
+                          (quantity.dirty || quantity.touched)
+                        "
+                      >
+                        <small
+                          *ngIf="quantity.errors.required"
+                          class="form-text text-danger"
+                          >Quantite requis</small
+                        >
+                        <small
+                          *ngIf="quantity.errors.pattern"
+                          class="form-text text-danger"
+                          >Quantite invalide</small
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Disponibilite</label>
+                      <ng-select
+                        [items]="table"
+                        bindLabel="name"
+                        bindValue="name"
+                        placeholder="choisir"
+                        #availability="ngModel"
+                        [(ngModel)]="article.availability"
+                        name="availability"
+                      >
+                      </ng-select>
+                    </div>
+                  </diV>
+                  <diV class="col-md-7">
+                    <h4 class="text-group mb-4">Description</h4>
+                    <ckeditor
+                      [editor]="editor"
+                      [(ngModel)]="article.description"
+                      name="description"
+                    ></ckeditor>
+                    <br />
+                    <h4 class="text-group mb-4">Promotion</h4>
+                    <div class="form-group form-row">
+                      <div class="col-md-4 mx-auto">
+                        <div class="mb-3 center-flex justify-content-between">
+                          <prx-toggle
+                            [id]="'toggleThemeLightprimary'"
+                            class="tgl-primary"
+                            name="onDiscount"
+                            [(ngModel)]="article.discount.onDiscount"
+                            [checked]="article.discount.onDiscount"
+                          ></prx-toggle>
+                          <p class="mb-0">En Promotion</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      [hidden]="!article.discount.onDiscount"
+                      class="form-group form-row"
+                    >
+                      <div class="col-md-8 mx-auto">
+                        <label class="control-label">Pourcentage (%)</label>
+                        <input
+                          [ngModelOptions]="{ standalone: true }"
+                          pattern="[0-9]{8,8}$"
+                          type="text"
+                          class="form-control"
+                          required
+                          [(ngModel)]="article.discount.percentage"
+                        />
+                      </div>
+                    </div>
+                  </diV>
+                </div>
+              </prx-wizard-step>
+
+              <prx-wizard-step>
+                <div class="row">
+                  <diV class="col-md-4">
+                    <h4 class="text-group mb-4">
+                      Categories et sous categories
+                    </h4>
+                    <div class="form-group">
+                      <label class="control-label"
+                        >Categories et sous categories</label
+                      >
+                      <ng-select
+                        [items]="categories"
+                        bindLabel="name"
+                        bindValue="_id"
+                        groupBy="subCategories"
+                        [multiple]="true"
+                        (add)="addCategory($event)"
+                        (remove)="delete($event)"
+                        [hideSelected]="true"
+                        [(ngModel)]="selectedSubCategory"
+                        [ngModelOptions]="{ standalone: true }"
+                      >
+                        <ng-template ng-optgroup-tmp let-item="item">
+                          {{ item.categoryName }}
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item">
+                          {{ item.name }}
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </diV>
+                  <diV class="col-md-8">
+                    <h4 class="text-group mb-4">
+                      sous categories selectionnees
+                    </h4>
+                    <div class="row gap-y">
+                      <div
+                        class="col-md-3"
+                        *ngFor="let item of article.categories; let id = index"
+                      >
+                        <prx-card class="shadow-hover h-100">
+                          <prx-card-body class="text-center">
+                            <h5 class="bold">
+                              {{ getCategory(item).subCategory }}
+                            </h5>
+                            <p>
+                              {{ getCategory(item).category }}
+                            </p>
+                          </prx-card-body>
+                        </prx-card>
+                      </div>
+                    </div>
+                  </diV>
+                </div>
+              </prx-wizard-step>
+
+              <prx-wizard-step>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 class="text-group mb-4">Images</h4>
+
+                    <ngx-dropzone
+                      (change)="onSelect($event)"
+                      [accept]="'image/*'"
+                    >
+                      <ngx-dropzone-label
+                        >Déposez vos images ici ou cliquez pour
+                        télécharger.</ngx-dropzone-label
+                      >
+                      <ngx-dropzone-preview
+                        class="test"
+                        *ngFor="let f of getFiles('image')"
+                        [removable]="true"
+                        (removed)="onRemove(f)"
+                      >
+                        <ngx-dropzone-label
+                          >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+                        >
+                      </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 class="text-group mb-4">Videos</h4>
+                    <ngx-dropzone
+                      (change)="onSelect($event)"
+                      [accept]="'video/*'"
+                      [multiple]="false"
+                    >
+                      <ngx-dropzone-label
+                        >Déposez votre video ici ou cliquez pour
+                        télécharger.</ngx-dropzone-label
+                      >
+                      <ngx-dropzone-preview
+                        class="test"
+                        *ngFor="let f of getFiles('video')"
+                        [removable]="true"
+                        (removed)="onRemove(f)"
+                      >
+                        <ngx-dropzone-label
+                          >{{ f.name }} ({{ f.type }})
+                        </ngx-dropzone-label>
+                        <br />
+                      </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                  </div>
+                </div>
+              </prx-wizard-step>
+              <prx-wizard-step>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h4 class="text-group mb-4">Ajoutez</h4>
+
+                    <div class="form-group">
+                      <label class="control-label">Nom</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        #name="ngModel"
+                        [(ngModel)]="feature.name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Valeur</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="value"
+                        #value="ngModel"
+                        [(ngModel)]="feature.value"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <button
+                        [disabled]="feature.value === '' || feature.name === ''"
+                        (click)="addFeature()"
+                        class="btn btn-circle btn-outline-primary"
+                      >
+                        <prx-icon [icon]="icons.ok"></prx-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h4 class="text-group mb-4">Caracteristiques</h4>
+
+                    <ng-container
+                      *ngIf="article.features && article.features.length"
+                    >
+                      <ngx-datatable
+                        class="ngx-datatable responsive {{ tableStyles }}"
+                        [rows]="article.features"
+                        [messages]="{
+                          emptyMessage: 'Aucun résultat disponible.'
+                        }"
+                        [columnMode]="ColumnMode.force"
+                        headerHeight="auto"
+                        [rowHeight]="false"
+                        footerHeight="auto"
+                        [limit]="4"
+                      >
+                        <!-- Column Definitions -->
+                        <ngx-datatable-column name="Nom">
+                          <ng-template
+                            let-feature="row"
+                            let-value="value"
+                            ngx-datatable-cell-template
+                          >
+                            <small class="text-muted d-block d-md-none"
+                              >Nom</small
+                            >
+                            <input
+                              class="form-control"
+                              type="text"
+                              [name]="feature.name"
+                              [(ngModel)]="feature.name"
+                              required
+                            />
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Valeur">
+                          <ng-template
+                            let-feature="row"
+                            let-value="value"
+                            ngx-datatable-cell-template
+                          >
+                            <small class="text-muted d-block d-md-none"
+                              >Valeur</small
+                            >
+                            <input
+                              class="form-control"
+                              type="text"
+                              [name]="feature.value"
+                              [(ngModel)]="feature.value"
+                              required
+                            />
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <!-- Actions Column -->
+                        <ngx-datatable-column
+                          [width]="80"
+                          [sortable]="false"
+                          [canAutoResize]="false"
+                          [draggable]="false"
+                          [resizeable]="false"
+                          cellClass="d-none d-md-flex"
+                        >
+                          <ng-template
+                            let-feature="row"
+                            let-value="value"
+                            ngx-datatable-cell-template
+                          >
+                            <div class="d-flex justify-content-end">
+                              <prx-context-menu appendToBody="true">
+                                <a
+                                  (click)="deleteFeature(feature)"
+                                  class="dropdown-item text-danger"
+                                  href="javascript:;"
+                                >
+                                  <span class="d-inline-block w-20px"
+                                    ><prx-icon [icon]="icons.delete"></prx-icon
+                                  ></span>
+                                  Supprimer
+                                </a>
+                              </prx-context-menu>
+                            </div>
+                          </ng-template>
+                        </ngx-datatable-column>
+                      </ngx-datatable>
+                    </ng-container>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <div class="form-group text-right">
+                  <prx-button
+                    type="button"
+                    color="primary"
+                    [icon]="longArrowAltRight"
+                    [isLoading]="isLoading"
+                    [disabled]="form.invalid"
+                    (click)="submit(form)"
+                  >
+                    <span translate>Enregistrer</span>
+                  </prx-button>
+                </div>
+              </prx-wizard-step>
+            </prx-wizard-bulleted>
+          </div>
+        </div>
+      </form>
+    </prx-card-body>
+  </prx-card>
+</div>

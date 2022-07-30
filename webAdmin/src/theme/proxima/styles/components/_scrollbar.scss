@@ -1,0 +1,43 @@
+.ps__rail-y {
+  z-index: 1;
+}
+
+// Scrollbars indicators
+perfect-scrollbar {
+  &.ps-show-active > .ps.ps--active-y > {
+    // show bottom fade
+    .ps-overlay:not(.ps-at-bottom) .ps-indicator-bottom {
+      background: linear-gradient(
+        to top,
+        $white 0,
+        rgba($white, 0.1)
+      ) !important;
+    }
+
+    // show top fade
+    .ps-overlay:not(.ps-at-top) .ps-indicator-top {
+      background: linear-gradient(
+        to bottom,
+        $white 0,
+        rgba($white, 0.1)
+      ) !important;
+    }
+  }
+
+  > .ps > .ps-overlay .ps-indicator-top,
+  > .ps > .ps-overlay .ps-indicator-bottom {
+    min-height: 50px !important;
+  }
+}
+
+.card {
+  .fade-content {
+    max-height: calc(#{$card-fade-height} + #{$card-spacer-x * 2});
+  }
+
+  .card-body {
+    .fade-content {
+      max-height: $card-fade-height;
+    }
+  }
+}

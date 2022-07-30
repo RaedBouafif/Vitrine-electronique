@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-orderdb
+  labels:
+    run: market-orderdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-orderdb
+    spec:
+      containers:
+      - name: market-orderdb
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-orderdb
+spec:
+  selector:
+    run: market-orderdb
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+      nodePort: 32503

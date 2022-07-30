@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row align-items-center">
+    <div
+      class="col-md-6 col-lg-7 fullscreen-md d-flex justify-content-center align-items-center blanket blanket-primary alpha-8 image-background cover"
+    >
+      <div class="content">
+        <img
+          src="assets/img/logo-light.svg"
+          class="logo img-responsive mb-4 mb-md-6"
+          alt=""
+        />
+
+        <h2 class="display-4 display-lg-3 text-contrast mt-4 mt-md-0">
+          Bienvenue à <span class="bold d-block" translate>APP_NAME</span>
+        </h2>
+        <p class="lead text-contrast" translate>
+          The only tool you'll ever need
+        </p>
+
+        <hr class="mt-md-6 w-25" />
+        <!--  <div class="d-flex flex-column">
+          <p class="small bold text-contrast">
+            Login, Register or sign in with
+          </p>
+          <nav class="nav mb-4">
+            <a
+              class="btn btn-rounded btn-outline-secondary brand-facebook mr-2"
+              href="javascript:;"
+              ><fa-icon [icon]="fa.facebook"></fa-icon
+            ></a>
+            <a
+              class="btn btn-rounded btn-outline-secondary brand-google mr-2"
+              href="javascript:;"
+              ><fa-icon [icon]="fa.google"></fa-icon
+            ></a>
+            <a
+              class="btn btn-rounded btn-outline-secondary brand-linkedin"
+              href="javascript:;"
+              ><fa-icon [icon]="fa.linkedin"></fa-icon
+            ></a>
+          </nav>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="col-md-5 col-lg-4 mx-auto">
+      <div class="login-form mt-5 mt-md-0">
+        <!-- <p
+          class="small alert alert-warning text-center rounded-pill mb-5"
+          translate
+        >
+          LOGIN_DEMO
+        </p> -->
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

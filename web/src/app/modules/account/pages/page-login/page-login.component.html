@@ -1,0 +1,176 @@
+<app-page-header [header]="'Mon compte'" [breadcrumbs]="[
+    {label: 'Accueil',       url: '/'},
+    {label: 'Mon Compte', url: ''}
+]"></app-page-header>
+
+<div class="block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex">
+                <div class="card flex-grow-1 mb-md-0">
+                    <div class="card-body">
+                        <h3 class="card-title">S'identifier</h3>
+                        <div class="form-group">
+                            <button type="button" (click)="signWithSocial('GO','IN')"  class="btn btn-danger w-100">Google</button>
+
+                        </div>
+                      
+                        <div class="form-group">
+                            <button type="button" (click)="signWithSocial('FB','IN')"  class="btn btn-primary w-100">Facebook</button>
+
+                        </div>
+                       <h4 class="text-center">OU</h4>
+                        <form (ngSubmit)="log(form)" [formGroup]="form">
+                            <app-alert *ngIf="message===1" class="mb-3" type="danger">Identifiant ou mot de passe invalide</app-alert>
+                            <app-alert *ngIf="message===2" class="mb-3" type="danger">Votre compte n'est pas encore confirmee</app-alert>
+                           <div class="form-group">
+                                <label>Identifiant*</label>
+                                <input [class.is-invalid]=" form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched)" 
+                                 type="text" class="form-control"  formControlName="username">
+                                 <div [hidden]="form.controls.username.valid || form.controls.username.untouched" class="invalid-feedback">
+                                    Identifiant requis
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de passe*</label>
+                                    <input [class.is-invalid]=" form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)" formControlName="password"
+                                     autocomplete="new-password2"    type="password" class="form-control">
+                                     <div [hidden]="form.controls.password.valid || form.controls.password.untouched" class="invalid-feedback">
+                                      Mot de passe requis </div>
+                                <small class="form-text text-muted">
+                                    <a routerLink="/account/forgot">Mot de passe oublié</a>
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <span class="form-check-input input-check">
+                                        <span class="input-check__body">
+                                            <input formControlName="remember" class="input-check__input" type="checkbox" id="login-remember">
+                                            <span class="input-check__box"></span>
+                                            <app-icon class="input-check__icon" name="check-9x7" size="9x7"></app-icon>
+                                        </span>
+                                    </span>
+                                    <label class="form-check-label" for="login-remember">Souviens-toi de moi</label>
+                                </div>
+                            </div>
+                            <button  [class.disabled]="form.invalid" type="submit" class="btn btn-primary mt-2 mt-md-3 mt-lg-4">s'identifier</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex mt-4 mt-md-0">
+                <div class="card flex-grow-1 mb-0">
+                    <div class="card-body">
+                        <h3 class="card-title">S'inscrire</h3>
+                        <app-alert *ngIf="message===3" class="mb-3" type="danger">un compte deja existe avec cet adresse mail</app-alert>
+                        <div class="form-group">
+                            <button type="button" (click)="signWithSocial('GO','UP')"  class="btn btn-danger w-100">Google</button>
+
+                        </div>
+                      
+                        <div class="form-group">
+                            <button type="button" (click)="signWithSocial('FB','UP')"  class="btn btn-primary w-100">Facebook</button>
+
+                        </div>
+                       <h4 class="text-center">OU</h4>
+                        <form (ngSubmit)="submit(form2)" #form2="ngForm">
+                            
+                            <app-alert *ngIf="message===4" class="mb-3" type="danger">L'ajout a echoué</app-alert>
+                            <app-alert *ngIf="message===5" class="mb-3" type="success"> Votre compte a été créé , Consulter votre boite mail pour les étapes suivantes</app-alert>
+                          
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="form-name">Nom*</label>
+                                    <input [class.is-invalid]=" name.invalid && (name.dirty || name.touched)" required #name="ngModel" type="text" id="form-name" class="form-control" name="name" [(ngModel)]="user.lastname" >
+                                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
+                                        <span *ngIf="name.errors.required" >Nom requis</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="form-email">Prenom*</label>
+                                    <input [class.is-invalid]=" firstname.invalid && (firstname.dirty || firstname.touched)" required #firstname="ngModel" type="text" id="form-firstname" class="form-control" name="firstname" [(ngModel)]="user.firstname" >
+                                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="invalid-feedback">
+                                        <span *ngIf="firstname.errors.required" >Prenom requis</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="form-name">Numéro de téléphone</label>
+                                    <input #phone="ngModel" type="text" id="form-phoneNumber" class="form-control" name="phoneNumber" [(ngModel)]="user.phoneNumber" >
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="form-email">Email*</label>
+                                    <input required  email="true" [class.is-invalid]=" mail.invalid && (mail.dirty || mail.touched)"
+                                     #mail="ngModel" type="email" id="form-email" class="form-control" name="mail" [(ngModel)]="user.mail" (focusout)="check(user.mail)" >
+                                     <div *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="invalid-feedback">
+                                         <span *ngIf="mail.errors.required" >Email requis</span>
+                                         <span *ngIf="!mail.errors.required" >Email Invalide</span>
+                                     </div>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-email">Adresses*</label>
+                                <input [class.is-invalid]=" addressI.invalid && (addressI.dirty || addressI.touched)" required #addressI="ngModel" type="text" id="form-address" class="form-control" name="addressI" [(ngModel)]="address.address" >
+                                <div *ngIf="addressI.invalid && (addressI.dirty || addressI.touched)" class="invalid-feedback">
+                                    <span *ngIf="addressI.errors.required" >Adresse requis</span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="form-name">Ville*</label>
+                                    <input [class.is-invalid]=" city.invalid && (city.dirty || city.touched)"
+                                     required #city="ngModel" type="text" id="form-city" class="form-control" name="city" [(ngModel)]="address.city">
+                                     <div *ngIf="city.invalid && (city.dirty || city.touched)" class="invalid-feedback">
+                                        <span *ngIf="city.errors.required" >Ville requis</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="form-email">Code Postal*</label>
+                                    <input [class.is-invalid]=" code.invalid && (code.dirty || code.touched)" required
+                                     #code="ngModel" type="text" id="form-postalCode" class="form-control" name="postalCode" [(ngModel)]="address.postalCode" >
+                                     <div *ngIf="code.invalid && (code.dirty || code.touched)" class="invalid-feedback">
+                                        <span *ngIf="code.errors.required" >Code Postal requis</span>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                            <div class="form-group">
+                                <label>Identifiant*</label>
+                                <input [class.is-invalid]=" login.invalid && (login.dirty || login.touched)" required
+                                 type="text" class="form-control"  name="login" #login="ngModel" [(ngModel)]="user.login">
+                                 <div *ngIf="login.invalid && (login.dirty || login.touched)" class="invalid-feedback">
+                                    <span *ngIf="login.errors.required" >Identifiant requis</span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Mot de passe*</label>
+                                    <input [class.is-invalid]=" password.invalid && (password.dirty || password.touched)" (paste)="onPaste($event)" (copy)="onPaste($event)" (keyup)="checkPassword(0)" 
+                                     autocomplete="new-password"  required pattern="(?=.*\d)(?=.*[a-z]).{5,}"  type="password" class="form-control" name="password"
+                                      #password="ngModel" [(ngModel)]="user.password">
+                                     <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+                                        <span *ngIf="password.errors.required" >Mot de passe requis</span>
+                                        <span *ngIf="password.errors.pattern" >Mot de passe doit avoir 5 caractères avec au moins un chiffre et une lettre</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Répéter le mot de passe</label>
+                                    <input [class.is-invalid]="message === 6" (paste)="onPaste($event)" (copy)="onPaste($event)" (keyup)="checkPassword(1)" 
+                                     autocomplete="new-password"  required type="password" class="form-control" name="passwordConfirm"
+                                      #password2="ngModel" [(ngModel)]="passwordConfirm">
+                                      <div *ngIf="message === 6" class="invalid-feedback">
+                                        Les mots de passe saisis ne sont pas identiques.
+                                    </div> 
+                                    
+                                </div>
+                            </div>
+                         
+                            <button type="submit" [class.disabled]="form2.invalid||message===6||message===3" class="btn btn-primary mt-2 mt-md-3 mt-lg-4">S'inscrire</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

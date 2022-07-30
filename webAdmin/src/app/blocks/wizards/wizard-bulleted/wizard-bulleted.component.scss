@@ -1,0 +1,38 @@
+@import "import";
+
+$bullet-height: 6px;
+
+:host {
+  &.mobile-full-screen {
+    .nav-steps {
+      margin-top: auto;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        margin-top: 3rem;
+      }
+    }
+  }
+}
+
+.nav-steps {
+  align-items: center;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.bullet {
+  width: $bullet-height * 3;
+  height: $bullet-height;
+  //cursor: pointer;
+  margin-right: 5px;
+  border-radius: $bullet-height / 2;
+  background-color: $gray-300;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+
+  &.active {
+    background-color: $color-primary;
+    width: $bullet-height * 4;
+    opacity: 1;
+  }
+}

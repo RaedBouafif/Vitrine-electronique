@@ -1,0 +1,11 @@
+@import "import";
+
+.step-image {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    width: 250px;
+  }
+}

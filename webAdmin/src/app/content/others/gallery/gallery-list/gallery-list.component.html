@@ -1,0 +1,150 @@
+<prx-page-header pre="Gallery" title="Liste Images" [sub]="totalCount">
+  <ng-container page-tools>
+    <ul class="nav">
+      <li class="nav-item mr-2">
+        <a
+          [routerLink]="['/others', 'gallery', 'new']"
+          class="btn btn-primary nav-link"
+        >
+          <prx-icon [icon]="icons.add"></prx-icon> Nouveau
+        </a>
+      </li>
+    </ul>
+  </ng-container>
+</prx-page-header>
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body>
+      <ng-container *ngIf="images && images.length; else loading">
+        <ngx-datatable
+          class="table table-with-details"
+          [rows]="images"
+          [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+          [columnMode]="ColumnMode.force"
+          headerHeight="auto"
+          [rowHeight]="false"
+          footerHeight="auto"
+          [limit]="10"
+        >
+          <!-- Column Templates -->
+          <!-- Column Definitions -->
+          <ngx-datatable-column name="Titre">
+            <ng-template
+              let-image="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <prx-avatar-info [name]="image.title" [info]="''" size="md">
+                <prx-avatar [avatar]="getAvatar(image)" size="md"></prx-avatar>
+              </prx-avatar-info>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Description">
+            <ng-template
+              let-image="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Description</small>
+              {{ image.description }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Date de creation">
+            <ng-template
+              let-image="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none"
+                >Date de creation</small
+              >
+              {{ image.creationDate | date }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actif">
+            <ng-template
+              let-image="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Actif</small>
+              <span *ngIf="image.active" class="text-capitalize text-success">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Actif
+              </span>
+              <span *ngIf="!image.active" class="text-capitalize text-danger">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Non Actif
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Actions Column -->
+          <ngx-datatable-column
+            [width]="80"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            cellClass="d-none d-md-flex"
+          >
+            <ng-template
+              let-image="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <div class="d-flex justify-content-end">
+                <prx-context-menu appendToBody="true">
+                  <a
+                    *ngIf="!image.active"
+                    (click)="update(image, true)"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Activer
+                  </a>
+                  <a
+                    *ngIf="image.active"
+                    (click)="update(image, false)"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Desactiver
+                  </a>
+                  <div class="divider dropdown-divider"></div>
+                  <a
+                    (click)="delete(image)"
+                    class="dropdown-item text-danger"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.delete"></prx-icon
+                    ></span>
+                    Supprimer
+                  </a>
+                </prx-context-menu>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #loading>
+        <prx-loader
+          [template]="'table'"
+          [isLoading]="isLoading"
+          [count]="3"
+        ></prx-loader>
+      </ng-template>
+    </prx-card-body>
+  </prx-card>
+</div>

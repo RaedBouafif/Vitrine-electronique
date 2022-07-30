@@ -1,0 +1,35 @@
+<!-- .topbar -->
+<div class="site-header__topbar topbar">
+    <div class="topbar__container container">
+        <div class="topbar__row">
+            <div class="topbar__item topbar__item--link">
+                <a class="topbar-link" routerLink="/site/about-us">À propos de nous</a>
+            </div>
+            <div class="topbar__item topbar__item--link">
+                <a class="topbar-link" routerLink="/site/contact-us">Contact</a>
+            </div>
+            <div class="topbar__spring"></div>
+            <div class="topbar__item">
+                <div [hidden]="!isAuthentificated" class="topbar-dropdown" appDropdown="topbar-dropdown--opened" #accountDropdown="appDropdown">
+                    <button class="topbar-dropdown__btn" type="button" (click)="accountDropdown.toggle()">
+                       Mon Compte
+                        <app-icon name="arrow-rounded-down-7x5" size="7x5"></app-icon>
+                    </button>
+
+                    <div class="topbar-dropdown__body">
+                        <app-header-menu layout="topbar" (itemClick)="accountDropdown.close()" [items]="[
+                            {label: 'Tableau de bord',     url: '/account/dashboard'},
+                            {label: 'Profil',  url: '/account/profile'},
+                            {label: 'Commandes', url: '/account/orders'},
+                            {label: 'Adresses',     url: '/account/addresses'},
+                            {label: 'Mot de passe',      url: '/account/password'},
+                            {label: 'Se déconnecter',        url: 'logout'}
+                        ]"></app-header-menu>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+    </div>
+</div>
+<!-- .topbar / end -->

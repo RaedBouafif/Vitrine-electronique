@@ -1,0 +1,52 @@
+<prx-page-overlay class="d-none d-md-block"></prx-page-overlay>
+
+<div class="content-wrapper">
+  <div class="shapes-wrapper d-none d-md-block">
+    <div class="static-shape shape-circle shape-circle-1">
+      <div class="animation animation--rotating"></div>
+    </div>
+    <div class="static-shape shape-circle shape-circle-2">
+      <div class="animation animation--rotating-clockwise"></div>
+    </div>
+
+    <div class="static-shape pattern-dots-1"></div>
+  </div>
+
+  <prx-card>
+    <prx-card-body>
+      <prx-wizard-bulleted
+        class="mobile-full-screen"
+        linear
+        doneUrl="/dashboard"
+        doneText="Go to Dashboard"
+      >
+        <prx-wizard-step>
+          <prx-welcome></prx-welcome>
+        </prx-wizard-step>
+
+        <prx-wizard-step *ngFor="let step of steps">
+          <prx-home-step [step]="step"></prx-home-step>
+        </prx-wizard-step>
+
+        <prx-wizard-step>
+          <prx-get-started></prx-get-started>
+        </prx-wizard-step>
+      </prx-wizard-bulleted>
+
+      <hr class="separator" />
+      <div class="skip-wizard">
+        <nav class="nav justify-content-between align-items-center font-sm">
+          <prx-checkbox
+            label="Show this on startup"
+            [(ngModel)]="showOnStartup"
+            class="light"
+          ></prx-checkbox>
+
+          <a href="javascript:;" class="text-muted light" (click)="Skip()"
+            >Skip {{ showOnStartup ? 'once' : 'always' }}</a
+          >
+        </nav>
+      </div>
+    </prx-card-body>
+  </prx-card>
+</div>

@@ -1,0 +1,49 @@
+<div
+  class="avatar {{ size ? 'avatar-' + size : '' }}"
+  [ngClass]="{
+    placeholder: !avatar.picture,
+    editable: editable,
+    'drag-over': hasDragOver
+  }"
+>
+  <img
+    *ngIf="avatar.picture; else placeholder"
+    [src]="avatar.picture"
+    class="user-avatar rounded-circle"
+    alt="{{ avatar.name }}"
+  />
+  <ng-template #placeholder>
+    <div
+      class="user-avatar rounded-circle text-capitalize"
+      [style.background-color]="placeholderBgColor"
+    >
+      {{ avatar.name | slice: 0:1 }}
+    </div>
+  </ng-template>
+  <span
+    class="status {{ avatar.status }}"
+    [ngClass]="statusCssClass"
+    [style.border-color]="statusBorderColor"
+    *ngIf="avatar.status"
+  ></span>
+
+  <div class="upload-avatar" *ngIf="editable">
+    <label
+      for="uploader-input"
+      class="upload-action upload-trigger"
+      ng2FileDrop
+      (fileOver)="fileOver($event)"
+      [uploader]="uploader"
+    >
+      <prx-icon [icon]="icons.upload" size="sm"></prx-icon>
+    </label>
+    <input
+      type="file"
+      class="file-uploader"
+      ng2FileSelect
+      [uploader]="uploader"
+      (change)="upload($event)"
+      id="uploader-input"
+    />
+  </div>
+</div>

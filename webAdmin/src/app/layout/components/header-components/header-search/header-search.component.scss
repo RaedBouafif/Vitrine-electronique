@@ -1,0 +1,30 @@
+@import "import";
+
+:host {
+  position: relative;
+  display: none;
+
+  .form-control,
+  .btn {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .btn {
+    position: absolute;
+    left: 0;
+  }
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    //flex: 1;
+    display: block;
+    margin-right: auto;
+  }
+
+  &.dark {
+    .form-control {
+      background-color: $color-5-dark;
+      color: $color-contrast;
+    }
+  }
+}

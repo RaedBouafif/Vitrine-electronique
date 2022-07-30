@@ -1,0 +1,17 @@
+@keyframes loading-bar {
+  0% {
+    margin-left: -100%;
+  }
+  100% {
+    margin-left: 100%;
+  }
+}
+
+@keyframes loading-bar2 {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

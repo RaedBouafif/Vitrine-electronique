@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="header-body" [class.has-navigation]="hasNavigation">
+    <div class="row gap-y align-items-center">
+      <div class="col">
+        <h6 class="pretitle text-uppercase small" *ngIf="pre" translate>
+          {{ pre }}
+        </h6>
+        <h1 class="title h3" translate [ngClass]="{ 'mb-0': !sub }">
+          {{ title }}
+        </h1>
+        <p class="subtitle mb-0" *ngIf="sub" translate>{{ sub }}</p>
+        <ng-content select="[subtitle]"></ng-content>
+      </div>
+
+      <div #toolsView class="col-sm-12 col-md-auto" *ngIf="!toolsHidden">
+        <ng-content select="[page-tools]"></ng-content>
+      </div>
+    </div>
+
+    <div class="row align-items-center" *ngIf="hasNavigation">
+      <div class="col">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

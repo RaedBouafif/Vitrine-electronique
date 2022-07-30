@@ -1,0 +1,180 @@
+<prx-page-header
+  pre="Fournisseurs"
+  title="Liste Fournisseurs"
+  [sub]="totalCount"
+>
+  <ng-container page-tools>
+    <ul class="nav">
+      <li class="nav-item mr-2 d-none d-md-inline-flex">
+        <input
+          [(ngModel)]="filter"
+          (keyup)="updateFilter()"
+          type="text"
+          class="form-control"
+          placeholder="Recherche..."
+        />
+      </li>
+
+      <li class="nav-item mr-2">
+        <a
+          [routerLink]="['/contacts', 'provider', 'new']"
+          class="btn btn-primary nav-link"
+        >
+          <prx-icon [icon]="icons.add"></prx-icon> Nouveau
+        </a>
+      </li>
+    </ul>
+
+    <input
+      type="text"
+      class="form-control d-md-none mt-2 mt-md-0"
+      placeholder="Search contacts..."
+    />
+  </ng-container>
+</prx-page-header>
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body>
+      <ng-container *ngIf="users && users.length; else loading">
+        <ngx-datatable
+          class="ngx-datatable responsive {{ tableStyles }}"
+          [rows]="contacts"
+          [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+          [columnMode]="ColumnMode.force"
+          headerHeight="auto"
+          [rowHeight]="false"
+          footerHeight="auto"
+          [limit]="10"
+        >
+          <!-- Column Definitions -->
+          <ngx-datatable-column name="Libellé">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Libellé</small>
+              {{ contact.designation }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Détails">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Détails</small>
+              {{ contact.description }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Adresse">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Adresse</small>
+              {{ contact.address }}, {{ contact.city }},{{ contact.country }},
+              {{ contact.postalCode }},
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Téléphone">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Téléphone</small>
+              {{ contact.phoneNumber }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Email">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Email</small>
+              {{ contact.mail }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actif">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Actif</small>
+              <span *ngIf="contact.active" class="text-capitalize text-success">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Actif
+              </span>
+              <span *ngIf="!contact.active" class="text-capitalize text-danger">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Non Actif
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Actions Column -->
+          <ngx-datatable-column
+            [width]="80"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            cellClass="d-none d-md-flex"
+          >
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <div class="d-flex justify-content-end">
+                <prx-context-menu appendToBody="true">
+                  <a
+                    [routerLink]="[
+                      '/contacts',
+                      'provider',
+                      'edit',
+                      contact._id
+                    ]"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Modifier
+                  </a>
+
+                  <div class="divider dropdown-divider"></div>
+                  <a
+                    (click)="delete(contact)"
+                    class="dropdown-item text-danger"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.delete"></prx-icon
+                    ></span>
+                    Supprimer
+                  </a>
+                </prx-context-menu>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #loading>
+        <prx-loader
+          [template]="'table'"
+          [isLoading]="isLoading"
+          [count]="3"
+        ></prx-loader>
+      </ng-template>
+    </prx-card-body>
+  </prx-card>
+</div>

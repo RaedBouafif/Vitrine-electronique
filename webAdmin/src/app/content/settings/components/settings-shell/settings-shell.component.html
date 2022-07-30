@@ -1,0 +1,23 @@
+<prx-page-header pre="Account" title="Settings" hasNavigation="true">
+  <ul class="nav nav-tabs tabs-clean nav-overflow header-tabs">
+    <li class="nav-item" *ngFor="let item of navigation">
+      <a
+        [routerLink]="['/settings', item.path]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link text-capitalize"
+      >
+        <prx-icon
+          [icon]="item.icon"
+          size="sm"
+          class="icon mr-0 mr-md-2"
+        ></prx-icon>
+        <span class="d-none d-md-inline">{{ item.name }}</span>
+      </a>
+    </li>
+  </ul>
+</prx-page-header>
+
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>

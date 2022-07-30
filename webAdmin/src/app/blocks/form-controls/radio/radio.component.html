@@ -1,0 +1,13 @@
+<input
+  type="radio"
+  class="form-control"
+  [name]="name"
+  [value]="value"
+  [id]="currentId"
+  [disabled]="disabled"
+  [checked]="checked"
+/>
+<label class="control-label" [class.shadowed]="shadow" [for]="currentId">
+  <span class="check-mark"></span>
+  <span *ngIf="label" translate>{{ label }}</span>
+</label>

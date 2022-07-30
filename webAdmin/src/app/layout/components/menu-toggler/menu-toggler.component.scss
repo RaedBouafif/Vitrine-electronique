@@ -1,0 +1,42 @@
+@import "import";
+
+:host {
+  display: block;
+
+  .icon-bar {
+    transform: rotate(0deg);
+    background-color: $mz-sidenav-icon-bar-color;
+    transition: all 0.35s ease-in-out;
+    width: $mz-sidenav-icon-bar-width;
+    display: block;
+    height: $mz-sidenav-icon-bar-height;
+
+    + .icon-bar {
+      margin-top: $mz-sidenav-icon-bar-gap-y;
+    }
+
+    &:first-child,
+    &:last-child {
+      width: $mz-sidenav-icon-bar-width - $mz-sidenav-icon-bar-shrink-width;
+      transform: translateX($mz-sidenav-icon-bar-shrink-width);
+    }
+  }
+
+  &:hover {
+    .icon-bar {
+      background-color: $mz-sidenav-color-hover;
+
+      &:first-child,
+      &:last-child {
+        width: $mz-sidenav-icon-bar-width;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &.dark {
+    .icon-bar {
+      background-color: $mz-sidenav-color-dark;
+    }
+  }
+}

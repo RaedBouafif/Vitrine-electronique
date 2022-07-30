@@ -1,0 +1,318 @@
+.ngx-datatable {
+  .datatable-header {
+    .datatable-header-cell {
+      font-weight: $datatable-header-font-weight;
+      font-size: $datatable-header-font-size;
+      color: $datatable-header-color;
+      text-transform: uppercase;
+
+      &.sort-active {
+        color: $datatable-sort-active-color;
+      }
+    }
+  }
+
+  .datatable-footer {
+    font-size: $font-size-sm;
+
+    .datatable-footer-inner {
+      flex-direction: column;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        flex-direction: row;
+      }
+    }
+
+    .page-count {
+      color: $text-muted;
+      min-height: 50px;
+      padding: $datatable-row-padding-y $datatable-row-padding-x;
+    }
+
+    .datatable-pager {
+      text-align: left;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        text-align: right;
+        margin-left: auto;
+      }
+
+      .pager {
+        display: flex !important;
+        align-items: center;
+        justify-content: flex-end;
+
+        a {
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          border-radius: $datatable-pager--button-border-radius;
+          vertical-align: middle;
+          height: $datatable-pager--button-height;
+          min-width: $datatable-pager--button-min-width;
+          padding: $datatable-pager--button-padding / 2;
+          position: relative;
+          line-height: 1rem;
+          font-weight: $datatable-pager--button-font-weight;
+          color: $datatable-pager--button-color;
+          border: 0;
+
+          @include media-breakpoint-up($grid-float-breakpoint) {
+            padding: $datatable-pager--button-padding;
+          }
+        }
+
+        li {
+          margin-left: 0.1rem !important;
+
+          @include media-breakpoint-up($grid-float-breakpoint) {
+            margin-left: 0.4rem !important;
+          }
+
+          &:not(.pages) a {
+            background: $datatable-pager--button-arrow-bg-color;
+          }
+
+          &:not(.disabled) a {
+            &:hover {
+              background: $datatable-pager-bg-color;
+              color: $datatable-pager-color;
+            }
+          }
+        }
+
+        .active a {
+          background: $datatable-pager-bg-color;
+          color: $datatable-pager-color;
+        }
+
+        .disabled a {
+          cursor: text;
+          opacity: 0.6;
+        }
+      }
+
+      a {
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .datatable-body-row {
+    &.active {
+      background-color: $table-active-bg;
+      color: $table-hover-color;
+    }
+  }
+
+  .datatable-row-detail {
+    padding: $datatable-row-padding-y $datatable-row-padding-x;
+  }
+
+  .datatable-group-header {
+    padding: $datatable-row-padding-y $datatable-row-padding-x;
+    font-weight: $font-weight-normal;
+  }
+
+  .datatable-header-cell,
+  .datatable-body-cell {
+    padding: $datatable-row-padding-y $datatable-row-padding-x;
+  }
+
+  &.table {
+    margin-bottom: 0;
+
+    .datatable-header {
+      border-bottom: 1px solid $datatable-row-border-color;
+    }
+
+    .datatable-body-row {
+      border-bottom: 1px solid $datatable-row-border-color;
+    }
+
+    .datatable-group-header {
+      background-color: $datatable-group-header-background;
+    }
+
+    // Table style variations
+    // These styles are applied to any layout you use, at this time: table and listview
+
+    &-bordered {
+      border: 1px solid $table-border-color;
+      border-radius: $border-radius;
+    }
+
+    &-hover {
+      .datatable-body-row {
+        &:hover {
+          background-color: $table-hover-bg;
+          color: $table-hover-color;
+        }
+      }
+    }
+
+    &-striped {
+      .datatable-body-row {
+        &.datatable-row-even {
+          background-color: $table-accent-bg;
+        }
+      }
+    }
+
+    &-with-details {
+      overflow: unset;
+
+      .datatable-row-wrapper {
+        &[ng-reflect-expanded="true"] {
+          box-shadow: $datatable-row-wrapper-box-shadow;
+          border-radius: $border-radius;
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  &.listview {
+    .datatable-body-row {
+      border: 1px solid $datatable-row-border-color;
+      border-radius: $datatable-row-border-radius;
+      margin-bottom: $datatable-row-margin-bottom;
+      box-shadow: $datatable-row-box-shadow;
+    }
+
+    &.collapsed-list {
+      .datatable-body-row {
+        margin-bottom: 0;
+
+        &:not(:last-child) {
+          box-shadow: none;
+        }
+
+        + .datatable-body-row {
+          border-radius: 0;
+          margin-top: -1px;
+        }
+
+        &:first-child {
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        &:last-child {
+          border-bottom-right-radius: $datatable-row-border-radius;
+          border-bottom-left-radius: $datatable-row-border-radius;
+        }
+      }
+    }
+  }
+
+  &.scroll-vertical {
+    height: $datatable-vertical-scroll-height;
+
+    .datatable-header-cell,
+    .datatable-body-cell {
+      padding: $datatable-row-padding-y $datatable-row-padding-x;
+    }
+  }
+
+  .table-details {
+    tr {
+      td {
+        border-top: 1px dashed $table-border-color;
+        padding: 0.5rem 0;
+
+        &:first-child {
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+
+    tr:first-child {
+      td {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+// RESPONSIVE
+// Basic responsivness implementation, there is plenty room for improvements here though
+.ngx-datatable {
+  &.responsive {
+    .datatable-header {
+      display: none !important;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        display: block !important;
+      }
+    }
+
+    .datatable-body-row {
+      .datatable-row-center {
+        flex-direction: column;
+
+        @include media-breakpoint-up($grid-float-breakpoint) {
+          flex-direction: row;
+        }
+
+        @include media-breakpoint-down($grid-float-breakpoint-max) {
+          .datatable-body-cell:not(.expand-toggler) {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
+
+  &.expandable {
+    .cell-responsive {
+      display: none !important;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        display: inline-block !important;
+      }
+    }
+
+    .expand-toggler {
+      display: inline-block !important;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        display: none !important;
+      }
+    }
+
+    .datatable-body-row {
+      &,
+      .datatable-row-center {
+        @include media-breakpoint-down($grid-float-breakpoint-max) {
+          width: 100% !important;
+        }
+      }
+
+      .datatable-row-center {
+        justify-content: flex-start;
+        flex-direction: row;
+
+        @include media-breakpoint-down($grid-float-breakpoint-max) {
+          .datatable-body-cell:not(.expand-toggler) {
+            width: auto !important;
+          }
+        }
+      }
+    }
+
+    .datatable-row-detail {
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        display: none;
+      }
+    }
+  }
+}

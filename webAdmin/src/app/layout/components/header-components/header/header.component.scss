@@ -1,0 +1,15 @@
+@import "import";
+
+:host {
+  z-index: 4;
+  box-shadow: 0 0 6px 0 rgba(50, 50, 50, 0.2);
+  background-color: $mz-header-bg-color;
+  color: $mz-header-text-color;
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+}

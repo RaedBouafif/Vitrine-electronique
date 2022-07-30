@@ -1,0 +1,20 @@
+<app-block-slideshow [withDepartments]="true"></app-block-slideshow>
+
+
+<app-block-categories header="Catégories populaires" layout="classic" [categories]="popularCategories"></app-block-categories>
+
+<app-block-products-carousel
+    header="Nouvelles Arrivées"
+    layout="horizontal"
+    [rows]="2"
+    [loading]="latestProducts.loading"
+    [products]="latestProducts.products"
+    [groups]="latestProducts.groups"
+    (groupChange)="groupChange(latestProducts, $event)"
+></app-block-products-carousel>
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+@import "import";
+
+.nav-link {
+  display: flex;
+  align-items: flex-end;
+
+  &.done {
+    color: $color-dark;
+  }
+}
+
+.step-number {
+  font-size: 2rem;
+  line-height: 2rem;
+  margin-right: 0.5rem;
+}

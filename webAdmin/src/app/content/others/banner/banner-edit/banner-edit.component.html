@@ -1,0 +1,150 @@
+<prx-page-header title="Maj bannière" sub=""></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body class="pb-6 p-md-5">
+      <prx-alert
+        [hidden]="!error"
+        [scheme]="ColorScheme.Danger"
+        [withIcon]="true"
+        [dismissible]="true"
+      >
+        L'ajout a échoué
+      </prx-alert>
+      <form class="cozy" #form="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Information</h4>
+
+            <div class="form-group">
+              <label class="control-label">Titre*</label>
+              <input
+                [class.is-invalid]="
+                  title.invalid && (title.dirty || title.touched)
+                "
+                class="form-control"
+                type="text"
+                name="title"
+                #title="ngModel"
+                [(ngModel)]="banner.title"
+                required
+              />
+              <small
+                *ngIf="title.invalid && (title.dirty || title.touched)"
+                class="form-text text-danger"
+                >Titre requis</small
+              >
+            </div>
+            <div class="form-group">
+              <label class="control-label">Actif</label>
+              <ng-select
+                [items]="table"
+                bindLabel="name"
+                bindValue="id"
+                [searchable]="false"
+                [clearable]="false"
+                placeholder=""
+                [(ngModel)]="banner.active"
+                name="active"
+              >
+              </ng-select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Lien*</label>
+              <input
+                [class.is-invalid]="
+                  link.invalid && (link.dirty || link.touched)
+                "
+                class="form-control"
+                type="text"
+                name="link"
+                #link="ngModel"
+                [(ngModel)]="banner.link"
+                required
+              />
+              <small
+                *ngIf="link.invalid && (link.dirty || link.touched)"
+                class="form-text text-danger"
+                >Lien requis</small
+              >
+            </div>
+            <div class="form-group">
+              <label class="control-label">Description</label>
+              <textarea
+                class="form-control"
+                rows="6"
+                name="description"
+                #description="ngModel"
+                [(ngModel)]="banner.description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Image</h4>
+            <div class="form-group">
+              <label class="control-label">Emplacement</label>
+              <ng-select
+                [items]="locations"
+                bindLabel="name"
+                bindValue="name"
+                [searchable]="false"
+                [clearable]="false"
+                placeholder=""
+                [(ngModel)]="banner.location"
+                name="location"
+              >
+              </ng-select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Type</label>
+              <ng-select
+                [items]="types"
+                bindLabel="name"
+                bindValue="name"
+                [searchable]="false"
+                [clearable]="false"
+                placeholder=""
+                [(ngModel)]="banner.type"
+                name="type"
+              >
+              </ng-select>
+            </div>
+            <ngx-dropzone
+              (change)="onSelect($event)"
+              [multiple]="false"
+              [accept]="'image/*'"
+            >
+              <ngx-dropzone-label
+                >Déposez votre image ici ou cliquez pour
+                télécharger.</ngx-dropzone-label
+              >
+              <ngx-dropzone-preview
+                *ngIf="file"
+                class="test"
+                [removable]="true"
+                (removed)="onRemove(file)"
+              >
+                <ngx-dropzone-label
+                  >{{ file.name }} ({{ file.type }})</ngx-dropzone-label
+                >
+              </ngx-dropzone-preview>
+            </ngx-dropzone>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="form-group text-right">
+          <prx-button
+            type="submit"
+            color="primary"
+            [icon]="longArrowAltRight"
+            [isLoading]="isLoading"
+            [disabled]="form.invalid || file === null"
+            (click)="submit(form)"
+          >
+            <span translate>Enregistrer</span>
+          </prx-button>
+        </div>
+      </form>
+    </prx-card-body>
+  </prx-card>
+</div>

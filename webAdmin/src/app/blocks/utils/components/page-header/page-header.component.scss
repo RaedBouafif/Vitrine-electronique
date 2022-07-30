@@ -1,0 +1,30 @@
+@import "import";
+
+$page-title-header-padding: 1.5rem;
+
+:host {
+  margin-bottom: $page-title-header-padding;
+  display: block;
+}
+
+.header-body {
+  padding-top: $page-title-header-padding;
+  padding-bottom: $page-title-header-padding;
+
+  &:not(.has-navigation) {
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.pretitle {
+  color: $gray-600;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  margin-bottom: 0;
+}
+
+.subtitle {
+  color: $gray-600;
+}

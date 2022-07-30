@@ -1,0 +1,15 @@
+<ng-container [ngSwitch]="layout">
+  <prx-vertical-layout-default
+    [fixedSidenav]="fixedSideNav"
+    [fixedHeader]="fixedHeader"
+    [sidenavCollapsed]="sidenavCollapsed"
+    [mobileCollapsed]="sidenavCollapsed"
+    [class]="layout + '-layout'"
+    *ngSwitchCase="Layouts.VerticalDefault"
+  ></prx-vertical-layout-default>
+
+  <prx-horizontal-layout-default
+    [fixedHeader]="fixedHeader"
+    *ngSwitchCase="Layouts.HorizontalDefault"
+  ></prx-horizontal-layout-default>
+</ng-container>

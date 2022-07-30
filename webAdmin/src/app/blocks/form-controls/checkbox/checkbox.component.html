@@ -1,0 +1,13 @@
+<input
+  type="checkbox"
+  class="form-control"
+  [name]="name"
+  [id]="currentId"
+  (change)="toggle()"
+  [disabled]="disabled"
+  [checked]="checked"
+/>
+<label class="control-label" [class.shadowed]="shadow" [for]="currentId">
+  <span class="check-mark"></span>
+  <span *ngIf="label" translate>{{ label }}</span>
+</label>

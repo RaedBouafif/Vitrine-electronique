@@ -1,0 +1,69 @@
+@import "import";
+
+:host {
+  &.collapsed {
+    .navbar {
+      margin-left: 0;
+    }
+  }
+}
+
+.navbar {
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  height: 100vh;
+  width: $mz-sidenav-width;
+  height: 100%;
+  margin-left: -$mz-sidenav-width;
+  transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $white;
+  z-index: 1;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    flex-direction: column;
+    height: $mz-header-height;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-left: 0;
+    width: auto;
+    position: relative;
+    box-shadow: none;
+  }
+}
+
+.navbar-collapse {
+  height: calc(100% - #{$mz-header-height});
+  overflow: auto;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.dd-icon {
+  margin-left: 1.5rem;
+}
+
+.sidenav-logo {
+  height: $mz-header-height;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem 0 1rem;
+  justify-content: space-between;
+  width: 100%;
+
+  .logo {
+    height: $mz-sidenav-logo-max-height;
+  }
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    display: none;
+  }
+}

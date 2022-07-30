@@ -1,0 +1,93 @@
+pipeline {
+
+    agent any
+    
+    stages {
+
+
+        stage('Build image Ms WebAdmin') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_webAdmin' }
+            }
+            steps { 
+            dir ('webAdmin') {
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker build . -t anonyme5/mwasimage:latest'
+                        sh 'docker login -u anonyme5 -p Five12345'
+                        sh 'docker push anonyme5/mwasimage:latest'
+                    }
+			 
+               }
+            }
+        }
+}
+    stage('run in dev') {
+          when {
+                
+                expression { env.gitlabTargetBranch == 'B_webAdmin' }
+            }
+            steps {
+				script {
+				docker.withServer('tcp://35.180.206.6:4243') {
+				        sh 'docker rm --force market-web-admin-service || true'
+                        sh 'docker run --restart=always -d -p 90:90 --network=mysubnet --network-alias=market-web-admin-service --name=market-web-admin-service   anonyme5/mwasimage:latest'
+                    }
+				}
+			   
+              
+            }
+        }
+     stage('Run in PRE-PROD Env') {
+           when {
+                
+               beforeAgent true
+                expression { env.gitlabTargetBranch == 'develop' }
+            }
+            agent {
+          kubernetes {
+        cloud 'kubernetes'
+           label "kube"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-web-admin-service -n jenkins  || true'
+                     sh 'kubectl apply -f  webAdmin/web-admin-deployment.yaml '
+                     sh 'kubectl apply -f  webAdmin/web-admin-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+     stage('Run in PROD Env') {
+           when {
+                
+               beforeAgent true
+                expression { env.gitlabTargetBranch == 'release' }
+            }
+            agent {
+          kubernetes {
+        cloud 'kubernetesProd'
+           label "kubeProd"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-web-admin-service -n jenkins  || true'
+                     sh 'kubectl apply -f  webAdmin/web-admin-deployment.yaml '
+                     sh 'kubectl apply -f  webAdmin/web-admin-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+
+    }
+   
+}

@@ -1,0 +1,61 @@
+<div class="dashboard">
+    <div class="dashboard__profile card profile-card">
+        <div class="card-body profile-card__body">
+            
+            <div class="profile-card__name">{{user.firstname}} {{user.lastname}} </div>
+            <div class="profile-card__email">{{user.mail}} </div>
+            <div class="profile-card__edit">
+                <a routerLink="../profile" class="btn btn-secondary btn-sm">Editer Profil</a>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="address" class="dashboard__address card address-card address-card--featured">
+        <div class="address-card__badge" *ngIf="address">Adresse par défaut</div>
+        <div class="address-card__body">
+            <div class="address-card__row">
+                {{ address.postalCode }}, {{ address.city }}<br>
+                {{ address.address }}
+            </div>
+            <div class="address-card__row">
+                <div class="address-card__row-title">Numero de telephone</div>
+                <div class="address-card__row-content">{{user.phoneNumber}} </div>
+            </div>
+            <div class="address-card__row">
+                <div class="address-card__row-title">Email</div>
+                <div class="address-card__row-content">{{ user.mail }}</div>
+            </div>
+            <div class="address-card__footer">
+                <a routerLink="/account/addresses">Carnet des adresses</a>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="orders.length!==0" class="dashboard__orders card">
+        <div class="card-header">
+            <h5>Dernières commandes</h5>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-table">
+            <div class="table-responsive-sm">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total TTC</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="orders.length!==0">
+                    <tr *ngFor="let order of orders">
+                        <td><a href="">#{{ order.reference }}</a></td>
+                        <td>{{ order.orderDate | date }}</td>
+                        <td>{{ getStatus(order.status) }}</td>
+                        <td *ngIf="order.totalTTC">{{ order.totalTTC }} TND</td>
+                        <td *ngIf="!order.totalTTC">{{ order.total }} TND</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

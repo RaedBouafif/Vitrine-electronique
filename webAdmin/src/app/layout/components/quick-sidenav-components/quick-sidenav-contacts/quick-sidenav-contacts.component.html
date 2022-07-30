@@ -1,0 +1,38 @@
+<form class="form">
+  <div class="form-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search user ..."
+      name="q"
+      [(ngModel)]="q"
+    />
+  </div>
+</form>
+
+<div class="list-group list-group-flush">
+  <a
+    href="javascript:;"
+    class="list-group-item px-0"
+    *ngFor="let message of messages"
+  >
+    <div class="media align-items-center">
+      <div class="position-relative">
+        <img
+          [src]="message.from.picture"
+          class="rounded-circle mr-2 shadow"
+          alt=""
+        />
+        <span class="status {{ message.from.status }}"></span>
+      </div>
+
+      <div class="media-body">
+        <p class="mb-0 justify-content-between text-capitalize semi-bold">
+          {{ message.from.name }}
+        </p>
+        <p class="small text-muted mb-2">{{ message.from.email }}</p>
+        <p class="small text-muted mb-0">{{ message.message }}</p>
+      </div>
+    </div>
+  </a>
+</div>

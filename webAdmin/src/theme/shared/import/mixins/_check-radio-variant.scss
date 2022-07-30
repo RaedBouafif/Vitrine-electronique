@@ -1,0 +1,45 @@
+@mixin check-radio-solid-variant($color, $type) {
+  .control-label {
+    .check-mark {
+      border-color: $color;
+
+      @if $type == checkbox {
+        background: $color;
+      }
+
+      @if $type == radio {
+        &:before {
+          color: $color;
+        }
+      }
+    }
+  }
+}
+
+@mixin check-radio-outlined-variant($color) {
+  .control-label {
+    .check-mark {
+      border-color: $color;
+    }
+  }
+}
+
+@mixin check-radio-checked-variant($color, $type) {
+  .form-control {
+    &:checked + .control-label {
+      .check-mark {
+        border-color: $color;
+
+        @if $type == checkbox {
+          background: $color;
+        }
+
+        @if $type == radio {
+          &:before {
+            background-color: $color;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+<div
+  class="nav-item apps dropdown"
+  dropdown
+  placement="bottom right"
+  (onOpenChange)="onOpenChange($event)"
+>
+  <prx-nav-link
+    class="dropdown-toggle"
+    [class.text-dark]="!dark"
+    [dark]="dark"
+    dropdownToggle
+  >
+    <i-feather name="grid"></i-feather>
+  </prx-nav-link>
+
+  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+    <div
+      class="dropdown-heading d-flex align-items-center justify-content-between"
+    >
+      <h6 class="m-0 text-uppercase bold" translate>My Apps</h6>
+    </div>
+
+    <div class="dropdown-body py-3 container-fluid">
+      <div class="row shortcuts no-gutters">
+        <a
+          href="javascript:;"
+          class="col-4"
+          *ngFor="let app of apps"
+          [routerLink]="[app.route]"
+        >
+          <div class="card border-0 rounded-0 shadow-box">
+            <div class="card-body px-2 center-flex">
+              <i-feather [name]="app.icon"></i-feather>
+              <span class="small app-name" translate>{{ app.name }}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="dropdown-footer text-center">
+      <a href="javascript:;">
+        <i-feather name="more-horizontal"></i-feather>
+      </a>
+    </div>
+  </div>
+</div>

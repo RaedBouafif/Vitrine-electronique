@@ -1,0 +1,54 @@
+<nav class="navbar" [ngClass]="{ 'navbar-dark bg-dark': dark }">
+  <div class="container-fluid">
+    <a class="toolbar-brand" href="javascript:;" *ngIf="branded">
+      <img src="assets/img/logo.svg" alt="Proxima" class="logo" *ngIf="!dark" />
+      <!-- <img
+        src="assets/img/logo-light.svg"
+        alt="Proxima"
+        class="logo"
+        *ngIf="dark"
+      /> -->
+    </a>
+
+    <!-- SEARCH FORM 
+    <prx-header-search [dark]="dark"></prx-header-search>-->
+
+    <nav class="navbar-nav nav ml-md-auto">
+      <prx-menu-toggler
+        [dark]="dark"
+        class="sidenav-toggler d-md-none mr-auto"
+        (click)="toggleSidenav()"
+      ></prx-menu-toggler>
+
+      <!-- APPS
+      <prx-header-menu-apps [dark]="dark" class="mr-3"></prx-header-menu-apps>  -->
+
+      <!-- MESSAGES DROPDOWN -->
+      <prx-header-menu-messages
+        [dark]="dark"
+        class="mr-3"
+      ></prx-header-menu-messages>
+
+      <!-- NOTIFICATIONS DROPDOWN 
+      <prx-header-menu-notifications
+        [dark]="dark"
+        class="mr-3"
+      ></prx-header-menu-notifications>-->
+
+      <!-- ACCOUNT DROPDOWN -->
+      <prx-header-user-account
+        [user]="user"
+        [credential]="credential"
+        [dark]="dark"
+        class="mr-3"
+      ></prx-header-user-account>
+
+      <!-- QUICK SIDENAV TOGGLER 
+      <div class="aside-toggler">
+        <prx-nav-link [dark]="dark" (click)="toggleQuickSidenav()">
+          <i-feather name="more-vertical"></i-feather>
+        </prx-nav-link>
+      </div>-->
+    </nav>
+  </div>
+</nav>

@@ -1,0 +1,26 @@
+<ng-content></ng-content>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" [class.custom-separator]="separator">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/dashboard']" class="breadcrumb-link">
+        <prx-icon [icon]="home"></prx-icon>
+      </a>
+    </li>
+
+    <ng-container *ngFor="let item of items; let i = index">
+      <li class="breadcrumb-item breadcrum-separator" *ngIf="separator">
+        <prx-icon [icon]="separator"></prx-icon>
+      </li>
+
+      <li class="breadcrumb-item" [class.active]="i === items.length - 1">
+        <a
+          [routerLink]="item.url"
+          *ngIf="item.url; else noURL"
+          class="breadcrumb-link"
+          >{{ item.label }}</a
+        >
+        <ng-template #noURL>{{ item.label }}</ng-template>
+      </li>
+    </ng-container>
+  </ol>
+</nav>

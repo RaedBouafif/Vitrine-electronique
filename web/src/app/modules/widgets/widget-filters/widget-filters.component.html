@@ -1,0 +1,48 @@
+<div class="widget-filters widget" [ngClass]="{
+    'widget-filters--offcanvas--always': offcanvas === 'always',
+    'widget-filters--offcanvas--mobile': offcanvas === 'mobile'
+}" appCollapse>
+    <h4 class="widget-filters__title widget__title">Filters</h4>
+
+    <div class="widget-filters__list" >
+        <div  class="widget-filters__item">
+            <div class="filter filter--opened" appCollapseItem="filter--opened" #collapse="appCollapseItem">
+                <button type="button" class="filter__title" (click)="collapse.toggle()">
+                    Categories
+                    <app-icon class="filter__arrow" name="arrow-rounded-down-12x7" size="12x7"></app-icon>
+                </button>
+                <div class="filter__body" appCollapseContent>
+                    <div class="filter__container">
+                        <div *ngIf="categories"  class="filter-categories filter-categories--root">
+                            <ul *ngIf="!category" class="filter-categories__list">
+                                <li *ngFor="let item of categories;" class="filter-categories__item filter-categories__item--child">
+                                    <a [routerLink]="this.root.category(item)">{{ item.categoryName }}</a>
+                                </li>
+                            </ul>
+                            <ul *ngIf="category" class="filter-categories__list">
+                                <li  class="filter-categories__item filter-categories__item--parent">
+                                    <app-icon class="filter-categories__arrow"  name="arrow-rounded-left-6x9" size="6x9"></app-icon>
+                                    <a [routerLink]="this.root.shop()">Tous</a>
+                                </li>
+                                <li  class="filter-categories__item {{isActiveCategory()}}">
+                                    <app-icon class="filter-categories__arrow"  name="arrow-rounded-left-6x9" size="6x9"></app-icon>
+                                    <a [routerLink]="this.root.category(category)">{{category.categoryName}}</a>
+                                </li>
+                                <li *ngFor="let item of category.subCategories; "
+                                 class="filter-categories__item {{isActive(item)}}">
+                                    <a [routerLink]="this.root.category(category)+'/'+item._id">{{ item.name }}</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!--    <div class="widget-filters__actions d-flex">
+        <button class="btn btn-secondary btn-sm" (click)="reset()">Reset</button>
+    </div> -->
+</div>

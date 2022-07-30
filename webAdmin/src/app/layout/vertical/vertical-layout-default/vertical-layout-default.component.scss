@@ -1,0 +1,44 @@
+@import "import";
+
+:host {
+  display: flex;
+  position: relative;
+
+  &.fixed-sidenav {
+    min-height: 100vh;
+    position: relative;
+    //overflow-x: hidden;
+  }
+
+  &.fixed-header {
+    .main-body {
+      padding-top: $mz-header-height;
+    }
+  }
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    &.fixed-sidenav {
+      .main-body {
+        padding-left: $mz-sidenav-width;
+      }
+    }
+
+    &.fixed-header {
+      .main-header {
+        left: $mz-sidenav-width;
+      }
+    }
+  }
+}
+
+.main-body {
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    &.sidenav-collapsed {
+      padding-left: $mz-sidenav-collapsed-width !important;
+
+      .main-header {
+        left: $mz-sidenav-collapsed-width !important;
+      }
+    }
+  }
+}

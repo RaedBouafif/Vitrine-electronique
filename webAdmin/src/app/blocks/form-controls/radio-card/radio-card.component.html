@@ -1,0 +1,22 @@
+<input
+  class="form-control"
+  [name]="name"
+  type="radio"
+  [id]="currentId"
+  (change)="toggle($event)"
+  [checked]="checked"
+/>
+<label class="mb-0" [for]="currentId">
+  <prx-card class="bw-2 card-option">
+    <prx-card-body>
+      <span
+        class="check-mark rounded-circle center-flex text-contrast"
+        *ngIf="showMark && checked"
+      >
+        <prx-icon [icon]="check"></prx-icon>
+      </span>
+
+      <ng-content></ng-content>
+    </prx-card-body>
+  </prx-card>
+</label>

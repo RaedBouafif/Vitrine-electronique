@@ -1,0 +1,99 @@
+<div class="product-tabs" [ngClass]="{'product-tabs--layout--sidebar': withSidebar}">
+    <div class="product-tabs__list">
+        <a href="#tab-description" class="product-tabs__item"
+           [ngClass]="{'product-tabs__item--active': tab === 'description'}"
+           (click)="$event.preventDefault(); tab = 'description'">Description</a>
+
+        <a *ngIf="product && product.features.length!==0"  href="#tab-specification" class="product-tabs__item"
+           [ngClass]="{'product-tabs__item--active': tab === 'specification'}"
+           (click)="$event.preventDefault(); tab = 'specification'">Caractéristiques</a>
+
+        <a href="#tab-reviews" class="product-tabs__item"
+           [ngClass]="{'product-tabs__item--active': tab === 'reviews'}"
+           (click)="$event.preventDefault(); tab = 'reviews'">Commentaires</a>
+    </div>
+    <div class="product-tabs__content">
+
+        <div class="product-tabs__pane" id="tab-description" [ngClass]="{'product-tabs__pane--active': tab === 'description'}">
+            <div class="typography">
+                <h3>Description complète du produit</h3>
+                <p [innerHTML]="product.description" ></p>
+            </div>
+        </div>
+
+        <div *ngIf="product && product.features.length!==0"  class="product-tabs__pane" id="tab-specification" [ngClass]="{'product-tabs__pane--active': tab === 'specification'}">
+            <div class="spec">
+                <h3 class="spec__header">Caractéristiques</h3>
+                <div  *ngIf="product" class="spec__section">
+                <!--     <h4 class="spec__section-title">{{ section.name }}</h4> -->
+                    <div *ngFor="let feature of product.features" class="spec__row">
+                        <div class="spec__name">{{ feature.name }}</div><div class="spec__value">{{ feature.value }}</div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="product-tabs__pane" id="tab-reviews" [ngClass]="{'product-tabs__pane--active': tab === 'reviews'}">
+            <div class="reviews-view">
+                <div class="reviews-view__list">
+                    <h3 class="reviews-view__header">Avis des clients</h3>
+
+                    <div *ngIf="reviews && reviews.length!==0" class="reviews-list">
+                        <ol class="reviews-list__content">
+                            <li *ngFor="let review of reviews" class="reviews-list__item">
+                                <div class="review">
+                                    
+                                    <div class="review__content">
+                                        <div class="review__author">{{ getCustomer(review.customer) }}</div>
+                                        <div class="review__rating">
+                                            <app-rating [value]="review.note"></app-rating>
+                                        </div>
+                                        <div class="review__text">{{ review.comment }}</div>
+                                        <div class="review__date">{{ review.creationDate | date : 'short' }}</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="reviews-list__pagination">
+                            <app-pagination (pageChange)='display($event)' [total]="pages"></app-pagination>
+                        </div>
+                    </div>
+                    <div *ngIf="reviews && reviews.length===0" class="reviews-list">
+                        
+                        Acune commnetaire
+                    </div>
+                </div>
+
+                <form *ngIf="credientialService.isAuthenticated()"  class="reviews-view__form">
+                    <h3 class="reviews-view__header">Écrire un commentaire</h3>
+                    <div class="row">
+                        <div class="col-12 col-lg-9 col-xl-8">
+                            
+                                <div class="form-group">
+                                    <label for="review-stars">Étoiles d'évaluation</label>
+                                    <select name="note" [(ngModel)]="review.note" id="review-stars" class="form-control">
+                                        <option value="5">5 Étoiles </option>
+                                        <option value="4">4 Étoiles </option>
+                                        <option value="3">3 Étoiles </option>
+                                        <option value="2">2 Étoiles </option>
+                                        <option value="1">1 Étoiles </option>
+                                    </select>
+                                </div>
+                             
+                            
+                            <div class="form-group">
+                                <label for="review-text">Votre avis</label>
+                                <textarea name="comment" [(ngModel)]="review.comment" class="form-control" id="review-text" rows="6"></textarea>
+                            </div>
+                            <div class="form-group mb-0">
+                                <button (click)="post()" type="submit" class="btn btn-primary btn-lg">Postez votre avis</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

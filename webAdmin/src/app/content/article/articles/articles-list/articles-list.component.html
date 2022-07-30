@@ -1,0 +1,201 @@
+<prx-page-header pre="Articles" title="Liste articles" [sub]="totalCount">
+  <ng-container page-tools>
+    <ul class="nav">
+      <li class="nav-item mr-2 d-none d-md-inline-flex">
+        <input
+          [(ngModel)]="filter"
+          (keyup)="updateFilter()"
+          type="text"
+          class="form-control"
+          placeholder="Recherche..."
+        />
+      </li>
+
+      <li class="nav-item mr-2">
+        <a [routerLink]="['/article', 'new']" class="btn btn-primary nav-link">
+          <prx-icon [icon]="icons.add"></prx-icon> Nouveau
+        </a>
+      </li>
+    </ul>
+  </ng-container>
+</prx-page-header>
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body>
+      <ng-container *ngIf="allArticles && allArticles.length; else loading">
+        <ngx-datatable
+          class="ngx-datatable responsive {{ tableStyles }}"
+          [rows]="articles"
+          [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+          [columnMode]="ColumnMode.force"
+          headerHeight="auto"
+          [rowHeight]="false"
+          footerHeight="auto"
+          [limit]="10"
+        >
+          <!-- Column Definitions -->
+          <ngx-datatable-column name="Ref">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Ref</small
+              >{{ article.reference }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Titre">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Titre</small>
+              <p>{{ article.title }}</p>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Prix HT">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Prix HT</small
+              >{{ article.price }} TND
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Taxe">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Taxe</small
+              >{{ article.tax * 100 }} %
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Prix TTC">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Prix TTC</small>
+              <span *ngIf="!article.discount.onDiscount"
+                >{{ getPrice(article) }} TND</span
+              >
+              <span *ngIf="article.discount.onDiscount"
+                ><span style="text-decoration: line-through;"
+                  >{{ getPrice(article) }} TND</span
+                >
+                {{ getPriceAfterDiscount(article) }} TND
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Quantite">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Quantite</small
+              >{{ article.quantity }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="En promotion">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">En promotion</small>
+              <span *ngIf="!article.discount.onDiscount">Non</span>
+              <span *ngIf="article.discount.onDiscount">Oui</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Actif">
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Actif</small>
+              <span *ngIf="article.active" class="text-capitalize text-success">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Actif
+              </span>
+              <span *ngIf="!article.active" class="text-capitalize text-danger">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Non Actif
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Actions Column -->
+          <ngx-datatable-column
+            [width]="80"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            cellClass="d-none d-md-flex"
+          >
+            <ng-template
+              let-article="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <div class="d-flex justify-content-end">
+                <prx-context-menu appendToBody="true">
+                  <!--  <a
+                    [routerLink]="[
+                      '/article',
+                      'details',
+                      article._id
+                    ]"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.list"></prx-icon
+                    ></span>
+                    Details
+                  </a> -->
+                  <a
+                    [routerLink]="['/article', 'edit', article._id]"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Modifier
+                  </a>
+                  <div class="divider dropdown-divider"></div>
+                  <a
+                    (click)="delete(article)"
+                    class="dropdown-item text-danger"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.delete"></prx-icon
+                    ></span>
+                    Supprimer
+                  </a>
+                </prx-context-menu>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #loading>
+        <prx-loader
+          [template]="'table'"
+          [isLoading]="isLoading"
+          [count]="3"
+        ></prx-loader>
+      </ng-template>
+    </prx-card-body>
+  </prx-card>
+</div>

@@ -1,0 +1,22 @@
+<div class="side-wrapper">
+  <tabset [justified]="true" type="tabs tabs-clean slide-left padded">
+    <tab>
+      <ng-template tabHeading>
+        <prx-icon icon="list" class="icon"></prx-icon>
+      </ng-template>
+      <prx-quick-sidenav-tasks></prx-quick-sidenav-tasks>
+    </tab>
+    <tab>
+      <ng-template tabHeading>
+        <prx-icon icon="users" class="icon"></prx-icon>
+      </ng-template>
+      <prx-quick-sidenav-contacts></prx-quick-sidenav-contacts>
+    </tab>
+    <tab>
+      <ng-template tabHeading>
+        <prx-icon icon="settings" class="icon"></prx-icon>
+      </ng-template>
+      <prx-quick-sidenav-settings></prx-quick-sidenav-settings>
+    </tab>
+  </tabset>
+</div>

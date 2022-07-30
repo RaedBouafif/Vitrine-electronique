@@ -1,0 +1,87 @@
+<div
+  class="nav-item messages dropdown"
+  dropdown
+  [insideClick]="true"
+  placement="bottom right"
+  (isOpenChange)="onOpenChange($event)"
+>
+  <prx-nav-link
+    class="dropdown-toggle"
+    [class.text-dark]="!dark"
+    [dark]="dark"
+    dropdownToggle
+  >
+    <prx-icon icon="inbox"></prx-icon>
+    <span class="badge badge-pill badge-info">{{ messages.length }}</span>
+  </prx-nav-link>
+
+  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+    <div
+      class="dropdown-heading d-flex align-items-center justify-content-between"
+    >
+      <h6 class="m-0 text-uppercase bold">Messages</h6>
+      <small *ngIf="messages && messages.length" class="text-muted" translate>
+        <span class="bold number">{{ messages.length }}</span>
+        unread
+      </small>
+    </div>
+
+    <ng-container *ngIf="messages && messages.length; else loading">
+      <prx-fade-content contentClass="list list-hover dropdown-body">
+        <a
+          [routerLink]="['/inbox']"
+          href="javascript:;"
+          class="list-group-item list-group-item-action"
+          *ngFor="let message of messages"
+        >
+          <div class="media">
+            <div class="media-body">
+              <p class="mb-0 d-flex w-100 justify-content-between">
+                <span class="semi-bold mb-1 text-capitalize">{{
+                  message.sender.name
+                }}</span>
+                <small class="text-muted small">{{
+                  message.sendingDate | date: 'medium'
+                }}</small>
+              </p>
+
+              <p class="small text-muted mb-0">{{ message.body }}</p>
+            </div>
+          </div>
+        </a>
+      </prx-fade-content>
+
+      <div class="dropdown-footer text-center">
+        <a [routerLink]="['/inbox']" href="javascript:;" title="">
+          <i-feather name="more-horizontal"></i-feather>
+        </a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="messages && messages.length === 0">
+      <prx-fade-content contentClass="list list-hover dropdown-body">
+        <a href="javascript:;" class="list-group-item list-group-item-action">
+          <div class="media">
+            <div class="media-body">
+              <p class="small text-muted mb-0">
+                Vous n'avez pas des nouveaux messages
+              </p>
+            </div>
+          </div>
+        </a>
+      </prx-fade-content>
+      <div class="dropdown-footer text-center">
+        <a [routerLink]="['/inbox']" href="javascript:;" title="">
+          <i-feather name="more-horizontal"></i-feather>
+        </a>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="px-3">
+        <prx-loader
+          template="user-messages"
+          [isLoading]="isLoading"
+        ></prx-loader>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,255 @@
+<prx-page-header title="Mettre a jour  Administrateur" sub=""></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body class="pb-6 p-md-5">
+      <prx-alert
+        [hidden]="!error"
+        [scheme]="ColorScheme.Danger"
+        [withIcon]="true"
+        [dismissible]="true"
+      >
+        L'ajout a échoué
+      </prx-alert>
+      <form class="cozy" #form="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Information</h4>
+
+            <div class="form-group form-row">
+              <div class="col-md-6">
+                <label class="control-label">Prenom*</label>
+                <input
+                  [class.is-invalid]="
+                    firstname.invalid && (firstname.dirty || firstname.touched)
+                  "
+                  required
+                  type="text"
+                  class="form-control"
+                  name="firstname"
+                  #firstname="ngModel"
+                  [(ngModel)]="admin.firstname"
+                />
+                <div
+                  *ngIf="
+                    firstname.invalid && (firstname.dirty || firstname.touched)
+                  "
+                >
+                  <small
+                    *ngIf="firstname.errors.required"
+                    class="form-text text-danger"
+                    >Prenom requis</small
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="control-label">Nom*</label>
+                <input
+                  [class.is-invalid]="
+                    lastname.invalid && (lastname.dirty || lastname.touched)
+                  "
+                  required
+                  type="text"
+                  class="form-control"
+                  name="lastname"
+                  #lastname="ngModel"
+                  [(ngModel)]="admin.lastname"
+                />
+                <div
+                  *ngIf="
+                    lastname.invalid && (lastname.dirty || lastname.touched)
+                  "
+                >
+                  <small
+                    *ngIf="lastname.errors.required"
+                    class="form-text text-danger"
+                    >Nom requis</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-row">
+              <div class="col-md-6">
+                <label class="control-label">Fonction</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="function"
+                  #function="ngModel"
+                  [(ngModel)]="admin.function"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="control-label">Role</label>
+                <ng-select
+                  [items]="table"
+                  bindLabel="name"
+                  bindValue="id"
+                  [searchable]="false"
+                  [clearable]="false"
+                  placeholder="choisir role"
+                  [(ngModel)]="admin.role"
+                  name="role"
+                  #role="ngModel"
+                >
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="form-group form-row">
+              <div class="col-md-6">
+                <label class="control-label">Identifant*</label>
+                <input
+                  [class.is-invalid]="
+                    login.invalid && (login.dirty || login.touched)
+                  "
+                  required
+                  type="text"
+                  class="form-control"
+                  name="login"
+                  #login="ngModel"
+                  [(ngModel)]="admin.login"
+                />
+                <div *ngIf="login.invalid && (login.dirty || login.touched)">
+                  <small
+                    *ngIf="login.errors.required"
+                    class="form-text text-danger"
+                    >Identifant requis</small
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="control-label">Mot de passe*</label>
+                <input
+                  [class.is-invalid]="
+                    password.invalid && (password.dirty || password.touched)
+                  "
+                  type="text"
+                  required
+                  class="form-control"
+                  name="password"
+                  #password="ngModel"
+                  [(ngModel)]="admin.password"
+                />
+                <div
+                  *ngIf="
+                    password.invalid && (password.dirty || password.touched)
+                  "
+                >
+                  <small
+                    *ngIf="password.errors.required"
+                    class="form-text text-danger"
+                    >Mot de passe requis</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Contact</h4>
+            <div class="form-group">
+              <label class="control-label">Numéro de téléphone*</label>
+              <input
+                [class.is-invalid]="
+                  phoneNumber.invalid &&
+                  (phoneNumber.dirty || phoneNumber.touched)
+                "
+                pattern="[0-9]{8,8}$"
+                type="text"
+                class="form-control"
+                required
+                name="phoneNumber"
+                #phoneNumber="ngModel"
+                [(ngModel)]="admin.phoneNumber"
+              />
+              <div
+                *ngIf="
+                  phoneNumber.invalid &&
+                  (phoneNumber.dirty || phoneNumber.touched)
+                "
+              >
+                <small
+                  *ngIf="phoneNumber.errors.required"
+                  class="form-text text-danger"
+                  >Numéro de téléphone requis</small
+                >
+                <small
+                  *ngIf="phoneNumber.errors.pattern"
+                  class="form-text text-danger"
+                  >Numéro de téléphone invalide</small
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Email*</label>
+
+              <input
+                email="true"
+                [class.is-invalid]="
+                  mail.invalid && (mail.dirty || mail.touched)
+                "
+                type="email"
+                class="form-control"
+                required
+                name="mail"
+                #mail="ngModel"
+                [(ngModel)]="admin.mail"
+              />
+              <div *ngIf="mail.invalid && (mail.dirty || mail.touched)">
+                <small
+                  *ngIf="mail.errors.required"
+                  class="form-text text-danger"
+                  >Email requis</small
+                >
+                <small
+                  *ngIf="!mail.errors.required"
+                  class="form-text text-danger"
+                  >Email invalide</small
+                >
+              </div>
+            </div>
+            <div class="form-group form-row">
+              <div class="col-md-9">
+                <label class="control-label">Adresse</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  #address="ngModel"
+                  [(ngModel)]="admin.address"
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="control-label">Code postale</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="postalCode"
+                  #postalCode="ngModel"
+                  [(ngModel)]="admin.postalCode"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="form-group text-right">
+          <prx-button
+            type="submit"
+            color="primary"
+            [icon]="longArrowAltRight"
+            [isLoading]="isLoading"
+            [disabled]="form.invalid"
+            (click)="submit(form)"
+          >
+            <span translate>Enregistrer</span>
+          </prx-button>
+        </div>
+      </form>
+    </prx-card-body>
+  </prx-card>
+</div>

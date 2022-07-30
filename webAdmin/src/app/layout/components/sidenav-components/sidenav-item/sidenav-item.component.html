@@ -1,0 +1,54 @@
+<!-- No dropdowns -->
+<a
+  *ngIf="!option.items; else dropDownItems"
+  [routerLink]="option.link"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="nav-link"
+  [target]="option.target || '_self'"
+>
+  <span [class.font-xs]="option.icon.size === 'xs'">
+    <fa-icon
+      [icon]="option.icon.name"
+      class="icon"
+      *ngIf="option.icon.name"
+    ></fa-icon>
+  </span>
+  <b class="icon extra-bold" *ngIf="option.icon.letter">{{
+    option.icon.letter
+  }}</b>
+  <span class="title" *ngIf="showTitle">{{ option.title }}</span>
+</a>
+
+<!-- Has dropdown -->
+<ng-template #dropDownItems>
+  <a
+    href="javascript:;"
+    class="nav-link"
+    openParent
+    (onToggle)="option.open = $event"
+  >
+    <fa-icon
+      [icon]="option.icon.name"
+      class="icon"
+      *ngIf="option.icon.name"
+    ></fa-icon>
+    <b class="icon extra-bold" *ngIf="option.icon.letter">{{
+      option.icon.letter
+    }}</b>
+    <span class="title" *ngIf="showTitle">{{ option.title }}</span>
+
+    <prx-dropdown-icon
+      [open]="option.open"
+      class="dd-icon"
+      *ngIf="showToggler"
+    ></prx-dropdown-icon>
+  </a>
+
+  <nav class="nav-dropdown-items">
+    <prx-sidenav-item
+      *ngFor="let item of option.items"
+      [option]="item"
+    ></prx-sidenav-item>
+  </nav>
+</ng-template>

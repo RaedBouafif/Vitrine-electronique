@@ -1,0 +1,8 @@
+<div #titleView class="card-header-title" *ngIf="!!title || !titleHidden">
+  <ng-content></ng-content>
+  <h5 *ngIf="title" class="card-title mb-0" [innerHTML]="title"></h5>
+</div>
+
+<div #toolsView class="card-header-tools" *ngIf="!toolsHidden">
+  <ng-content select="[card-tools]"></ng-content>
+</div>

@@ -1,0 +1,24 @@
+@import "import";
+
+:host {
+  position: relative;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    @include make-col(7, $grid-columns);
+  }
+}
+
+.btn-group-reply {
+  position: absolute;
+  top: 8px;
+  right: 0;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    position: relative;
+  }
+}
+
+.nav {
+  background-color: $gray-100;
+  border-bottom: 1px solid $border-color;
+}

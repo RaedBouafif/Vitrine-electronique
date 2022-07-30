@@ -1,0 +1,59 @@
+<div class="emails-ws--messages">
+  <!-- Messages -->
+
+  <div
+    class="emails-wrapper"
+    perfectScrollbar
+    *ngIf="messages && messages.length; else loading"
+  >
+    <!-- <div *ngFor="let group of messages"> You still can use it ... -->
+
+    <p
+      class="small semi-bold text-accent text-uppercase list-group-item border-0 my-3"
+    >
+      Messages
+    </p>
+
+    <div class="list list-hover list-group-flush">
+      <a
+        href="javascript:;"
+        class="list-group-item list-group-item-action"
+        *ngFor="let message of messages"
+        (click)="displayMessage(message)"
+        [ngClass]="{
+          'is-selected': message._id === selectedMessage?._id,
+          'is-read': message.read === false
+        }"
+      >
+        <div class="media">
+          <div class="media-body position-relative pb-5">
+            <p class="mb-0 text-muted d-flex justify-content-between">
+              <span class="text-capitalize">{{ message.sender.name }}</span>
+              <span class="small text-muted ml-auto">{{
+                message.sendingDate | date: 'medium'
+              }}</span>
+            </p>
+            <div class="w-100 absolute">
+              <p class="bold text-truncate text-capitalize mb-2">
+                {{ message.subject }}
+              </p>
+              <p class="small text-body text-truncate mb-0">
+                {{ message.body | htmlclean }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="p-4">
+      <prx-loader
+        [template]="'user-messages'"
+        [isLoading]="isLoading"
+        [count]="8"
+      ></prx-loader>
+    </div>
+  </ng-template>
+</div>

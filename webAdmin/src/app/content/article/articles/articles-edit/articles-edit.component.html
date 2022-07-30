@@ -1,0 +1,67 @@
+<prx-page-header pre="" title="MAJ Article"></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card
+    ><form class="cozy" #form="ngForm">
+      <prx-card-header prxSticky>
+        <ng-container card-title>
+          <div class="d-flex align-items-center">
+            <div class="ml-auto">
+              <prx-button
+                type="button"
+                color="primary"
+                [disabled]="form.invalid"
+                (click)="submit(form)"
+              >
+                <span>Enregistrer</span>
+              </prx-button>
+              <button
+                (click)="cancel()"
+                class="btn btn-light border"
+                type="button"
+              >
+                <prx-icon [icon]="icons.chevronLeft"></prx-icon> Annuler
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </prx-card-header>
+      <prx-card-body>
+        <tabset type="tabs tabs-bordered">
+          <tab heading="Informations">
+            <prx-ui-tab-content
+              [newMedia]="newMedia"
+              [selectedSubCategory]="selectedSubCategory"
+              [article]="article"
+              [content]="1"
+            ></prx-ui-tab-content>
+          </tab>
+          <tab heading="Categories">
+            <prx-ui-tab-content
+              [newMedia]="newMedia"
+              [selectedSubCategory]="selectedSubCategory"
+              [article]="article"
+              [content]="2"
+            ></prx-ui-tab-content>
+          </tab>
+          <tab heading="Caracteristiques">
+            <prx-ui-tab-content
+              [newMedia]="newMedia"
+              [selectedSubCategory]="selectedSubCategory"
+              [article]="article"
+              [content]="3"
+            ></prx-ui-tab-content>
+          </tab>
+          <tab heading="images">
+            <prx-ui-tab-content
+              [newMedia]="newMedia"
+              [selectedSubCategory]="selectedSubCategory"
+              [article]="article"
+              [content]="4"
+            ></prx-ui-tab-content>
+          </tab>
+        </tabset>
+      </prx-card-body>
+    </form>
+  </prx-card>
+</div>

@@ -1,0 +1,71 @@
+<div class="emails-ws--body" *ngIf="email; else noresult">
+  <nav class="nav d-flex d-md-none py-2">
+    <a
+      href="javascript:;)"
+      class="nav-link nav-item email-list-toggle"
+      (click)="triggerReturnToList()"
+    >
+      <prx-icon [icon]="icons.longArrowAltLeft"></prx-icon>
+    </a>
+  </nav>
+
+  <div class="email-content-wrapper p-4">
+    <div class="email-header">
+      <div
+        class="subject border-bottom py-4 d-flex align-items-center justify-content-between"
+      >
+        <p class="semi-bold lead text-capitalize mb-0">{{ email.subject }}</p>
+
+        <div class="btn-group btn-group-reply ml-auto">
+          <button (click)="deleteMessage()" type="button" class="btn btn-link">
+            <prx-icon [icon]="icons.trashAlt"></prx-icon>
+          </button>
+        </div>
+      </div>
+
+      <prx-avatar-info
+        [name]="user.avatar.name"
+        class="py-4 text-darker"
+        [info]="user.email"
+      >
+        <prx-avatar [avatar]="user.avatar"></prx-avatar>
+      </prx-avatar-info>
+    </div>
+
+    <div class="email-body" [innerHtml]="email.body"></div>
+  </div>
+  <div *ngIf="email.reply" class="email-reply-wrapper p-4">
+    <div class="card start-reply">
+      <div [innerHtml]="email.reply" class="card-body"></div>
+    </div>
+  </div>
+  <div *ngIf="!email.reply" class="email-reply-wrapper p-4">
+    <div class="card start-reply">
+      <div *ngIf="!openReply" class="card-body">
+        Cliquez <a href="javascript:;" (click)="openReply = true">ici</a> pour
+        répondre
+      </div>
+      <div *ngIf="openReply" class="card-body">
+        <ckeditor [editor]="editor" [(ngModel)]="reply"></ckeditor>
+        <hr class="my-4" />
+        <div class="form-group text-right">
+          <prx-button
+            type="submit"
+            color="primary"
+            [disabled]="reply === ''"
+            (click)="replyToMail()"
+          >
+            <span translate>Envoyer</span>
+          </prx-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noresult>
+  <div class="no-result center-xy text-center">
+    <prx-icon icon="mail" size="xxl" class="text-gray"></prx-icon>
+    <h1 class="thin font-md">Aucun email n'a été sélectionné</h1>
+  </div>
+</ng-template>

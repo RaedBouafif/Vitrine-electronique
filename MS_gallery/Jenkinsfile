@@ -1,0 +1,108 @@
+pipeline {
+
+    agent any
+    
+    stages {
+
+        stage('Build data base') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_gallery' }
+                
+            }
+            steps { 
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker run -d --restart=always -p 32505:27017 --network=mysubnet --network-alias=market-gallerydb --name=market-gallerydb mongo || true'
+                    }
+			 
+               }
+            
+        }
+}
+        stage('Build image Ms User') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_gallery' }
+            }
+            steps { 
+            dir ('MS_gallery') {
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker build --build-arg DOCKER_ENV=dev . -t anonyme5/mgsimage:latest'
+                        sh 'docker login -u anonyme5 -p Five12345'
+                        sh 'docker push anonyme5/mgsimage:latest'
+                    }
+			 
+               }
+            }
+        }
+}
+    stage('run in dev') {
+          when {
+                
+                expression { env.gitlabTargetBranch == 'B_gallery' }
+            }
+            steps {
+				script {
+				docker.withServer('tcp://35.180.206.6:4243') {
+				        sh 'docker rm --force market-gallery-service || true'
+                        sh 'docker run --restart=always -d -p 4005:4005 --network=mysubnet --network-alias=market-gallery-service --name=market-gallery-service   anonyme5/mgsimage:latest'
+                    }
+				}
+			   
+              
+            }
+        }
+     stage('Run in PRE-PROD Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'develop' }
+            }
+            agent {
+          kubernetes {
+            cloud "kubernetes"
+           label "kube"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-gallery-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_gallery/galleryDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_gallery/gallery-deployment.yaml '
+                     sh 'kubectl apply -f  MS_gallery/gallery-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+ stage('Run in PROD Env') {
+        when {
+                beforeAgent true
+                expression { env.gitlabTargetBranch == 'release' }
+            }
+            agent {
+          kubernetes {
+            cloud "kubernetesProd"
+           label "kubeProd"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-gallery-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_gallery/galleryDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_gallery/gallery-deployment.yaml '
+                     sh 'kubectl apply -f  MS_gallery/gallery-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+
+    }
+   
+}

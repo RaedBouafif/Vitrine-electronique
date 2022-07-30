@@ -1,0 +1,111 @@
+.ql-toolbar {
+  &.ql-snow {
+    border: 1px solid $input-border-color;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+
+    button {
+      &.ql-active,
+      &:focus,
+      &:hover {
+        .ql-stroke {
+          stroke: $color-primary;
+        }
+      }
+    }
+
+    .ql-picker-label {
+      &.ql-active,
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    .ql-picker-item {
+      &.ql-selected,
+      &.ql-active,
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.ql-container {
+  &.ql-snow {
+    border: 1px solid $input-border-color;
+    border-top: 0;
+
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+}
+
+.ql-snow {
+  .ql-picker {
+    &.ql-expanded {
+      outline: none !important;
+      border-color: transparent !important;
+
+      .ql-picker-label {
+        border-color: transparent !important;
+        color: $color-primary;
+        outline: none !important;
+
+        &.ql-active,
+        &:hover {
+          color: $color-primary;
+        }
+      }
+
+      .ql-picker-options {
+        border: 0;
+        padding: 0.5rem 1rem;
+        box-shadow: $dropdown-box-shadow;
+        border-radius: $border-radius;
+      }
+    }
+  }
+
+  .ql-tooltip {
+    border: 0;
+    padding: 0.5rem 1rem;
+    box-shadow: $dropdown-box-shadow;
+    border-radius: $border-radius;
+
+    input[type="text"] {
+      border: 1px solid $input-border-color;
+      outline: none !important;
+
+      border-radius: $input-border-radius;
+
+      &:active,
+      &:focus {
+        border-color: $input-focus-border-color !important;
+      }
+    }
+
+    .ql-action {
+      transition: color 0.3s ease;
+
+      &:hover {
+        transition: color 0.3s ease;
+        color: $color-primary;
+      }
+    }
+
+    .modal {
+      &,
+      &.ql-editing {
+        left: 20px !important;
+      }
+    }
+  }
+
+  .ql-editor pre.ql-syntax {
+    background-color: $color-dark;
+    color: $gray-100;
+    overflow: visible;
+    border-radius: $border-radius;
+  }
+}

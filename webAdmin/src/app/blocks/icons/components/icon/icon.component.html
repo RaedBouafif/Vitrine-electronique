@@ -1,0 +1,8 @@
+<fa-icon
+  *ngIf="useFontAwesome; else useFeather"
+  [icon]="icon"
+  [size]="size"
+></fa-icon>
+<ng-template #useFeather>
+  <i-feather [name]="icon" [class]="'icon-' + size"></i-feather>
+</ng-template>

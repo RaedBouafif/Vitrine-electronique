@@ -1,0 +1,94 @@
+<div class="row mb-5">
+  <div class="col-xl-8 text-center text-xl-left">
+    <h1 class="bold text-dark my-0" translate>Login</h1>
+    <!--  <p class="my-0">
+      <span translate>Don't have an account yet?</span>
+      <a routerLink="/register" class="text-primary bold" translate
+        >Create it here</a
+      >
+    </p> -->
+  </div>
+
+  <!-- <div class="col-xl-4 align-self-end text-center text-xl-right">
+    <prx-button-language-selector></prx-button-language-selector>
+  </div> -->
+</div>
+
+<form (ngSubmit)="login(form)" [formGroup]="form" class="cozy" novalidate>
+  <div
+    class="alert alert-danger alert-icon"
+    [hidden]="!error || isLoading"
+    translate
+  >
+    Username or password incorrect.
+  </div>
+
+  <div class="form-group">
+    <label class="control-label bold small text-uppercase" translate
+      >Username</label
+    >
+    <input
+      type="text"
+      formControlName="username"
+      class="form-control bg-light form-control-rounded"
+      [placeholder]="'Username' | translate"
+    />
+    <small
+      [hidden]="
+        form.controls.username.valid || form.controls.username.untouched
+      "
+      class="text-danger"
+      translate
+    >
+      Username is required
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label bold small text-uppercase" translate
+      >Password</label
+    >
+    <input
+      type="password"
+      formControlName="password"
+      class="form-control bg-light form-control-rounded"
+      [placeholder]="'Username' | translate"
+    />
+    <small
+      [hidden]="
+        form.controls.password.valid || form.controls.password.untouched
+      "
+      class="text-danger"
+      translate
+    >
+      Password is required
+    </small>
+  </div>
+
+  <div class="form-group">
+    <prx-checkbox
+      formControlName="remember"
+      label="Remember me"
+      [id]="'rememberme'"
+    ></prx-checkbox>
+  </div>
+
+  <div
+    class="form-group mb-0 d-flex align-items-center justify-content-between"
+    style="float: right;"
+  >
+    <!--  <a routerLink="/forgot" class="text-warning small" translate
+      >Forgot your password?</a
+    > -->
+
+    <prx-button
+      type="submit"
+      color="primary"
+      [icon]="longArrowAltRight"
+      [isLoading]="isLoading"
+      [disabled]="form.invalid"
+    >
+      <span translate>Login</span>
+    </prx-button>
+  </div>
+</form>

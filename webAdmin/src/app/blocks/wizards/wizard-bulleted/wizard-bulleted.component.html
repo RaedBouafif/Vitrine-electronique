@@ -1,0 +1,22 @@
+<div class="content">
+  <!-- This is where the content from each CdkStep is projected to -->
+  <ng-container [ngTemplateOutlet]="selected.content"></ng-container>
+</div>
+
+<!-- This is the navigation bullets of the stepper -->
+<div class="nav nav-steps">
+  <span
+    *ngFor="let step of steps; let i = index"
+    class="bullet"
+    [ngClass]="{ active: selectedIndex == i, done: selectedIndex > i }"
+  ></span>
+</div>
+
+<prx-wizard-navigation
+  [selectedIndex]="selectedIndex"
+  [doneUrl]="doneUrl"
+  [doneText]="doneText"
+  [isLastStep]="selectedIndex === steps.length - 1"
+  [steps]="steps"
+  [style]="navigation"
+></prx-wizard-navigation>

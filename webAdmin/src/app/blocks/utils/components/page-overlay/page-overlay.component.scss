@@ -1,0 +1,16 @@
+@import "import";
+
+:host {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: $prx-page-overlay-zindex;
+  background: rgba($gray-200, 0.75);
+}
+
+.overlay-content {
+  z-index: $prx-page-overlay-zindex + 1;
+}

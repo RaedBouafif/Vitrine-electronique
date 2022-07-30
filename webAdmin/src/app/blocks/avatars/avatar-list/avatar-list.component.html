@@ -1,0 +1,17 @@
+<div class="avatar-list-horizontal {{ size ? 'avatar-list-' + size : '' }}">
+  <prx-avatar
+    *ngFor="let item of avatars | slice: 0:displayItems"
+    [avatar]="item.avatar"
+    [size]="size"
+    [placeholderBgColor]="item.placeholderBgColor"
+    class="avatar-list-item"
+    [showTooltip]="showTooltip"
+  ></prx-avatar>
+
+  <div
+    class="avatar-list-item more-available rounded-circle border"
+    *ngIf="display && remainingItems > 0"
+  >
+    <small>+</small>{{ remainingItems }}
+  </div>
+</div>

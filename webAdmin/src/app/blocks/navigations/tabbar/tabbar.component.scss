@@ -1,0 +1,32 @@
+@import "import";
+
+:host {
+  display: block;
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  z-index: 1;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+  }
+}
+
+.tabbar-container {
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  @include center-flex(space-evenly);
+
+  position: relative;
+  border-radius: 30px;
+  box-shadow: $dropdown-box-shadow;
+  background: $color-contrast;
+}
+
+.nav-link {
+  flex: 0 0 auto;
+}

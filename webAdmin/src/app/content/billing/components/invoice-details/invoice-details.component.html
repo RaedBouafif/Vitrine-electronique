@@ -1,0 +1,97 @@
+<ng-container *ngIf="invoice.details; else loadingItems">
+  <div class="row">
+    <div class="col-md-5 col-xl-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="small text-info bold">Client</p>
+          <prx-avatar-info
+            [name]="customer.firstname"
+            [info]="customer.mail"
+            class="mb-4"
+          >
+            <prx-avatar [avatar]="avatar"></prx-avatar>
+          </prx-avatar-info>
+
+          <p class="small text-info bold">Contact</p>
+          <prx-address
+            [email]="customer.mail"
+            [phone]="customer.phoneNumber"
+            [address]="invoice.deliveryAddress"
+          >
+          </prx-address>
+        </div>
+        <div class="col-md-6 text-right">
+          <p *ngIf="invoice.totalTTC" class="small bold text-info mb-0">
+            Total TTC
+          </p>
+          <p *ngIf="invoice.totalTTC" class="h3 font-light mb-4">
+            {{ invoice.totalTTC | number: '1.2-2' }} TND
+          </p>
+          <p class="small bold text-info mb-0">Total HT</p>
+          <p class="h3 font-light mb-4">
+            {{ invoice.total | number: '1.2-2' }} TND
+          </p>
+          <p class="small bold text-info mb-0">Paiement</p>
+          <p class="h5 font-light mb-4">
+            {{ payment.name }}
+          </p>
+          <p class="small bold text-info mb-0">Livraison</p>
+          <p class="h5 font-light mb-4">
+            {{ delivery.name }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7 col-xl-8">
+      <table class="table table-clean table-responsive">
+        <thead>
+          <tr>
+            <td class="border-top-0 small text-uppercase bold text-dark">
+              Article
+            </td>
+            <td class="border-top-0 small text-uppercase bold text-dark">
+              Quantite
+            </td>
+            <td class="border-top-0 small text-uppercase bold text-dark">
+              Prix Unitaire
+            </td>
+            <td class="border-top-0 small text-uppercase bold text-dark">
+              Total
+            </td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of invoice.details">
+            <td *ngIf="showArticle(item.article)">
+              <p class="bold mb-2">{{ showArticle(item.article).title }}</p>
+              <div
+                [innerHTML]="showArticle(item.article).description"
+                class="invoice-items-table font-sm text-muted"
+              ></div>
+            </td>
+            <td *ngIf="!showArticle(item.article)">
+              <p class="bold mb-2">{{ item.article }}</p>
+            </td>
+            <td>{{ item.quantity | number }}</td>
+            <td>{{ item.unitPrice | number: '1.2-2' }}</td>
+            <td>{{ item.unitPrice * item.quantity | number: '1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loadingItems>
+  <div class="row">
+    <div class="col-md-6">
+      <prx-loader
+        [template]="'table'"
+        [isLoading]="!invoice.details"
+        [count]="3"
+      ></prx-loader>
+    </div>
+  </div>
+</ng-template>

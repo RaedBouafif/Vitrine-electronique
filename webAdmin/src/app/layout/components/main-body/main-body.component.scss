@@ -1,0 +1,13 @@
+@import "import";
+
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+
+  &.quick-sidenav-expanded {
+    filter: blur(5px);
+  }
+}

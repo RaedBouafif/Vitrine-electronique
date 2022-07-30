@@ -1,0 +1,22 @@
+@import "import";
+
+:host {
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    border-right: 1px solid $border-color;
+    @include make-col(5, $grid-columns);
+  }
+}
+
+.is-selected {
+  background-color: $gray-100;
+  box-shadow: 3px 0 0 0 $color-primary inset;
+}
+.is-read {
+  background-color: $gray-100;
+  box-shadow: 3px 0 0 0 $color-danger inset;
+}
+
+.emails-wrapper {
+  height: 100%;
+  position: relative;
+}

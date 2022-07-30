@@ -1,0 +1,54 @@
+<div class="product-gallery__featured">
+    <button *ngIf="productLayout !== 'quickview'" class="product-gallery__zoom" (click)="openPhotoSwipe(currentItem)">
+        <app-icon name="zoom-in-24" size="24"></app-icon>
+    </button>
+    <owl-carousel-o [options]="carouselOptions" (changed)="featuredCarouselTranslated($event)" appOwlPreventClick #featuredCarousel>
+        <!--suppress AngularUndefinedBinding -->
+        <ng-template *ngFor="let item of items;let i=index" carouselSlide [id]="i">
+            <div class="product-image product-image--location--gallery">
+                <a
+                    appClick
+                    class="product-image__body"
+                    target="_blank"
+                    [href]="item.path"
+                    (click)="onFeaturedImageClick($event, item);"
+                >
+                    <!--
+                    The data-width and data-height attributes must contain the size of a larger version
+                    of the product image.
+
+                    If you do not know the image size, you can remove the data-width and data-height
+                    attribute, in which case the width and height will be obtained from the naturalWidth
+                    and naturalHeight property of img.product-image__img.
+                    -->
+                    <img class="product-image__img" [src]="item.path" alt="" #imageElement>
+                </a>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>
+<div class="product-gallery__carousel">
+    <owl-carousel-o
+        appOwlPreventClick
+        [options]="thumbnailsCarouselOptions"
+        [appFakeSlides]="items.length"
+        #fakeSlides="appFakeSlides"
+        #thumbnailsCarousel
+    >
+        <!--suppress AngularUndefinedBinding -->
+        <ng-template *ngFor="let item of items;let i=index" carouselSlide [id]="i">
+            <div
+                appClick
+                class="product-image product-gallery__carousel-item"
+                [class.product-gallery__carousel-item--active]="i === currentItemid"
+                (click)="onThumbnailImageClick(item,i)"
+            >
+                <div class="product-image__body">
+                    <img class="product-image__img product-gallery__carousel-image" [src]="item.path" alt="">
+                </div>
+            </div>
+        </ng-template>
+        <!--suppress AngularUndefinedBinding -->
+        <ng-template *ngFor="let i of fakeSlides.slides" carouselSlide [id]="'fake-slide-'+i"></ng-template>
+    </owl-carousel-o>
+</div>

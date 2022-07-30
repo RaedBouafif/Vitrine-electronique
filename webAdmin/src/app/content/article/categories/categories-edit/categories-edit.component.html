@@ -1,0 +1,211 @@
+<prx-page-header title="MAJ Categorie" sub=""></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body class="pb-6 p-md-5">
+      <prx-alert
+        [hidden]="!error"
+        [scheme]="ColorScheme.Danger"
+        [withIcon]="true"
+        [dismissible]="true"
+      >
+        Maj a échoué
+      </prx-alert>
+      <form class="cozy" #form="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Information</h4>
+            <div class="form-group">
+              <label class="control-label">Avatar</label>
+              <prx-avatar
+                [editable]="true"
+                [avatar]="avatar"
+                (changed)="onUrlChanged($event)"
+                size="lg"
+              ></prx-avatar>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Nom*</label>
+              <input
+                [class.is-invalid]="
+                  categoryName.invalid &&
+                  (categoryName.dirty || categoryName.touched)
+                "
+                class="form-control"
+                type="text"
+                name="categoryName"
+                #categoryName="ngModel"
+                [(ngModel)]="category.categoryName"
+                required
+              />
+              <small
+                *ngIf="
+                  categoryName.invalid &&
+                  (categoryName.dirty || categoryName.touched)
+                "
+                class="form-text text-danger"
+                >Nom requis</small
+              >
+            </div>
+            <div class="form-group">
+              <label class="control-label">Actif</label>
+              <ng-select
+                [items]="table"
+                bindLabel="name"
+                bindValue="id"
+                [searchable]="false"
+                [clearable]="false"
+                placeholder=""
+                [(ngModel)]="category.active"
+                name="active"
+              >
+              </ng-select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Sous Categorie</label>
+              <input
+                type="text"
+                class="form-control"
+                name="subCategory"
+                #subCategoryI="ngModel"
+                [(ngModel)]="subCategory"
+                (keydown.enter)="addSubCategory()"
+              />
+              <small class="form-text text-info"
+                >Saisir le nom de la sous categories et valider en cliquant sur
+                "Entrer"</small
+              >
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Sous Categories</h4>
+
+            <ng-container
+              *ngIf="category.subCategories && category.subCategories.length"
+            >
+              <ngx-datatable
+                class="ngx-datatable responsive {{ tableStyles }}"
+                [rows]="category.subCategories"
+                [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+                [columnMode]="ColumnMode.force"
+                headerHeight="auto"
+                [rowHeight]="false"
+                footerHeight="auto"
+                [limit]="4"
+              >
+                <!-- Column Definitions -->
+                <ngx-datatable-column name="Nom">
+                  <ng-template
+                    let-subCategory="row"
+                    let-value="value"
+                    ngx-datatable-cell-template
+                  >
+                    <small class="text-muted d-block d-md-none">Nom</small>
+                    <input
+                      class="form-control"
+                      type="text"
+                      [name]="subCategory.name"
+                      [(ngModel)]="subCategory.name"
+                      required
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Actif">
+                  <ng-template
+                    let-subCategory="row"
+                    let-value="value"
+                    ngx-datatable-cell-template
+                  >
+                    <small class="text-muted d-block d-md-none">Actif</small>
+                    <span
+                      *ngIf="subCategory.active"
+                      class="text-capitalize text-success"
+                    >
+                      <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                      Actif
+                    </span>
+                    <span
+                      *ngIf="!subCategory.active"
+                      class="text-capitalize text-danger"
+                    >
+                      <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                      Non Actif
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <!-- Actions Column -->
+                <ngx-datatable-column
+                  [width]="80"
+                  [sortable]="false"
+                  [canAutoResize]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  cellClass="d-none d-md-flex"
+                >
+                  <ng-template
+                    let-subCategory="row"
+                    let-value="value"
+                    ngx-datatable-cell-template
+                  >
+                    <div class="d-flex justify-content-end">
+                      <prx-context-menu appendToBody="true">
+                        <a
+                          *ngIf="!subCategory.active"
+                          (click)="update(subCategory, true)"
+                          class="dropdown-item"
+                          href="javascript:;"
+                        >
+                          <span class="d-inline-block w-20px"
+                            ><prx-icon [icon]="icons.edit"></prx-icon
+                          ></span>
+                          Activer
+                        </a>
+                        <a
+                          *ngIf="subCategory.active"
+                          (click)="update(subCategory, false)"
+                          class="dropdown-item"
+                          href="javascript:;"
+                        >
+                          <span class="d-inline-block w-20px"
+                            ><prx-icon [icon]="icons.edit"></prx-icon
+                          ></span>
+                          Desctiver
+                        </a>
+                        <div class="divider dropdown-divider"></div>
+                        <a
+                          (click)="delete(subCategory)"
+                          class="dropdown-item text-danger"
+                          href="javascript:;"
+                        >
+                          <span class="d-inline-block w-20px"
+                            ><prx-icon [icon]="icons.delete"></prx-icon
+                          ></span>
+                          Supprimer
+                        </a>
+                      </prx-context-menu>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </ng-container>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="form-group text-right">
+          <prx-button
+            type="button"
+            color="primary"
+            [icon]="longArrowAltRight"
+            [isLoading]="isLoading"
+            [disabled]="form.invalid"
+            (click)="submit(form)"
+          >
+            <span translate>Enregistrer</span>
+          </prx-button>
+        </div>
+      </form>
+    </prx-card-body>
+  </prx-card>
+</div>

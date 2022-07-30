@@ -1,0 +1,43 @@
+@import "import";
+
+$notification-badge-size: 5px;
+
+.ring {
+  transform-origin: 50% 4px;
+  animation: ring 1.5s ease-in-out 2s infinite;
+}
+
+.notification {
+  &-badge {
+    //font-size: 1.1rem;
+    background-color: $color-danger;
+    z-index: 2;
+    padding: 0;
+    line-height: $notification-badge-size;
+    min-height: $notification-badge-size;
+    min-width: $notification-badge-size;
+    height: $notification-badge-size;
+    width: $notification-badge-size;
+    border-radius: 50%;
+    //margin-bottom: 5px;
+  }
+
+  &-indicator {
+    position: absolute;
+    top: 5px;
+    @include center(x);
+
+    &:before {
+      content: "";
+      background-color: transparent;
+      border: 2px solid $color-danger;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      animation: pulse 1500ms ease-in-out infinite;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.body-wrapper {
+  //padding-top: $mz-header-height;
+  flex: 1;
+  background-color: $prx-body-wrapper-bg-color;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    padding-top: 0;
+  }
+}
+
+// Styling the card-header sticky style when interacting with layout
+.fixed-header {
+  .card-header {
+    &.fixed {
+      top: $mz-header-height;
+    }
+  }
+}
+
+.sidenav-collapsed {
+  .card-header {
+    &.fixed {
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        left: $mz-sidenav-collapsed-width;
+      }
+    }
+  }
+}
+
+// Styling perfect-scrollbar
+.sidenav-content {
+  .ps .ps__rail-y:hover,
+  .ps.ps--scrolling-y > .ps__rail-y {
+    background-color: rgba($mz-sidenav-bg-color, 0.2);
+  }
+}
+
+.quick-sidenav-overlay {
+  .close {
+    position: absolute;
+    top: 30px;
+    right: $mz-quick-sidenav-width + 30;
+    color: #000;
+    cursor: pointer;
+  }
+}

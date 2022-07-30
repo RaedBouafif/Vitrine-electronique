@@ -1,0 +1,33 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Historique des commandes</h5>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+        <div class="table-responsive-sm">
+            <table>
+                <thead>
+                <tr>
+                    <th>Commande</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total TTC</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orders">
+                    <td><a [routerLink]="'/account/orders/' + order._id">#{{ order.reference }}</a></td>
+                    <td>{{ order.orderDate | date : 'short' }}</td>
+                    <td>{{ getStatus(order.status)  }}</td>
+                    <td *ngIf="order.totalTTC">{{ order.totalTTC }} TND</td>
+                    <td *ngIf="!order.totalTTC">{{ order.total }} TND</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-footer">
+        <app-pagination (pageChange)='display($event)' [total]="pages"></app-pagination>
+    </div>
+</div>

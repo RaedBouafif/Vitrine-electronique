@@ -1,0 +1,133 @@
+<app-page-header [header]="'Check-out'" [breadcrumbs]="[
+    {label: 'Home',          url: root.home()},
+    {label: 'Panier', url: root.cart()},
+    {label: 'Check-out',      url: ''}
+]"></app-page-header>
+
+<div class="checkout block">
+    <div class="container">
+        <div class="row">
+           
+            <div class="col-12 col-lg-6 col-xl-7">
+                <div class="card mb-lg-0">
+                    <div class="card-body">
+                        <h3 class="card-title">Détails de la facturation</h3>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="checkout-first-name">Prenom</label>
+                                <input type="text" class="form-control" id="checkout-first-name" name="firstname" [(ngModel)]="user.firstname" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="checkout-last-name">Nom</label>
+                                <input type="text" class="form-control" id="checkout-last-name" name="lastname" [(ngModel)]="user.lastname" disabled>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="checkout-email">Email</label>
+                                <input type="email" class="form-control" id="checkout-email" name="mail" [(ngModel)]="user.mail" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="checkout-phone">Numero de telephone</label>
+                                <input type="text" class="form-control" id="checkout-phone" name="phoneNumber" [(ngModel)]="user.phoneNumber" disabled>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="checkout-country">Adresse de livraison</label>
+                            <select id="checkout-country" class="form-control" [(ngModel)]="addressV" >
+                                <option value="-1">choisre une adresse...</option>
+                                <option [value]="id" *ngFor="let address of user.addresses;let id=index">{{address.address}},{{address.postalCode}},{{address.city}}</option>
+                            </select>
+                        </div>
+
+                       
+
+                      
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-body">
+                        <h3 class="card-title">Les détails d'expédition</h3>
+
+                        <div class="payment-methods">
+                            <ul class="payment-methods__list">
+                                <li class="payment-methods__item " *ngFor="let deliveryM of deliveryMethods;let id=index">
+                                    <label class="payment-methods__item-header">
+                                            <span class="payment-methods__item-radio input-radio">
+                                                <span class="input-radio__body">
+                                                    <input (click)="order.deliveryMethod=deliveryM._id" class="input-radio__input" name="checkout_delivery_method" type="radio" [checked]="id===0">
+                                                    <span class="input-radio__circle"></span>
+                                                </span>
+                                            </span>
+                                        <span class="payment-methods__item-title">{{deliveryM.name}}</span>
+                                    </label>
+                                   
+                                </li>
+                               
+                                
+                            </ul>
+                        </div>
+
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <h3 class="card-title">Votre Commande</h3>
+<div id="table">
+                        <table  class="checkout__totals" #table>
+                            <thead class="checkout__totals-header">
+                            <tr>
+                                <th>Article</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody class="checkout__totals-products">
+                            <tr *ngFor="let item of cart.items$|async">
+                                <td>{{ item.quantity }} × {{ item.product.title }}  </td>
+                                <td>{{ item.priceTTC * item.quantity }} TND</td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="checkout__totals-footer">
+                            <tr>
+                                <th>Total HT</th>
+                                <td>{{ cart.total$|async }} TND</td>
+                            </tr>
+                            <tr>
+                                <th>Total TTC</th>
+                                <td>{{ cart.totalTTC$|async }} TND</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                        <div class="payment-methods">
+                            <ul class="payment-methods__list">
+                                <li class="payment-methods__item " *ngFor="let paymentM of paymentMethods;let id=index">
+                                    <label class="payment-methods__item-header">
+                                            <span class="payment-methods__item-radio input-radio">
+                                                <span class="input-radio__body">
+                                                    <input (click)="order.paymentMethod=paymentM._id" class="input-radio__input" name="checkout_payment_method" type="radio" [checked]="id===0">
+                                                    <span class="input-radio__circle"></span>
+                                                </span>
+                                            </span>
+                                        <span class="payment-methods__item-title">{{paymentM.name}}</span>
+                                    </label>
+                                   
+                                </li>
+                               
+                                
+                            </ul>
+                        </div>
+
+                       
+
+                        <button (click)="submit()" type="submit" class="btn btn-primary btn-xl btn-block">Passer la commande</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

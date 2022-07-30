@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-web-service
+  labels:
+    run: market-web-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-web-service
+    spec:
+      containers:
+        - name: market-web-service
+          image: anonyme5/mwsimage:latest
+          ports:
+            - containerPort: 91

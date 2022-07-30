@@ -1,0 +1,49 @@
+@import "import";
+
+:host {
+  cursor: pointer;
+  color: $color-gray !important;
+  padding: $nav-link-padding-y;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  flex: 0 0 auto;
+
+  &:before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background-color: $gray-200;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: scale(0);
+    transition: transform 0.1s ease-in-out;
+    z-index: 0;
+  }
+
+  &:hover {
+    &:before {
+      transform: scale(1);
+    }
+  }
+
+  &:disabled {
+    cursor: unset;
+    color: $gray-200;
+  }
+
+  &.dark {
+    &:before {
+      background-color: $color-5-dark;
+    }
+  }
+}
+
+.nav-link-content {
+  z-index: 1;
+}

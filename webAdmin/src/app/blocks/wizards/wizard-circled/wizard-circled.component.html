@@ -1,0 +1,28 @@
+<!-- This is the navigation-bar of the stepper -->
+<ul class="nav nav-steps">
+  <li
+    *ngFor="let step of steps; let i = index"
+    class="nav-item"
+    [ngClass]="{ active: selectedIndex == i, done: selectedIndex > i }"
+  >
+    <span class="nav-link">
+      <p class="mb-0 bold">{{ i + 1 }}</p>
+      <p class="bold step-label">{{ step.label }}</p>
+    </span>
+  </li>
+</ul>
+
+<div class="content">
+  <!-- This is where the content from each CdkStep is projected to -->
+  <ng-container [ngTemplateOutlet]="selected.content"></ng-container>
+
+  <hr class="my-4" />
+  <prx-wizard-navigation
+    [selectedIndex]="selectedIndex"
+    [doneUrl]="doneUrl"
+    [doneText]="doneText"
+    [isLastStep]="selectedIndex === steps.length - 1"
+    [steps]="steps"
+    [style]="navigation"
+  ></prx-wizard-navigation>
+</div>

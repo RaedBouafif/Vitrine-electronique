@@ -1,0 +1,158 @@
+<prx-page-header pre="Categories" title="Liste Categories" [sub]="totalCount">
+  <ng-container page-tools>
+    <ul class="nav">
+      <li class="nav-item mr-2 d-none d-md-inline-flex">
+        <input
+          [(ngModel)]="filter"
+          (keyup)="updateFilter()"
+          type="text"
+          class="form-control"
+          placeholder="Recherche..."
+        />
+      </li>
+
+      <li class="nav-item mr-2">
+        <a
+          [routerLink]="['/article', 'category', 'new']"
+          class="btn btn-primary nav-link"
+        >
+          <prx-icon [icon]="icons.add"></prx-icon> Nouveau
+        </a>
+      </li>
+    </ul>
+  </ng-container>
+</prx-page-header>
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body>
+      <ng-container *ngIf="allCategories && allCategories.length; else loading">
+        <ngx-datatable
+          class="ngx-datatable responsive {{ tableStyles }}"
+          [rows]="categories"
+          [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+          [columnMode]="ColumnMode.force"
+          headerHeight="auto"
+          [rowHeight]="false"
+          footerHeight="auto"
+          [limit]="10"
+        >
+          <!-- Column Definitions -->
+          <ngx-datatable-column name="Nom">
+            <ng-template
+              let-category="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <prx-avatar-info
+                [name]="category.categoryName"
+                [info]="''"
+                size="md"
+              >
+                <prx-avatar
+                  [avatar]="getAvatar(category)"
+                  size="md"
+                ></prx-avatar>
+              </prx-avatar-info>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Sous Categories">
+            <ng-template
+              let-category="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none"
+                >Sous Categories</small
+              >
+              <div class="d-flex flex-wrap">
+                <span
+                  class="badge badge-light border rounded-pill text-truncate mr-1 mt-1"
+                  *ngFor="let tag of category.subCategories"
+                  >{{ tag.name }}</span
+                >
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Actif">
+            <ng-template
+              let-category="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Actif</small>
+              <span
+                *ngIf="category.active"
+                class="text-capitalize text-success"
+              >
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Actif
+              </span>
+              <span
+                *ngIf="!category.active"
+                class="text-capitalize text-danger"
+              >
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Non Actif
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Actions Column -->
+          <ngx-datatable-column
+            [width]="80"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            cellClass="d-none d-md-flex"
+          >
+            <ng-template
+              let-category="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <div class="d-flex justify-content-end">
+                <prx-context-menu appendToBody="true">
+                  <a
+                    [routerLink]="[
+                      '/article',
+                      'category',
+                      'edit',
+                      category._id
+                    ]"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Modifier
+                  </a>
+                  <div class="divider dropdown-divider"></div>
+                  <a
+                    (click)="delete(category)"
+                    class="dropdown-item text-danger"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.delete"></prx-icon
+                    ></span>
+                    Supprimer
+                  </a>
+                </prx-context-menu>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #loading>
+        <prx-loader
+          [template]="'table'"
+          [isLoading]="isLoading"
+          [count]="3"
+        ></prx-loader>
+      </ng-template>
+    </prx-card-body>
+  </prx-card>
+</div>

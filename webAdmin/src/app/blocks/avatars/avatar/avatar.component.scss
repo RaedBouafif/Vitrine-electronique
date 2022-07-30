@@ -1,0 +1,171 @@
+@import "import";
+
+:host {
+  border-radius: 50%;
+  margin-right: 0.5rem;
+
+  &.avatar-list-item {
+    .avatar {
+      margin-right: 0;
+    }
+  }
+}
+
+.avatar {
+  position: relative;
+  width: $mz-user-avatar-width;
+
+  &-sm {
+    width: $mz-user-avatar-sm-width;
+
+    &.placeholder {
+      height: $mz-user-avatar-sm-width;
+
+      .user-avatar {
+        font-size: 0.5rem;
+      }
+    }
+
+    .status {
+      height: $status-icon-sm-size;
+      width: $status-icon-sm-size;
+    }
+  }
+
+  &-md {
+    width: $mz-user-avatar-md-width;
+
+    &.placeholder {
+      height: $mz-user-avatar-md-width;
+
+      .user-avatar {
+        font-size: 1rem;
+      }
+    }
+
+    .status {
+      height: $status-icon-md-size;
+      width: $status-icon-md-size;
+    }
+  }
+
+  &-lg {
+    width: $mz-user-avatar-md-width * 1.75;
+
+    &.placeholder {
+      height: $mz-user-avatar-md-width * 1.75;
+
+      .user-avatar {
+        font-size: 1.5rem;
+      }
+    }
+
+    .status {
+      height: $status-icon-md-size;
+      width: $status-icon-md-size;
+    }
+  }
+
+  &-xl {
+    width: $mz-user-avatar-md-width * 2.75;
+
+    &.placeholder {
+      height: $mz-user-avatar-md-width * 2.75;
+
+      .user-avatar {
+        font-size: 2.5rem;
+      }
+    }
+
+    .status {
+      height: $status-icon-md-size * 0.1.25;
+      width: $status-icon-md-size * 1.25;
+    }
+  }
+}
+
+.placeholder {
+  height: $mz-user-avatar-width;
+
+  .user-avatar {
+    background-color: $color-primary;
+    color: $white;
+    font-size: 2rem;
+    @include center-flex(center);
+    font-weight: $font-weight-bold;
+  }
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  //box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.status {
+  right: 0;
+  bottom: 0;
+  border: 2px solid $white;
+  position: absolute;
+  border-radius: 50%;
+  height: $status-icon-size;
+  width: $status-icon-size;
+
+  &.online {
+    background-color: $status-online-bg-color;
+  }
+
+  &.away {
+    background-color: $status-away-bg-color;
+  }
+
+  &.offline {
+    background-color: $status-offline-bg-color;
+  }
+
+  &.busy {
+    background-color: $status-busy-bg-color;
+  }
+}
+
+// Editable Mode On
+.editable {
+  &.placeholder {
+    .user-avatar {
+      background-color: $gray-100;
+      color: $gray-400;
+      border: 2px solid $gray-400;
+    }
+  }
+
+  &.drag-over {
+    .user-avatar {
+      border-style: dotted;
+    }
+  }
+}
+
+.upload-avatar {
+  .file-uploader {
+    display: none;
+  }
+
+  .upload-action {
+    cursor: pointer;
+    @include center-flex();
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 13px 0 rgba($black, 0.1);
+    transition: all 0.3s;
+    width: 25px;
+    height: 25px;
+    margin-bottom: 0;
+  }
+
+  .upload-trigger {
+    right: -5px;
+    bottom: -5px;
+    color: $color-contrast;
+    background-color: $color-primary;
+  }
+}

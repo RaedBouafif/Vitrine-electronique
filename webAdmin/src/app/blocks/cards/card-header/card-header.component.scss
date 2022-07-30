@@ -1,0 +1,38 @@
+@import "import";
+
+:host {
+  @include center-flex(space-between);
+  background-color: $card-bg;
+
+  &.fixed {
+    position: fixed;
+    box-shadow: 0 23px 20px -20px rgba($gray-400, 0.1),
+      0 0 15px rgba($gray-400, 0.06);
+
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+
+    @include media-breakpoint-up($grid-float-breakpoint) {
+      left: $mz-sidenav-width;
+    }
+  }
+}
+
+.card-header-title {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.card-header-tools {
+  margin-left: auto;
+}
+
+@include media-breakpoint-up($grid-float-breakpoint) {
+  .card-header-title {
+    + .card-header-tools {
+      margin-left: 3rem;
+    }
+  }
+}

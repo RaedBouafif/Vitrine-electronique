@@ -1,0 +1,48 @@
+@import "import";
+
+.static {
+  &-shape {
+    position: absolute;
+
+    &.shape {
+      &-main {
+        width: 60%;
+        left: 0;
+        bottom: 0;
+        transform: translate3d(-25%, 15%, 0);
+      }
+
+      &-circle {
+        opacity: 0.25;
+
+        &-1 {
+          right: 0;
+          top: 0;
+          transform: translate3d(50%, -50%, 0);
+
+          div {
+            @include circle-variant(300px, $gray-300);
+          }
+        }
+      }
+
+      &-ring {
+        left: 0;
+        bottom: 0;
+
+        &-1 {
+          transform: translate3d(-50%, 50%, 0);
+
+          .animation {
+            @include ring-variant(150px, 3px, $gray-200);
+            animation-duration: 45s;
+          }
+        }
+
+        .animation {
+          border-style: dashed;
+        }
+      }
+    }
+  }
+}

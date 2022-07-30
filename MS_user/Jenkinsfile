@@ -1,0 +1,111 @@
+pipeline {
+
+    agent any
+    
+    stages {
+
+        stage('Build data base') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_user' }
+                
+            }
+            steps { 
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker run -d --restart=always -p 32500:27017 --network=mysubnet --network-alias=market-userdb --name=market-userdb mongo || true'
+                    }
+			 
+               }
+            
+        }
+}
+        stage('Build image Ms User') {
+             when {
+                
+                expression { env.gitlabTargetBranch == 'B_user' }
+            }
+            steps { 
+            dir ('MS_user') {
+			   script {
+			    docker.withServer('tcp://35.180.206.6:4243') {
+                        sh 'docker build --build-arg DOCKER_ENV=dev . -t anonyme5/musimage:latest'
+                        sh 'docker login -u anonyme5 -p Five12345'
+                        sh 'docker push anonyme5/musimage:latest'
+                    }
+			 
+               }
+            }
+        }
+}
+    stage('run in dev') {
+          when {
+                
+                expression { env.gitlabTargetBranch == 'B_user' }
+            }
+            steps {
+				script {
+				docker.withServer('tcp://35.180.206.6:4243') {
+				        sh 'docker rm --force market-user-service || true'
+                        sh 'docker run --restart=always -d -p 4000:4000 --network=mysubnet --network-alias=market-user-service --name=market-user-service   anonyme5/musimage:latest'
+                    }
+				}
+			   
+              
+            }
+        }
+     stage('Run in PRE-PROD Env') {
+                when {
+                
+               beforeAgent true
+                expression { env.gitlabTargetBranch == 'develop' }
+            }
+            agent {
+          kubernetes {
+              cloud "kubernetes"
+           label "kube"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-user-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_user/userDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_user/user-deployment.yaml '
+                     sh 'kubectl apply -f  MS_user/user-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+         stage('Run in PROD Env') {
+           when {
+                
+               beforeAgent true
+                expression { env.gitlabTargetBranch == 'release' }
+            }
+            agent {
+          kubernetes {
+              cloud "kubernetesProd"
+           label "kubeProd"
+          }
+        }
+            steps {
+				script {
+				 container('kubectl') {
+                 sh 'kubectl delete deploy market-user-service -n jenkins  || true'
+                 sh 'kubectl apply -f  MS_user/userDB-deployment.yaml ' 
+                     sh 'kubectl apply -f  MS_user/user-deployment.yaml '
+                     sh 'kubectl apply -f  MS_user/user-service.yaml ' 
+                     }
+		}
+			   
+              
+            }
+        }
+
+
+    }
+   
+}

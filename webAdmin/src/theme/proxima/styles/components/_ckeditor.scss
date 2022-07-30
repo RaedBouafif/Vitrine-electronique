@@ -1,0 +1,49 @@
+// https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/ui/theme-customization.html
+:root {
+  --ck-border-radius: #{$border-radius} !important;
+
+  --ck-color-base-border: #{$border-color} !important;
+
+  --ck-color-toolbar-border: #{$border-color} !important;
+  --ck-color-toolbar-background: #{$gray-100} !important;
+  --ck-color-button-default-hover-background: #{$gray-200} !important;
+
+  --ck-drop-shadow: #{$dropdown-box-shadow} !important;
+  --ck-color-list-button-on-text: #{$color-dark} !important;
+  --ck-color-list-button-on-background: #{$gray-200} !important;
+  --ck-color-list-button-on-background-focus: #{$gray-200} !important;
+  --ck-color-list-button-hover-background: #{$gray-100} !important;
+}
+
+.ck-content {
+  min-height: 200px;
+
+  &.ck-focused {
+    border-color: $gray-400 !important;
+    box-shadow: none !important;
+  }
+}
+
+.ck {
+  .ck-dropdown__panel {
+    border: none !important;
+  }
+}
+
+// Balloon Build
+/*.ck-body .ck-balloon-panel {
+  .ck-content {
+    min-height: 200px;
+    border-color: transparent !important;
+
+    &.ck-focused {
+      border-color: $gray-400 !important;
+    }
+  }
+
+  &.ck-toolbar-container,
+  .ck-toolbar {
+    border-radius: $border-radius !important;
+  }
+}
+*/

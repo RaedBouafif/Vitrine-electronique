@@ -1,0 +1,59 @@
+<div class="nav-item account dropdown" dropdown placement="bottom right">
+  <prx-nav-link class="dropdown-toggle" dropdownToggle [dark]="dark">
+    <img
+      src="{{ environment.assets }}img/icons/profile-placeholder.png"
+      class="avatar user-avatar rounded-circle"
+      alt="..."
+    />
+  </prx-nav-link>
+
+  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+    <div class="dropdown-heading rounded-top bg-3 arrow position-top">
+      <div class="media align-items-center">
+        <img
+          src="{{ environment.assets }}img/icons/profile-placeholder.png"
+          class="user-avatar shadow mr-2 rounded-circle"
+          alt=""
+        />
+
+        <div class="media-body">
+          <span class="bold user-name text-overflow text-capitalize"
+            >{{ user.firstname }} {{ user.lastname }}</span
+          >
+          <p class="small text-muted text-overflow mb-0">
+            {{ user.mail }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <ul class="dropdown-body list list-group list-group-flush">
+      <li
+        *ngIf="credential.admin"
+        class="list-group-item list-group-item-action"
+      >
+        <a [routerLink]="['/settings', 'admin']" href="javascript:;" translate>
+          <i-feather name="user" class="mr-2"></i-feather>
+          administrators
+        </a>
+      </li>
+      <li
+        *ngIf="credential.admin"
+        class="list-group-item list-group-item-action"
+      >
+        <a [routerLink]="['/settings']" href="javascript:;" translate>
+          <i-feather name="settings" class="mr-2"></i-feather>
+          settings
+        </a>
+      </li>
+    </ul>
+
+    <div
+      class="dropdown-footer d-flex justify-content-between align-items-center"
+    >
+      <button class="btn btn-rounded btn-primary" (click)="logout()" translate>
+        Log out
+      </button>
+    </div>
+  </div>
+</div>

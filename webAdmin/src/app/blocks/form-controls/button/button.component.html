@@ -1,0 +1,13 @@
+<button
+  [type]="type"
+  class="btn btn-{{ outlined ? 'outline' : '' }}{{ color ? color : 'primary' }}"
+  [disabled]="disabled || isLoading"
+>
+  <ng-content></ng-content>
+  <fa-icon
+    [icon]="isLoading ? loadingIcon : icon"
+    [spin]="isLoading"
+    class="ml-2"
+    *ngIf="icon"
+  ></fa-icon>
+</button>

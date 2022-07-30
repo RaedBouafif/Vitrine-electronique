@@ -1,0 +1,243 @@
+<prx-page-header pre="Clients" title="Liste Clients" [sub]="totalCount">
+  <ng-container page-tools>
+    <ul class="nav">
+      <li class="nav-item mr-2 d-none d-md-inline-flex">
+        <input
+          [(ngModel)]="filter"
+          (keyup)="updateFilter()"
+          type="text"
+          class="form-control"
+          placeholder="Recherche..."
+        />
+      </li>
+    </ul>
+
+    <input
+      type="text"
+      class="form-control d-md-none mt-2 mt-md-0"
+      placeholder="Search contacts..."
+    />
+  </ng-container>
+</prx-page-header>
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body>
+      <ng-container *ngIf="users && users.length; else loading">
+        <ngx-datatable
+          class="table table-with-details"
+          [rows]="contacts"
+          [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+          [columnMode]="ColumnMode.force"
+          headerHeight="auto"
+          [rowHeight]="false"
+          footerHeight="auto"
+          [limit]="10"
+        >
+          <!-- Row Detail Template -->
+          <ngx-datatable-row-detail
+            rowHeight="auto"
+            (toggle)="onDetailToggle($event)"
+          >
+            <ng-template
+              let-contact="row"
+              let-expanded="expanded"
+              ngx-datatable-row-detail-template
+            >
+              <h5>Liste des adresses</h5>
+              <ng-container
+                *ngIf="contact.addresses && contact.addresses.length"
+              >
+                <ngx-datatable
+                  class="listview"
+                  [headerHeight]="0"
+                  [footerHeight]="0"
+                  [rows]="contact.addresses"
+                  [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+                  [columnMode]="ColumnMode.force"
+                  headerHeight="auto"
+                  [rowHeight]="false"
+                  footerHeight="auto"
+                  [limit]="10"
+                >
+                  <!-- Column Definitions -->
+                  <ngx-datatable-column name="Adresse">
+                    <ng-template
+                      let-address="row"
+                      let-value="value"
+                      ngx-datatable-cell-template
+                    >
+                      <small class="text-muted d-block d-md-none"
+                        >Adresse</small
+                      >
+                      {{ address.address }}, {{ address.city }},
+                      {{ address.postalCode }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </ng-container>
+            </ng-template>
+          </ngx-datatable-row-detail>
+
+          <!-- Column Templates -->
+          <!-- First column is arrow toggle -->
+          <ngx-datatable-column
+            [width]="50"
+            [resizeable]="false"
+            [sortable]="false"
+            [draggable]="false"
+            [canAutoResize]="false"
+          >
+            <ng-template
+              let-contact="row"
+              let-expanded="expanded"
+              ngx-datatable-cell-template
+            >
+              <a
+                href="javascript:void(0)"
+                [class.datatable-icon-right]="!expanded"
+                [class.datatable-icon-down]="expanded"
+                title="Expand/Collapse Row"
+                (click)="toggleExpandRow(contact)"
+              >
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+          <!-- Column Definitions -->
+          <ngx-datatable-column name="Nom et prenom">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Nom et prenom</small>
+              {{ contact.firstname }} {{ contact.lastname }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Identifiant">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Identifiant</small>
+              {{ contact.login }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Téléphone">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Téléphone</small>
+              {{ contact.phoneNumber }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Email">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Email</small>
+              {{ contact.mail }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Date d'inscription">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none"
+                >Date d'inscription"</small
+              >
+              {{ contact.registrationDate | date }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actif">
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <small class="text-muted d-block d-md-none">Actif</small>
+              <span *ngIf="contact.active" class="text-capitalize text-success">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Actif
+              </span>
+              <span *ngIf="!contact.active" class="text-capitalize text-danger">
+                <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                Non Actif
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Actions Column -->
+          <ngx-datatable-column
+            [width]="80"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            cellClass="d-none d-md-flex"
+          >
+            <ng-template
+              let-contact="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <div class="d-flex justify-content-end">
+                <prx-context-menu appendToBody="true">
+                  <a
+                    *ngIf="!contact.active"
+                    (click)="update(contact, true)"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Activer
+                  </a>
+                  <a
+                    *ngIf="contact.active"
+                    (click)="update(contact, false)"
+                    class="dropdown-item"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.edit"></prx-icon
+                    ></span>
+                    Desactiver
+                  </a>
+                  <div class="divider dropdown-divider"></div>
+                  <a
+                    (click)="delete(contact)"
+                    class="dropdown-item text-danger"
+                    href="javascript:;"
+                  >
+                    <span class="d-inline-block w-20px"
+                      ><prx-icon [icon]="icons.delete"></prx-icon
+                    ></span>
+                    Supprimer
+                  </a>
+                </prx-context-menu>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #loading>
+        <prx-loader
+          [template]="'table'"
+          [isLoading]="isLoading"
+          [count]="3"
+        ></prx-loader>
+      </ng-template>
+    </prx-card-body>
+  </prx-card>
+</div>

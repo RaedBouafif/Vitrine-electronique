@@ -1,0 +1,9 @@
+@each $name, $color in $brand-colors {
+  .brand-#{$name} {
+    @include button-hover($color, $color);
+  }
+
+  .brand-outline-#{$name} {
+    @include button-outline-hover($color);
+  }
+}

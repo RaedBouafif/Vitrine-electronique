@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-zuul-service
+  labels:
+    run: market-zuul-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-zuul-service
+    spec:
+      containers:
+      - name: market-zuul-service
+        image: anonyme5/mzsimage:latest
+        ports:
+        - containerPort: 9004

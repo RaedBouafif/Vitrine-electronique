@@ -1,0 +1,16 @@
+{
+  "name": "proxima",
+  "short_name": "proxima",
+  "theme_color": "#5533ff",
+  "background_color": "#5533ff",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "assets/img/logo.svg",
+      "sizes": "60x60",
+      "type": "image/svg"
+    }
+  ]
+}

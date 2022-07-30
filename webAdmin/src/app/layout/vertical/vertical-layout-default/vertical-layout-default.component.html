@@ -1,0 +1,44 @@
+<prx-sidenav
+  [credential]="credential"
+  [class.mobile-hidden]="mobileCollapsed"
+  [collapsed]="sidenavCollapsed"
+  [fixed]="fixedSidenav"
+  (sideNavToggled)="onSidenavToggled($event)"
+></prx-sidenav>
+
+<prx-main-body
+  [ngClass]="{
+    'sidenav-collapsed': sidenavCollapsed,
+    'quick-sidenav-expanded': !isQuickSidenavCollapsed
+  }"
+>
+  <prx-header [fixed]="fixedHeader">
+    <prx-header-toolbar
+      [user]="user"
+      [credential]="credential"
+      [sidenavCollapsed]="sidenavCollapsed"
+      [quickSidenavCollapsed]="isQuickSidenavCollapsed"
+      (sidenavToggled)="onSidenavToggled($event)"
+      (quickSidenavToggled)="onQuickSidenavToggled($event)"
+    ></prx-header-toolbar>
+  </prx-header>
+
+  <main class="body-wrapper">
+    <router-outlet></router-outlet>
+  </main>
+
+  <prx-footer></prx-footer>
+</prx-main-body>
+
+<!-- <prx-quick-sidenav [collapsed]="isQuickSidenavCollapsed"></prx-quick-sidenav> -->
+
+<prx-page-overlay
+  *ngIf="!isQuickSidenavCollapsed"
+  class="quick-sidenav-overlay"
+>
+  <fa-icon
+    [icon]="closeIcon"
+    class="close"
+    (click)="onQuickSidenavToggled(true)"
+  ></fa-icon>
+</prx-page-overlay>

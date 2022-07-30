@@ -1,0 +1,15 @@
+@import "import";
+
+:host {
+  .address-element {
+    margin-bottom: 0;
+    display: flex;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .icon {
+    position: absolute;
+    left: 0;
+  }
+}

@@ -1,0 +1,19 @@
+@import "import";
+
+:host {
+  width: $mz-quick-sidenav-width;
+  order: 3;
+  margin-right: 0;
+  transition: margin-right 0.3s ease-in-out;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: $mz-quick-sidenav-bg-color;
+  border-left: 1px solid $border-color;
+  z-index: $prx-page-overlay-zindex + 1;
+
+  &.collapsed {
+    margin-right: -$mz-quick-sidenav-width;
+  }
+}

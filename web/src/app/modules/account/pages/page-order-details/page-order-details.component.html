@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="order-header">
+        <div class="order-header__actions">
+            <a routerLink="/account/orders" class="btn btn-xs btn-secondary">Retour à la liste</a>
+        </div>
+        <h5 class="order-header__title">Commande #{{ order.reference }}</h5>
+        <div class="order-header__subtitle">
+            A été placé le <mark class="order-header__date">{{ order.orderDate | date:'short' }}</mark>
+            et est actuellement <mark class="order-header__status">{{ getStatus(order.status) }}</mark>{{ ' '}}
+            <span style="color: green;" *ngIf="order.paymentStatus">(Payé)</span>
+            <span style="color: red;" *ngIf="!order.paymentStatus">(Non Payé)</span>.
+        </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+        <div class="table-responsive-sm">
+            <table>
+                <thead>
+                <tr>
+                    <th>Article</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody class="card-table__body card-table__body--merge-rows">
+                <tr *ngFor="let item of order.details">
+                    <td >
+                        <span *ngIf="getProduct(item.article)">{{ getProduct(item.article).title }}</span>
+                        <span *ngIf="!getProduct(item.article)">{{ item.article }}</span>
+                         × {{ item.quantity }}</td>
+                    <td>{{ item.unitPrice * item.quantity   }} TND</td>
+                </tr>
+                </tbody>
+  
+                <tfoot>
+                <tr>
+                    <th>Total HT</th>
+                    <td>{{ order.total }} TND</td>
+                </tr>
+                <tr>
+                    <th>Total TTC</th>
+                    <td *ngIf="order.totalTTC">{{ order.totalTTC }} TND</td>
+                    <td *ngIf="!order.totalTTC">{{ order.total }} TND</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3 no-gutters mx-n2">
+    <div class="col-sm-12 col-12 px-2">
+        <div class="card address-card address-card--featured">
+            <div class="address-card__body">
+                <div class="address-card__badge address-card__badge--muted">Adresse de livraison</div>
+                <div class="address-card__name">{{ user.firstname + ' ' + user.lastname}}</div>
+                <div class="address-card__row">
+                    {{ order.deliveryAddress }}
+                </div>
+                <div class="address-card__row">
+                    <div class="address-card__row-title">Numéro de téléphone</div>
+                    <div class="address-card__row-content">{{ user.phoneNumber }}</div>
+                </div>
+                <div class="address-card__row">
+                    <div class="address-card__row-title">Email</div>
+                    <div class="address-card__row-content">{{ user.mail }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

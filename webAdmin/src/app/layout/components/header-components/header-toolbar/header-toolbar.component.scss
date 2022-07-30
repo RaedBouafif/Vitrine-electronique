@@ -1,0 +1,48 @@
+@import "import";
+
+.navbar {
+  display: flex;
+  //flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: $mz-header-height;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    //flex-direction: row;
+    //align-items: center;
+  }
+}
+
+.navbar-nav {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  //justify-content: flex-end;
+  align-items: center;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  flex: 1;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    flex: unset;
+    padding: 0.5rem 0;
+  }
+}
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+.toolbar-brand {
+  margin-right: 1rem;
+  display: none;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    display: block;
+  }
+}
+
+.logo {
+  max-height: $mz-sidenav-logo-max-height;
+}

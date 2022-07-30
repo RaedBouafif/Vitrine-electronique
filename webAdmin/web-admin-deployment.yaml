@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-web-admin-service
+  labels:
+    run: market-web-admin-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-web-admin-service
+    spec:
+      containers:
+        - name: market-web-admin-service
+          image: anonyme5/mwasimage:latest
+          ports:
+            - containerPort: 90

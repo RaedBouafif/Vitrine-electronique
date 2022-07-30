@@ -1,0 +1,74 @@
+<div *ngIf="!isAuthentificated" class="account-menu">
+   <div style="margin: 5%;"> <div class="form-group">
+        <button type="button" (click)="signWithSocial('GO')"  class="btn btn-danger w-100">Google</button>
+
+    </div>
+  
+    <div class="form-group">
+        <button type="button" (click)="signWithSocial('FB')"  class="btn btn-primary w-100">Facebook</button>
+
+    </div>
+</div>
+   <h4 class="text-center">OU</h4>
+        <form class="account-menu__form" (ngSubmit)="log(form)" [formGroup]="form">
+            <div class="account-menu__form-title">Connectez-vous à votre compte</div>
+        <app-alert *ngIf="message===1" class="mb-3" type="danger">Identifiant ou mot de passe invalide</app-alert>
+        <app-alert *ngIf="message===2" class="mb-3" type="danger">Votre compte n'est pas encore confirmee</app-alert>
+       <div class="form-group">
+            <label class="sr-only">Identifiant*</label>
+            <input [class.is-invalid]=" form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched)" 
+             type="text" class="form-control form-control-sm"  formControlName="username">
+             <div [hidden]="form.controls.username.valid || form.controls.username.untouched" class="invalid-feedback">
+                Identifiant requis
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="sr-only">Mot de passe*</label>
+            <div class="account-menu__form-forgot">
+                <input [class.is-invalid]=" form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)" formControlName="password"
+                autocomplete="new-password2"    type="password" class="form-control form-control-sm">
+                 <a routerLink="/account/forgot" class="account-menu__form-forgot-link">oublié?</a>
+            </div>
+               
+                 <div [hidden]="form.controls.password.valid || form.controls.password.untouched" class="invalid-feedback">
+                  Mot de passe requis </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <span class="form-check-input input-check">
+                    <span class="input-check__body">
+                        <input formControlName="remember" class="input-check__input" type="checkbox" id="login-remember">
+                        <span class="input-check__box"></span>
+                        <app-icon class="input-check__icon" name="check-9x7" size="9x7"></app-icon>
+                    </span>
+                </span>
+                <label class="form-check-label" for="login-remember">Souviens-toi de moi</label>
+            </div>
+        </div>
+        <div class="form-group account-menu__form-button">
+            <button [class.disabled]="form.invalid" type="submit" class="btn btn-primary btn-sm">S'identifier</button>
+        </div>
+        <div class="account-menu__form-link"><a routerLink="/account/login" (click)="closeMenu.emit()">Créer un compte</a></div>
+    </form>
+   
+</div>
+<div *ngIf="isAuthentificated" class="account-menu">
+    <div class="account-menu__divider"></div>
+    <a routerLink="/account/dashboard" class="account-menu__user" (click)="closeMenu.emit()">
+        <div class="account-menu__user-info">
+            <div class="account-menu__user-name">{{credential.fullName}}</div>
+            <div class="account-menu__user-email">{{credential.email}}</div>
+        </div>
+    </a>
+    <div class="account-menu__divider"></div>
+    <ul class="account-menu__links">
+        <li><a routerLink="/account/profile" (click)="closeMenu.emit()">Editer le profil</a></li>
+        <li><a routerLink="/account/orders" (click)="closeMenu.emit()">Historique des commandes</a></li>
+        <li><a routerLink="/account/addresses" (click)="closeMenu.emit()">Adresses</a></li>
+        <li><a routerLink="/account/password" (click)="closeMenu.emit()">Mot de passe</a></li>
+    </ul>
+    <div class="account-menu__divider"></div>
+    <ul class="account-menu__links">
+        <li><a  (click)="logout();">Se déconnecter</a></li>
+    </ul>
+</div>

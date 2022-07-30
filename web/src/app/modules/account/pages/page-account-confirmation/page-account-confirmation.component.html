@@ -1,0 +1,36 @@
+<div class="block">
+    <div *ngIf="code === 1||code===0" class="container">
+        <div class="not-found">
+            <div class="not-found__404">
+                Félicitation
+            </div>
+
+            <div class="not-found__content">
+                <h1 class="not-found__title">Bienvenue</h1>
+
+                <p class="not-found__text">
+                    Votre Compte a été confirmée avec succès
+                </p>
+
+    
+            </div>
+        </div>
+    </div>
+    <div *ngIf="code === 2" class="container">
+        <div class="not-found">
+            <div class="not-found__404">
+                Oops !
+            </div>
+
+            <div class="not-found__content">
+                
+
+                <p class="not-found__text">
+                    Le lien d'activation de votre compte a expiré, vous receverez un nouveau lien
+                </p>
+
+               
+            </div>
+        </div>
+    </div>
+</div>

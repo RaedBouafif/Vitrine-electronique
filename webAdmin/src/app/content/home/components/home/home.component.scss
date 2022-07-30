@@ -1,0 +1,129 @@
+@import "import";
+
+:host {
+  height: 100%;
+  padding: 0;
+  @include center-flex();
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    position: relative;
+  }
+}
+
+.content-wrapper {
+  z-index: $prx-page-overlay-zindex;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    width: 50%;
+    min-width: 420px;
+    height: auto;
+  }
+
+  @include media-breakpoint-up(lg) {
+    width: 35%;
+  }
+}
+
+.card {
+  height: 100%;
+  margin-bottom: 0;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    height: auto;
+  }
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mobile-full-screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.separator {
+  margin: 2rem 0;
+}
+
+.static {
+  &-shape {
+    position: absolute;
+
+    &.shape {
+      &-circle {
+        opacity: 0.25;
+
+        &-1 {
+          right: 0;
+          top: 0;
+          transform: translate3d(50%, -50%, 0);
+
+          div {
+            @include circle-variant(300px, $gray-300);
+          }
+        }
+
+        &-2 {
+          left: 0;
+          bottom: 0;
+          transform: translate3d(-50%, 50%, 0);
+
+          div {
+            @include circle-variant(200px, $gray-300);
+          }
+        }
+      }
+
+      &-ring {
+        left: 53%;
+        top: 30%;
+
+        &-1 {
+          transform: translate3d(-50%, -50%, 0);
+          .animation {
+            @include ring-variant(20px, 4px, $color-primary);
+            animation-duration: 45s;
+          }
+        }
+
+        &-2 {
+          transform: translate3d(-15%, -15%, 0);
+          .animation {
+            @include ring-variant(20px, 2px, $color-alternate);
+            animation-duration: 60s;
+          }
+        }
+
+        .animation {
+          border-style: dashed;
+        }
+      }
+    }
+
+    &.pattern {
+      &-dots {
+        &-1 {
+          bottom: 0;
+          right: 0;
+          width: 75%;
+          height: 50%;
+          transform: translate3d(25%, 25%, 0);
+          @include pattern-dots(2px, 10px, rgba($color-gray, 0.1));
+        }
+      }
+    }
+  }
+}

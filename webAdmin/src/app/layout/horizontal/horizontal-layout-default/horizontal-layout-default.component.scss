@@ -1,0 +1,17 @@
+@import "import";
+
+:host {
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+
+  &.fixed-header {
+    .main-body {
+      padding-top: $mz-header-height;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        padding-top: $mz-header-height * 2;
+      }
+    }
+  }
+}

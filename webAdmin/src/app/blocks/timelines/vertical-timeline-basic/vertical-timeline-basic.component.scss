@@ -1,0 +1,61 @@
+@import "import";
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border-style: solid;
+}
+
+.list-group-timeline {
+  //position: relative;
+
+  .list-group-item {
+    margin-bottom: 0;
+    position: relative;
+    padding: 0;
+    margin: $list-group-item-padding-y 0;
+
+    &:after {
+      content: "";
+      width: 2px;
+      background-color: $time-line-color;
+      position: absolute;
+      z-index: 0;
+      height: 100%;
+      left: $time-line-left-pos;
+      top: $time-line-top-pos;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+
+      &:after {
+        content: none;
+      }
+    }
+
+    &.has-indicator {
+      &:after {
+        left: 44px;
+        top: 21px;
+      }
+    }
+  }
+}
+
+.task-time {
+  width: $time-line-time-width;
+  max-width: $time-line-time-width;
+  text-align: right;
+}
+
+.task-title {
+  cursor: pointer;
+}
+
+.task-done {
+  .task-title {
+    text-decoration: line-through;
+  }
+}

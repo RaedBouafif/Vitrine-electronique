@@ -1,0 +1,8 @@
+<div class="text-uppercase text-muted small mb-2">
+  <span *ngIf="label">{{ label }}</span>
+  <ng-content select="[title-label]"></ng-content>
+</div>
+
+<div class="d-flex align-items-center">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,10 @@
+@import "import";
+
+.tgl-btn {
+  margin-bottom: 0;
+}
+
+.option {
+  margin-bottom: 1.5rem;
+  @include center-flex(space-between);
+}

@@ -1,0 +1,26 @@
+.icon {
+  padding: 0;
+  display: inline-block;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+
+  &.logo {
+    max-width: 80px;
+  }
+
+  i {
+    margin: 0;
+  }
+}
+
+img {
+  &.icon {
+    max-width: 54px;
+  }
+}
+
+@each $i, $color in $theme-colors {
+  .stroke-#{"" + $i} {
+    stroke: $color;
+  }
+}

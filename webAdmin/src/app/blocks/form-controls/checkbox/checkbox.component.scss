@@ -1,0 +1,138 @@
+@import "import";
+
+/** shared among radio */
+.form-control {
+  display: none;
+
+  &:checked + .control-label {
+    font-weight: $font-weight-normal;
+
+    .check-mark {
+      border-color: $check-radio-default-check-border-color;
+    }
+  }
+}
+
+.check-mark {
+  position: relative;
+  padding: 0;
+  margin: 0 0.25rem 0 0;
+  transition: all 0.3s ease-in-out;
+  vertical-align: middle;
+  height: $checkbox-size;
+  width: $checkbox-size;
+  border: 1px solid $input-border-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:before {
+    content: "";
+    display: block;
+  }
+}
+
+.control-label {
+  cursor: pointer;
+  padding-left: 0;
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+
+  &.error {
+    &:before {
+      content: none;
+    }
+  }
+
+  &.shadowed {
+    box-shadow: none !important;
+
+    .check-mark {
+      box-shadow: $checkbox-check-shadow;
+    }
+  }
+}
+/***/
+
+.form-control {
+  &:checked {
+    + .control-label .check-mark {
+      background: $check-radio-default-check-border-color;
+
+      &:before {
+        border-right: $checkbox-checksize solid $white;
+        border-bottom: $checkbox-checksize solid $white;
+      }
+    }
+  }
+}
+
+.control-label {
+  .check-mark {
+    border-radius: 0.15rem;
+
+    &:before {
+      transform: rotate(45deg);
+      height: $checkbox-size - 6;
+      width: $checkbox-size / 3;
+    }
+  }
+}
+
+:host {
+  position: relative;
+  display: flex;
+
+  &.form-check-inline {
+    display: inline-flex;
+  }
+
+  &.bw-2 {
+    .control-label {
+      .check-mark {
+        border-width: 2px;
+      }
+    }
+  }
+
+  &.inverted {
+    .form-control:checked + .control-label .check-mark {
+      background: $input-bg !important;
+
+      &:before {
+        border-bottom-color: $check-radio-default-check-border-color;
+        border-right-color: $check-radio-default-check-border-color;
+      }
+    }
+  }
+
+  &.circle {
+    .control-label .check-mark {
+      border-radius: 50%;
+    }
+  }
+
+  @each $i, $color in $theme-colors {
+    &.checkbox-#{$i} {
+      @include check-radio-checked-variant($color, checkbox);
+
+      &.checkbox-outlined {
+        @include check-radio-outlined-variant($color);
+      }
+
+      &.checkbox-solid {
+        @include check-radio-solid-variant($color, checkbox);
+      }
+
+      &.inverted {
+        .form-control:checked + .control-label .check-mark:before {
+          //color: $color;
+          border-bottom-color: $color;
+          border-right-color: $color;
+        }
+      }
+    }
+  }
+}

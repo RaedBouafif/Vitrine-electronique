@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-user-service
+  labels:
+    run: market-user-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-user-service
+    spec:
+      containers:
+      - name: market-user-service
+        image: anonyme5/musimage:latest
+        ports:
+        - containerPort: 4000

@@ -1,0 +1,63 @@
+<div
+  class="nav-item notifications dropdown"
+  dropdown
+  [insideClick]="true"
+  placement="bottom right"
+  (isOpenChange)="onOpenChange($event)"
+>
+  <prx-nav-link
+    href="javascript:;"
+    class="dropdown-toggle"
+    [class.text-dark]="!dark"
+    [dark]="dark"
+    dropdownToggle
+  >
+    <i-feather name="bell" class="ring"></i-feather>
+    <span class="notification-badge notification-indicator"></span>
+  </prx-nav-link>
+
+  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+    <div
+      class="dropdown-heading d-flex align-items-center justify-content-between"
+    >
+      <h6 class="m-0 text-uppercase bold">Notifications</h6>
+      <small class="text-muted" *ngIf="notifications && notifications.length"
+        ><span class="bold number">{{ notifications.length }}</span> new</small
+      >
+    </div>
+
+    <ng-container *ngIf="notifications && notifications.length; else loading">
+      <prx-fade-content contentClass="list list-hover dropdown-body">
+        <a
+          href="javascript:;"
+          class="list-group-item list-group-item-action d-flex align-items-center"
+          *ngFor="let note of notifications"
+        >
+          <span class="text-{{ note.priority }}">
+            <i-feather [name]="note.type" class="mr-2"></i-feather>
+          </span>
+
+          <p class="semi-bold mb-0 d-flex flex-column">
+            <span>{{ note.description }}</span>
+            <span class="text-muted small">{{ note.time }}</span>
+          </p>
+        </a>
+      </prx-fade-content>
+
+      <div class="dropdown-footer text-center">
+        <a href="javascript:;" title="">
+          <i-feather name="more-horizontal"></i-feather>
+        </a>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="px-3">
+        <prx-loader
+          template="notifications"
+          [isLoading]="isLoading"
+        ></prx-loader>
+      </div>
+    </ng-template>
+  </div>
+</div>

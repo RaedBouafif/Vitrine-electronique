@@ -1,0 +1,30 @@
+.noUi-target {
+  border: $nouislider-target-border;
+  background: $nouislider-target-bg-color;
+  height: $nouislider-target-height;
+  box-shadow: none;
+
+  .noUi-handle {
+    border: 1px solid $nouislider-handle-border-color;
+    box-shadow: $nouislider-handle-box-shadow;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+    right: -$nouislider-handle-size / 2;
+
+    &:before,
+    &:after {
+      content: none;
+    }
+
+    &:focus {
+      box-shadow: $nouislider-handle-box-shadow-focus;
+    }
+  }
+
+  &.noUi-horizontal .noUi-handle {
+    width: $nouislider-handle-size;
+    height: $nouislider-handle-size;
+    border-radius: $nouislider-border-radius;
+    outline: none;
+  }
+}

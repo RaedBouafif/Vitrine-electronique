@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-userdb
+  labels:
+    run: market-userdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-userdb
+    spec:
+      containers:
+      - name: market-userdb
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-userdb
+spec:
+  selector:
+    run: market-userdb
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+      nodePort: 32500

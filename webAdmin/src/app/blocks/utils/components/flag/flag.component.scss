@@ -1,0 +1,24 @@
+@import "import";
+
+.flag {
+  &-xs {
+    width: $mz-user-avatar-sm-width;
+    height: $mz-user-avatar-sm-width;
+  }
+
+  &,
+  &-sm {
+    width: $mz-user-avatar-sm-width;
+    height: $mz-user-avatar-sm-width;
+  }
+
+  &-md {
+    width: $mz-user-avatar-md-width * 1.5;
+    height: $mz-user-avatar-md-width * 1.5;
+  }
+
+  &-lg {
+    width: $mz-user-avatar-md-width * 2;
+    height: $mz-user-avatar-md-width * 2;
+  }
+}

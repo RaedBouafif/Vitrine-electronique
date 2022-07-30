@@ -1,0 +1,89 @@
+<prx-page-header title="Nouvelle Image" sub=""></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body class="pb-6 p-md-5">
+      <prx-alert
+        [hidden]="!error"
+        [scheme]="ColorScheme.Danger"
+        [withIcon]="true"
+        [dismissible]="true"
+      >
+        L'ajout a échoué
+      </prx-alert>
+      <form class="cozy" #form="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Fichier</h4>
+
+            <ngx-dropzone
+              (change)="onSelect($event)"
+              [multiple]="false"
+              [accept]="'image/*'"
+            >
+              <ngx-dropzone-label
+                >Déposez votre image ici ou cliquez pour
+                télécharger.</ngx-dropzone-label
+              >
+              <ngx-dropzone-preview
+                *ngIf="file"
+                [removable]="true"
+                (removed)="onRemove(file)"
+              >
+                <ngx-dropzone-label
+                  >{{ file.name }} ({{ file.type }})</ngx-dropzone-label
+                >
+              </ngx-dropzone-preview>
+            </ngx-dropzone>
+          </div>
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Information</h4>
+
+            <div class="form-group">
+              <label class="control-label">Titre*</label>
+              <input
+                [class.is-invalid]="
+                  title.invalid && (title.dirty || title.touched)
+                "
+                class="form-control"
+                type="text"
+                name="title"
+                #title="ngModel"
+                [(ngModel)]="image.title"
+                required
+              />
+              <small
+                *ngIf="title.invalid && (title.dirty || title.touched)"
+                class="form-text text-danger"
+                >Titre requis</small
+              >
+            </div>
+            <div class="form-group">
+              <label class="control-label">Description</label>
+              <textarea
+                class="form-control"
+                rows="6"
+                name="description"
+                #description="ngModel"
+                [(ngModel)]="image.description"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="form-group text-right">
+          <prx-button
+            type="submit"
+            color="primary"
+            [icon]="longArrowAltRight"
+            [isLoading]="isLoading"
+            [disabled]="form.invalid || file === null"
+            (click)="submit(form)"
+          >
+            <span translate>Enregistrer</span>
+          </prx-button>
+        </div>
+      </form>
+    </prx-card-body>
+  </prx-card>
+</div>

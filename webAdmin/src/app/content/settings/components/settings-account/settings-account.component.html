@@ -1,0 +1,64 @@
+<prx-card class="overflow-hidden">
+  <prx-card-body class="pb-6 p-md-5">
+    <prx-alert
+      [hidden]="!error"
+      [scheme]="ColorScheme.Danger"
+      [withIcon]="true"
+      [dismissible]="true"
+    >
+      Le mise a jour a échoué
+    </prx-alert>
+    <prx-alert
+      [hidden]="!success"
+      [scheme]="ColorScheme.Success"
+      [withIcon]="true"
+      [dismissible]="true"
+    >
+      Mise a jour aves succées
+    </prx-alert>
+    <form class="cozy" #form="ngForm">
+      <div class="form-group form-row">
+        <label class="control-label">Adresse Email principal</label>
+        <input
+          [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+          class="form-control"
+          type="email"
+          name="mail"
+          #email="ngModel"
+          [(ngModel)]="mail"
+          required
+          email="true"
+        />
+        <small
+          *ngIf="email.invalid && (email.dirty || email.touched)"
+          class="form-text text-danger"
+          >Email requis</small
+        >
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-group">Description</p>
+
+          <ckeditor
+            [editor]="editor"
+            [(ngModel)]="settings.description"
+            name="description"
+          ></ckeditor>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <div class="form-group text-right">
+        <prx-button
+          type="button"
+          color="primary"
+          [icon]="longArrowAltRight"
+          [isLoading]="isLoading"
+          [disabled]="form.invalid"
+          (click)="submit(form)"
+        >
+          <span translate>Enregistrer</span>
+        </prx-button>
+      </div>
+    </form>
+  </prx-card-body>
+</prx-card>

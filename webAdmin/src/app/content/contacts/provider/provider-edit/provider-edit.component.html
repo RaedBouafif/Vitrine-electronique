@@ -1,0 +1,218 @@
+<prx-page-header title="Mettre a jour Fournisseur" sub=""></prx-page-header>
+
+<div class="container-fluid">
+  <prx-card>
+    <prx-card-body class="pb-6 p-md-5">
+      <prx-alert
+        [hidden]="!error"
+        [scheme]="ColorScheme.Danger"
+        [withIcon]="true"
+        [dismissible]="true"
+      >
+        Le mise à jour a échoué
+      </prx-alert>
+      <form class="cozy" #form="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Information</h4>
+
+            <div class="form-group">
+              <label class="control-label">Libelle*</label>
+              <input
+                [class.is-invalid]="
+                  designation.invalid &&
+                  (designation.dirty || designation.touched)
+                "
+                class="form-control"
+                type="text"
+                name="designation"
+                #designation="ngModel"
+                [(ngModel)]="provider.designation"
+                required
+              />
+              <small
+                *ngIf="
+                  designation.invalid &&
+                  (designation.dirty || designation.touched)
+                "
+                class="form-text text-danger"
+                >Libelle requis</small
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Details</label>
+              <textarea
+                class="form-control"
+                rows="1"
+                name="description"
+                #description="ngModel"
+                [(ngModel)]="provider.description"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Actif</label>
+              <ng-select
+                [items]="table"
+                bindLabel="name"
+                bindValue="id"
+                [searchable]="false"
+                [clearable]="false"
+                placeholder="Select user"
+                [(ngModel)]="provider.active"
+                name="active"
+              >
+              </ng-select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Lien</label>
+              <input
+                class="form-control"
+                type="text"
+                name="link"
+                #link="ngModel"
+                [(ngModel)]="provider.link"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4 class="text-group mb-4">Contact</h4>
+            <div class="form-group">
+              <label class="control-label">Numéro de téléphone*</label>
+              <input
+                [class.is-invalid]="
+                  phoneNumber.invalid &&
+                  (phoneNumber.dirty || phoneNumber.touched)
+                "
+                pattern="[0-9]{8,8}$"
+                type="text"
+                class="form-control"
+                required
+                name="phoneNumber"
+                #phoneNumber="ngModel"
+                [(ngModel)]="provider.phoneNumber"
+              />
+              <div
+                *ngIf="
+                  phoneNumber.invalid &&
+                  (phoneNumber.dirty || phoneNumber.touched)
+                "
+              >
+                <small
+                  *ngIf="phoneNumber.errors.required"
+                  class="form-text text-danger"
+                  >Numéro de téléphone requis</small
+                >
+                <small
+                  *ngIf="phoneNumber.errors.pattern"
+                  class="form-text text-danger"
+                  >Numéro de téléphone invalide</small
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Email*</label>
+
+              <input
+                email="true"
+                [class.is-invalid]="
+                  mail.invalid && (mail.dirty || mail.touched)
+                "
+                type="email"
+                class="form-control"
+                required
+                name="mail"
+                #mail="ngModel"
+                [(ngModel)]="provider.mail"
+              />
+              <div *ngIf="mail.invalid && (mail.dirty || mail.touched)">
+                <small
+                  *ngIf="mail.errors.required"
+                  class="form-text text-danger"
+                  >Email requis</small
+                >
+                <small
+                  *ngIf="!mail.errors.required"
+                  class="form-text text-danger"
+                  >Email invalide</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Adresse*</label>
+              <input
+                [class.is-invalid]="
+                  address.invalid && (address.dirty || address.touched)
+                "
+                type="text"
+                class="form-control"
+                required
+                name="address"
+                #address="ngModel"
+                [(ngModel)]="provider.address"
+              />
+              <div
+                *ngIf="address.invalid && (address.dirty || address.touched)"
+              >
+                <small
+                  *ngIf="address.errors.required"
+                  class="form-text text-danger"
+                  >adresse requis</small
+                >
+              </div>
+            </div>
+
+            <div class="form-group form-row">
+              <div class="col-md-4">
+                <label class="control-label">Ville</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="city"
+                  #city="ngModel"
+                  [(ngModel)]="provider.city"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="control-label">Code postale</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="postalCode"
+                  #postalCode="ngModel"
+                  [(ngModel)]="provider.postalCode"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="control-label">Pays</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="country"
+                  #country="ngModel"
+                  [(ngModel)]="provider.country"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="form-group text-right">
+          <prx-button
+            type="submit"
+            color="primary"
+            [icon]="longArrowAltRight"
+            [isLoading]="isLoading"
+            [disabled]="form.invalid"
+            (click)="submit(form)"
+          >
+            <span translate>Enregistrer</span>
+          </prx-button>
+        </div>
+      </form>
+    </prx-card-body>
+  </prx-card>
+</div>

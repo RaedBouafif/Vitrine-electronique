@@ -1,0 +1,287 @@
+<div class="container-fluid">
+  <div class="bg-contrast py-md-3">
+    <div
+      class="container-fluid d-flex justify-content-md-between align-items-center"
+    >
+      <h1 class="title h3 d-none d-md-flex text-white">C</h1>
+      <prx-tabbar>
+        <prx-nav-link
+          (click)="download()"
+          tooltip="Télécharger"
+          placement="bottom"
+        >
+          <prx-icon [icon]="icons.download"></prx-icon>
+        </prx-nav-link>
+      </prx-tabbar>
+    </div>
+  </div>
+  <div>
+    <prx-card class="mt-4">
+      <prx-card-body class="invoice p-3 p-sm-6">
+        <div class="row mb-5 align-items-center">
+          <div class="col-lg-6">
+            <div class="company">
+              <img
+                class="logo img-responsive"
+                src="{{ environment.assets }}img/logos/logo_final.png"
+                alt=""
+              />
+              <h5 class="bold text-capitalize">Tunisie Accastillage</h5>
+
+              <prx-address url="tunisie-accastillage.com"></prx-address>
+            </div>
+          </div>
+
+          <div class="col-lg-6 text-right">
+            <div class="title">
+              <h1 class="text-uppercase display-4">Commande</h1>
+              <h4 class="text-muted bold">{{ invoice.reference }}</h4>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="invoice !== null; else loading">
+          <div class="row">
+            <div class="col-lg-8">
+              <p class="small text-darker">Client</p>
+              <h5 class="bold text-capitalize">
+                {{ customer.firstname }} {{ customer.lastname }}
+              </h5>
+              <prx-address
+                [email]="customer.mail"
+                [phone]="customer.phoneNumber"
+                [address]="invoice.deliveryAddress"
+              >
+              </prx-address>
+            </div>
+            <div
+              class="col-lg-4 d-flex align-items-end justify-content-between mb-3"
+            >
+              <div>
+                <div class="regular text-capitalize">N:</div>
+                <div class="regular text-capitalize">Date:</div>
+                <div class="regular text-capitalize">Paiement:</div>
+                <div class="regular text-capitalize">Livraison:</div>
+                <div class="regular text-capitalize">Total HT :</div>
+                <div class="regular text-capitalize">Total TTC :</div>
+              </div>
+              <div>
+                <div>{{ invoice.reference }}</div>
+                <div>{{ invoice.orderDate | date: 'mediumDate' }}</div>
+                <div>{{ payment.name }}</div>
+                <div>{{ delivery.name }}</div>
+                <div class="bold text-darker">
+                  {{ invoice.total | number: '1.2-2' }} TND
+                </div>
+                <div class="bold text-darker">
+                  {{ invoice.totalTTC || invoice.total | number: '1.2-2' }} TND
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br /><br /><br />
+
+          <table class="table table--responsive">
+            <thead>
+              <tr>
+                <td class="border-top-0 small text-uppercase bold text-dark">
+                  Article
+                </td>
+                <td
+                  class="border-top-0 small text-uppercase bold text-dark text-center"
+                >
+                  Quantite
+                </td>
+                <td
+                  class="border-top-0 small text-uppercase bold text-dark text-right"
+                >
+                  Prix Unitaire
+                </td>
+                <td
+                  class="border-top-0 small text-uppercase bold text-dark text-right"
+                >
+                  Total
+                </td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let item of invoice.details">
+                <td *ngIf="showArticle(item.article)">
+                  <p class="bold mb-2">{{ showArticle(item.article).title }}</p>
+                  <div
+                    [innerHTML]="showArticle(item.article).description"
+                    class="invoice-items-table font-sm text-muted"
+                  ></div>
+                </td>
+                <td *ngIf="!showArticle(item.article)">
+                  <p class="bold mb-2">{{ item.article }}</p>
+                </td>
+                <td class="text-center">{{ item.quantity | number }}</td>
+                <td class="text-right">
+                  {{ item.unitPrice | number: '1.2-2' }}
+                </td>
+                <td class="text-right">
+                  {{ item.unitPrice * item.quantity | number: '1.2-2' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row grand-total">
+            <div
+              class="col-lg-6 ml-auto d-flex align-items-center justify-content-between"
+            >
+              <div class="text-uppercase bold text-darker">Total HT</div>
+              <div class="text-right regular text-darker font-md">
+                {{ invoice.total | number: '1.2-2' }} TND
+              </div>
+            </div>
+          </div>
+          <div class="row grand-total">
+            <div
+              class="col-lg-6 ml-auto d-flex align-items-center justify-content-between"
+            >
+              <div class="text-uppercase bold text-darker">Total TTC</div>
+              <div class="text-right regular text-darker font-md">
+                {{ invoice.totalTTC || invoice.total | number: '1.2-2' }} TND
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-end mt-9">
+            <div class="col-12 col-md-6 mr-auto">
+              <p class="font-md light text-secondary">Merci <br /></p>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #loading>
+          <div class="row">
+            <div class="col-md-6">
+              <prx-loader
+                [template]="'table'"
+                [isLoading]="invoice === null"
+                [count]="3"
+              ></prx-loader>
+            </div>
+          </div>
+        </ng-template>
+      </prx-card-body>
+    </prx-card>
+  </div>
+</div>
+<div style=" opacity: 0.0;">
+  <div style="padding: 100px;" id="htmlData" #htmlData>
+    <p style="height: 150px;">
+      <span style="float: left;">
+        <img
+          style="height: 75px;width: 75px;margin-bottom: 20px;"
+          src="{{ environment.assets }}img/logos/logo_final.png"
+          alt=""
+        />
+
+        <h5><strong>Tunisie Accastillage</strong></h5>
+        <h5>tunisie-accastillage.com</h5>
+      </span>
+      <span style="float: right;">
+        <h1 style="text-transform: uppercase;">Commande</h1>
+        <h4>{{ invoice.reference }}</h4></span
+      >
+    </p>
+
+    <p>
+      <span style="float: left;">
+        <p>Client</p>
+        <h5 style="text-transform: capitalize;font-weight: bold;">
+          {{ customer.firstname }} {{ customer.lastname }}
+        </h5>
+        <p>{{ invoice.deliveryAddress }}</p>
+        <p>{{ customer.mail }}</p>
+        <p>{{ customer.phoneNumber }}</p>
+      </span>
+      <span style="float: right;font-size: medium;">
+        <div>
+          <span style="text-transform: capitalize;">N:</span
+          >{{ invoice.reference }}
+        </div>
+        <div>
+          <span style="text-transform: capitalize;">Date:</span
+          >{{ invoice.orderDate | date: 'mediumDate' }}
+        </div>
+        <div>
+          <span style="text-transform: capitalize;">Paiement:</span
+          >{{ payment.name }}
+        </div>
+        <div>
+          <span style="text-transform: capitalize;">Livraison:</span
+          >{{ delivery.name }}
+        </div>
+        <div>
+          <span style="text-transform: capitalize;">Total HT :</span
+          >{{ invoice.total | number: '1.2-2' }} TND
+        </div>
+        <div>
+          <span style="text-transform: capitalize;">Total TTC :</span
+          >{{ invoice.totalTTC || invoice.total | number: '1.2-2' }} TND
+        </div>
+      </span>
+    </p>
+
+    <table style="width: 100%;">
+      <thead>
+        <tr style="border-bottom: 1px solid #6882b2;">
+          <td style="text-transform: uppercase;font-weight: bold;">
+            Article
+          </td>
+          <td style="text-transform: uppercase;font-weight: bold;">
+            Quantite
+          </td>
+          <td style="text-transform: uppercase;font-weight: bold;">
+            Prix Unitaire
+          </td>
+          <td style="text-transform: uppercase;font-weight: bold;">
+            Total
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          style="border-bottom: 1px solid #6882b2;"
+          *ngFor="let item of invoice.details"
+        >
+          <td *ngIf="showArticle(item.article)">
+            <p style="font-weight: bold;">
+              {{ showArticle(item.article).title }}
+            </p>
+            <div [innerHTML]="showArticle(item.article).description"></div>
+          </td>
+          <td *ngIf="!showArticle(item.article)">
+            <p style="font-weight: bold;">
+              {{ item.article }}
+            </p>
+          </td>
+          <td>{{ item.quantity | number }}</td>
+          <td>
+            {{ item.unitPrice | number: '1.2-2' }}
+          </td>
+          <td>
+            {{ item.unitPrice * item.quantity | number: '1.2-2' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="float: right;">
+      <span style="font-weight: bold;text-transform: uppercase;">Total HT</span>
+
+      {{ invoice.total | number: '1.2-2' }} TND
+    </div>
+    <div style="float: right;clear: right;">
+      <span style="font-weight: bold;text-transform: uppercase;"
+        >Total TTC</span
+      >
+
+      {{ invoice.totalTTC || invoice.total | number: '1.2-2' }} TND
+    </div>
+  </div>
+</div>

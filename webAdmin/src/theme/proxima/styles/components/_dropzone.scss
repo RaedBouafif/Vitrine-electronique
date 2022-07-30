@@ -1,0 +1,100 @@
+$close-icon-size: 18px;
+
+.dropzone {
+  min-height: auto;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border: 2px dashed $color-gray;
+  border-radius: $border-radius;
+
+  .dropzone-msg-title {
+    margin: 0 0 1rem 0;
+    padding: 0;
+    font-weight: $font-weight-semi-bold;
+    font-size: $h4-font-size;
+  }
+
+  .dropzone-msg-desc {
+    color: $text-muted;
+    font-weight: $font-weight-normal;
+  }
+
+  .dz-preview {
+    .dz-image {
+      border-radius: $border-radius;
+    }
+
+    .dz-progress {
+      max-height: 4px;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0;
+      width: 100%;
+      border-radius: 0.15rem;
+      background: $color-gray-light;
+
+      .dz-upload {
+        background: linear-gradient(
+          to right,
+          $color-info,
+          rgba($color-info, 0.5)
+        );
+      }
+    }
+
+    .dz-remove {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 0;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: 0;
+      top: -$close-icon-size / 2;
+      right: $close-icon-size / 2;
+      z-index: 10;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: scale(0.5);
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+      }
+
+      &:before {
+        background-color: rgba($color-danger, 0.5);
+        border-radius: 50%;
+        height: $close-icon-size;
+        width: $close-icon-size;
+      }
+
+      &:after {
+        content: "";
+        top: 3px;
+        left: 3px;
+        height: 12px;
+        width: 12px;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTEzLjQxLDEybDYuMy02LjI5YTEsMSwwLDEsMC0xLjQyLTEuNDJMMTIsMTAuNTksNS43MSw0LjI5QTEsMSwwLDAsMCw0LjI5LDUuNzFMMTAuNTksMTJsLTYuMyw2LjI5YTEsMSwwLDAsMCwwLDEuNDIsMSwxLDAsMCwwLDEuNDIsMEwxMiwxMy40MWw2LjI5LDYuM2ExLDEsMCwwLDAsMS40MiwwLDEsMSwwLDAsMCwwLTEuNDJaIi8+PC9zdmc+");
+      }
+    }
+
+    &:hover {
+      .dz-remove {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  // State colors
+  @each $name, $color in $theme-colors {
+    &.dropzone-#{"" + $name} {
+      border-color: $color;
+    }
+  }
+}

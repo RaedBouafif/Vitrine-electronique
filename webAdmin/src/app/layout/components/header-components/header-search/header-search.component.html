@@ -1,0 +1,13 @@
+<form class="form">
+  <div class="form-group mb-0 d-flex align-items-center position-relative">
+    <input
+      type="text"
+      class="form-control form-control-rounded pl-5"
+      [placeholder]="'Search for' | translate"
+      name="q"
+    />
+    <button type="submit" class="btn pr-2 text-gray" [class.pl-0]="!dark">
+      <i-feather name="search" [class]="search"></i-feather>
+    </button>
+  </div>
+</form>

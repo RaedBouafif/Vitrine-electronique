@@ -1,0 +1,32 @@
+<prx-card>
+  <prx-card-body>
+    <div class="row align-items-center">
+      <div class="col">
+        <!-- Title -->
+        <h6 class="text-uppercase text-muted small mb-2">{{ title }}</h6>
+
+        <div class="row align-items-center no-gutters">
+          <div class="col-auto">
+            <!-- Heading -->
+            <span class="h2 mb-0 mr-2">{{ heading }}</span>
+
+            <!-- Badge -->
+            <span class="badge badge-success" *ngIf="badge">{{ badge }}</span>
+            <ng-content select="[badge]"></ng-content>
+          </div>
+
+          <div class="col">
+            <ng-content select="[progress]"></ng-content>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto" *ngIf="type">
+        <ng-content select="[icon]"></ng-content>
+        <div class="chart chart-mini" *ngIf="type == StatType.chart">
+          <ng-content select="[mini-chart]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </prx-card-body>
+</prx-card>

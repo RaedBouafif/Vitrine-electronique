@@ -1,0 +1,18 @@
+<div class="dropdown mt-3 mt-xl-0" dropdown placement="bottom right">
+  <button id="language-dropdown" class="btn btn-light" dropdownToggle>
+    <span>{{ currentLanguage }}</span>
+    <fa-icon [icon]="chevronDown" class="ml-2"></fa-icon>
+  </button>
+
+  <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+    <li *ngFor="let language of languages">
+      <a
+        class="dropdown-item"
+        href="javascript:;"
+        (click)="setLanguage(language)"
+      >
+        {{ language }}
+      </a>
+    </li>
+  </ul>
+</div>

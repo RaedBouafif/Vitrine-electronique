@@ -1,0 +1,66 @@
+<!-- No dropdowns -->
+<a
+  *ngIf="!option.items; else dropDownItems"
+  [routerLink]="option.link"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="nav-link nav-link-{{ level }}"
+  [target]="option.target || '_self'"
+>
+  <div class="nav-icon">
+    <fa-icon
+      [icon]="option.icon.name"
+      class="icon"
+      [class.font-xs]="option.icon.size === 'xs'"
+      *ngIf="option.icon.name"
+    ></fa-icon>
+    <b class="icon extra-bold" *ngIf="option.icon.letter">{{
+      option.icon.letter
+    }}</b>
+  </div>
+
+  <span class="title">{{ option.title }}</span>
+</a>
+
+<!-- Has dropdown -->
+<ng-template #dropDownItems>
+  <a href="javascript:;" class="nav-link nav-link-{{ level }}">
+    <div class="nav-icon mr-2" *ngIf="option.icon">
+      <fa-icon
+        [icon]="option.icon.name"
+        class="icon"
+        *ngIf="option.icon.name"
+      ></fa-icon>
+      <b class="icon extra-bold" *ngIf="option.icon.letter">{{
+        option.icon.letter
+      }}</b>
+    </div>
+
+    <span class="title">{{ option.title }}</span>
+
+    <span class="toggle ml-auto">
+      <ng-content select="[dropdown-icon]"></ng-content>
+    </span>
+  </a>
+
+  <nav class="nav-dropdown-items level-{{ level }}">
+    <prx-header-navbar-item
+      *ngFor="let item of option.items"
+      [option]="item"
+      [level]="level + 1"
+      (onToggle)="item.open = $event"
+      class="dropdown-item"
+    >
+      <ng-container dropdown-icon>
+        <prx-icon
+          [icon]="angleRight"
+          class="dd-icon d-none d-md-block"
+        ></prx-icon>
+        <prx-dropdown-icon
+          class="dd-icon d-block d-md-none"
+          [open]="item.open"
+        ></prx-dropdown-icon>
+      </ng-container>
+    </prx-header-navbar-item>
+  </nav>
+</ng-template>

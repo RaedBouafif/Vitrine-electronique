@@ -1,0 +1,20 @@
+@import "import";
+
+:host {
+  display: none;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    display: block;
+    min-width: 240px;
+    border-right: 1px solid $border-color;
+  }
+}
+
+.sidebar {
+  order: 0;
+  flex-direction: column;
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    display: flex;
+  }
+}

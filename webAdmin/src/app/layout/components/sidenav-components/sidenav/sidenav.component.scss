@@ -1,0 +1,287 @@
+@import "import";
+
+.sidenav-logo {
+  height: $mz-header-height;
+  transition: width 0.3s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem 0 1rem;
+
+  .logo {
+    height: $mz-sidenav-logo-max-height;
+  }
+}
+
+.sidenav-brand {
+  padding: 0;
+}
+
+:host {
+  width: $mz-sidenav-width;
+  margin-left: -$mz-sidenav-width;
+  transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+  color: $mz-sidenav-color;
+  z-index: 1;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.35);
+
+  @if $mz-sidenav-enable-gradient {
+    background: linear-gradient(
+      45deg,
+      $mz-sidenav-gradient-start-color,
+      $mz-sidenav-gradient-end-color $mz-sidenav-gradient-end-color-stop
+    );
+  } @else {
+    background-color: $mz-sidenav-bg-color;
+  }
+
+  &.collapsed,
+  &.mobile-hidden {
+    margin-left: 0;
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &.collapsed {
+    @include media-breakpoint-up($grid-float-breakpoint) {
+      width: $mz-sidenav-collapsed-width;
+
+      &:hover {
+        width: $mz-sidenav-width !important;
+
+        .sidenav-toggler {
+          display: block;
+        }
+
+        .sidenav-logo {
+          justify-content: space-between;
+        }
+      }
+
+      .sidenav-toggler {
+        display: none;
+      }
+
+      .sidenav-logo {
+        justify-content: center;
+      }
+    }
+
+    .nav {
+      .nav-link,
+      .nav-header {
+        padding-left: $mz-sidenav-link-padding-x-collapsed;
+      }
+
+      .nav-header {
+        height: 1px;
+        font-size: 0;
+        box-shadow: 0 1px 0 $mz-sidenav-navitem-box-shadow-color;
+        padding: 0;
+        margin: 1.5rem;
+      }
+    }
+
+    .user-sidenav {
+      > .nav-link {
+        padding-left: $mz-sidenav-link-padding-x;
+      }
+    }
+
+    @include media-breakpoint-down($grid-float-breakpoint-max) {
+      &.mobile-hidden {
+        margin-left: -$mz-sidenav-width;
+      }
+    }
+  }
+  // end collapsed
+
+  &.image-background {
+    .nav {
+      .nav-link {
+        &.active,
+        &:hover,
+        &:active,
+        &:visited {
+          background-color: rgba($mz-sidenav-navitem-bg-color-hover, 0.35);
+          color: rgba($mz-sidenav-color, 0.75);
+        }
+      }
+
+      .nav-dropdown {
+        .nav-dropdown-items {
+          background-color: transparent;
+        }
+
+        &.open {
+          > .nav-link {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  &.fixed {
+    position: fixed;
+    left: 0;
+    height: 100vh;
+
+    .sidenav-content {
+      height: calc(100% - #{$mz-header-height});
+      position: relative;
+    }
+  }
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    margin-left: 0;
+    overflow: hidden;
+  }
+}
+
+// navigation styles
+%open-border {
+  box-shadow: 3px 0 0 0 $mz-sidenav-navitem-bg-color-open-border inset;
+}
+
+.nav {
+  .nav-header {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    font-weight: $font-weight-normal;
+    padding: 1.5rem $mz-sidenav-link-padding-y $mz-sidenav-link-padding-x;
+  }
+
+  .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: $mz-sidenav-navitem-color;
+    transition: background 0.15s linear, color 0.15s linear;
+    opacity: 0.75;
+    padding-left: $mz-sidenav-link-padding-x;
+    padding-right: 0; ///
+    margin-right: $mz-sidenav-link-padding-x; ///
+    border-radius: 0 20px 20px 0; ///
+
+    &.active,
+    &:active,
+    &:hover {
+      background-color: $mz-sidenav-navitem-bg-color-hover;
+      opacity: 1;
+      color: $mz-sidenav-navitem-color-hover;
+    }
+
+    &.active {
+      color: $mz-sidenav-navitem-color-active !important;
+      background-color: $mz-sidenav-navitem-bg-color-active;
+
+      .icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  .nav-dropdown {
+    position: relative;
+
+    > .nav-link {
+      .dd-icon {
+        //@include font-awesome($fa-var-angle-down);
+        position: absolute;
+        right: $mz-sidenav-link-padding-x;
+        line-height: 1;
+      }
+    }
+
+    .nav-dropdown-items {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      max-height: 0;
+      overflow-y: hidden;
+      transition: max-height 0.3s ease 0s;
+      //background-color: $mz-sidenav-navitem-bg-color-open; // no need since the open will override the entire bg color
+      box-shadow: 0 1px 0 $mz-sidenav-navitem-box-shadow-color;
+
+      .nav-link {
+        color: $mz-sidenav-icon-color;
+        // padding-left: 3rem; //$mz-sidenav-navitem-padding-x + $nav-icon-width + $nav-icon-margin-right;
+      }
+    }
+
+    &.open {
+      background-color: $mz-sidenav-navitem-bg-color-open; ///1
+
+      > .nav-link {
+        //background-color: $mz-sidenav-navitem-bg-color-open; ///1
+        color: $mz-sidenav-navitem-color-hover;
+        opacity: 1;
+        @extend %open-border;
+      }
+
+      > .nav-dropdown-items {
+        max-height: 1000px;
+        box-shadow: 3px 0 0 0 $mz-sidenav-navitem-bg-color-open-border inset,
+          0 -1px 0 rgba($mz-sidenav-navitem-bg-color-open-border, 0.15) inset;
+      }
+    }
+  }
+
+  .icon {
+    opacity: 0.65;
+    //font-size: 1.25rem;
+    margin-left: 0;
+    min-width: 20px;
+    margin-right: 0.5rem;
+  }
+}
+
+.user-sidenav {
+  box-shadow: 0 1px 0 $mz-sidenav-navitem-box-shadow-color;
+  width: 100%;
+
+  > .nav-link {
+    padding: $mz-sidenav-link-padding-y $mz-sidenav-link-padding-x;
+    opacity: 1;
+    margin-right: 0;
+    border-radius: 0;
+
+    &:after {
+      right: $mz-sidenav-link-padding-x * 2 !important;
+    }
+  }
+
+  .nav-dropdown-items {
+    .nav-link {
+      padding: $mz-sidenav-link-padding-y $mz-sidenav-link-padding-x;
+      flex: 1;
+      border-radius: 0;
+    }
+  }
+
+  .stat {
+    padding: 0.5rem $mz-sidenav-link-padding-x;
+  }
+
+  .nav {
+    background-color: darken($mz-sidenav-navitem-bg-color-open, 1.75%);
+    box-shadow: 0 -1px 0 $mz-sidenav-navitem-box-shadow-color,
+      3px 0 0 0 $mz-sidenav-navitem-bg-color-open-border inset;
+  }
+
+  .badge {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-size: 60%;
+  }
+
+  .user-picture {
+    box-shadow: 0 0 0 3px rgba($white, 0.1);
+  }
+}

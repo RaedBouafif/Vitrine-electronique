@@ -1,0 +1,42 @@
+@import "import";
+
+section,
+.section {
+  position: relative;
+
+  .container {
+    padding-top: $section-padding / 2;
+    padding-bottom: $section-padding / 2;
+    position: relative;
+
+    &.bring-to-front {
+      z-index: 1029;
+    }
+
+    @include media-breakpoint-up($grid-float-breakpoint) {
+      padding-top: $section-padding;
+      padding-bottom: $section-padding;
+    }
+  }
+
+  .container-wide {
+    overflow-x: hidden;
+
+    .row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+
+  .section-heading {
+    margin-bottom: 3.5rem;
+
+    h2 {
+      font-weight: $font-weight-bold;
+
+      @include media-breakpoint-up($grid-float-breakpoint) {
+        font-size: $font-size-section-heading;
+      }
+    }
+  }
+}

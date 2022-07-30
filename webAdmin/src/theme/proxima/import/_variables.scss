@@ -1,0 +1,224 @@
+// Font
+$font-family-complementary: $font-family-base;
+$bubbles-horizontal-min-height: 460px;
+
+// [ NAVIGATION ]
+$navigation-dropdown-item-bg-color: $color-secondary;
+$navigation-btn-outline-color: $white;
+$navbar-min-height: 90px;
+$navbar-font-size: 0.9rem;
+$navbar-background-color: $white;
+$navbar-text-color: $body-color;
+$navbar-text-color-hover: $color-5;
+$navbar-text-color-dark: $color-4-dark-5x;
+$navbar-text-color-dark-hover: darken($navbar-text-color-dark, 15%);
+
+$navbar-fixed-top-background-color: transparent;
+$navbar-fixed-text-color: $white;
+$navbar-fixed-text-color-hover: $gray-200;
+$navbar-fixed-text-color-active: $gray-500;
+
+$navbar-sticky-background-color: $white;
+$navbar-sticky-text-color: $color-5-light;
+$navbar-sticky-text-color-hover: $color-1;
+
+$navbar-side-width: 250px;
+$navbar-side-background-color: $white;
+$navbar-side-text-color: $color-1;
+$navbar-side-text-color-hover: $gray-300;
+$navbar-side-border-color: $border-color;
+
+// AUTH
+$auth-form-container-bg-color: $white;
+
+// SHELL
+$prx-page-overlay-zindex: 1001;
+$prx-body-wrapper-bg-color: $gray-100;
+
+// Header Navigation
+$mz-header-height: 70px;
+$mz-header-dropdown-min-width: 280px;
+$mz-header-bg-color: $white;
+$mz-header-text-color: $body-color;
+$mz-header-avatar-size: 40px;
+$mz-header-navlink-padding-y: $nav-link-padding-y;
+$mz-header-navlink-padding-x: $nav-link-padding-y * 2;
+$mz-header-navlink-margin-right: $mz-header-navlink-padding-y;
+$mz-header-badge-pos-top: 0;
+$mz-header-list-group-item-border-color: rgba(0, 0, 0, 0.035);
+$mz-header-app--card-hover-bg-color: $color-5-light-5x;
+$mz-header-app--card-min-width: 300px;
+
+$mz-quick-sidenav-width: 270px;
+$mz-quick-sidenav-text-color: $body-color;
+$mz-quick-sidenav-bg-color: $white;
+$mz-quick-sidenav-overlay-bg-color: rgba($color-5-light-5x, 0.75);
+
+$mz-sidenav-width: 265px;
+$mz-sidenav-collapsed-width: 80px;
+$mz-sidenav-logo-max-height: 40px;
+
+$mz-user-avatar-width: 56px;
+$mz-user-avatar-md-width: 40px;
+$mz-user-avatar-sm-width: 22px;
+
+// sidenav background color variations
+$mz-sidenav-bg-color: $color-dark;
+$mz-sidenav-enable-gradient: true;
+$mz-sidenav-gradient-start-color: $color-5-dark-5x;
+$mz-sidenav-gradient-end-color: $color-dark;
+$mz-sidenav-gradient-end-color-stop: 75%;
+
+// sidenav text color
+$mz-sidenav-color: $gray-500;
+$mz-sidenav-color-hover: $white;
+$mz-sidenav-color-dark: $gray-200;
+
+// sidenav hamburger menu
+$mz-sidenav-icon-bar-color: $color-dark;
+$mz-sidenav-icon-bar-width: 25px;
+$mz-sidenav-icon-bar-shrink-width: 5px;
+$mz-sidenav-icon-bar-height: 1px;
+$mz-sidenav-icon-bar-gap-y: 6px;
+
+// sidenav items
+$mz-sidenav-navitem-color: $mz-sidenav-color;
+$mz-sidenav-navitem-color-hover: $mz-sidenav-color-hover;
+$mz-sidenav-navitem-color-open: $mz-sidenav-navitem-color-hover;
+$mz-sidenav-navitem-color-active: $white;
+$mz-sidenav-navitem-bg-color-hover: rgba($mz-sidenav-bg-color, 0.5);
+$mz-sidenav-navitem-bg-color-open: $mz-sidenav-navitem-bg-color-hover;
+$mz-sidenav-navitem-bg-color-open-border: $color-5-dark-3x;
+$mz-sidenav-navitem-bg-color-active: $color-5-dark-3x;
+
+$mz-sidenav-navitem-box-shadow-color: rgba($mz-sidenav-navitem-color, 0.05);
+$mz-sidenav-link-padding-x: 1rem;
+$mz-sidenav-link-padding-y: 1rem;
+$mz-sidenav-link-padding-x-collapsed: 1.75rem;
+
+// sidenav icons
+$mz-sidenav-icon-color: rgba($mz-sidenav-color, 0.75);
+
+// progress bar
+$mz-sidenav-progress-bg-color: $color-5-dark;
+$mz-sidenav-progress-bar-bg-color: $white;
+
+// [ ARROWS - for background edges ]
+$arrow-size: 30px;
+$arrow-size-gap-size: 2px;
+$arrow-pos: (-$arrow-size / 2) + $arrow-size-gap-size;
+
+// [DROPDOWNS]
+$dropdown-heading-padding-x: 1rem;
+$dropdown-heading-padding-y: 1.5rem;
+$dropdown-footer-bg-color: $striped-bg-color;
+$dropdown-footer-padding-x: 1rem;
+$dropdown-footer-padding-y: 0.5rem;
+$dropdown-min-width: 180px;
+$dropdown-body-max-height: 380px;
+$dropdown-bg-color: $white;
+$dropdown-nav-min-width: 350px;
+$dropdown-box-shadow-color: rgba($color-dark, 0.2);
+$dropdown-box-shadow: 0 0 15px 1px $dropdown-box-shadow-color,
+  0 0 1px rgba(0, 0, 0, 0.2);
+
+//
+$input-hover-border-color: $gray-500;
+$input-icon-right-gap: 2.5rem !default;
+$input-icon-position-from-edge: 10px !default;
+$input-padding-y: $input-btn-padding-y !default;
+$input-padding-x: $input-btn-padding-x !default;
+$input-border-rounded: 10rem !default;
+$form-icon-color: $gray-400;
+
+// [ ONLINE STATUS ]
+$status-icon-size: 14px;
+$status-icon-md-size: 12px;
+$status-icon-sm-size: 8px;
+$status-online-bg-color: #35ac19;
+$status-away-bg-color: #fcd116;
+$status-offline-bg-color: #777777;
+$status-busy-bg-color: #e81123;
+
+// [ LOADER ITEMS ]
+$placeholder-container--margin-top: 1.5rem !default;
+$placeholder-bar--bg-color: $gray-200 !default; // #ebedef
+$placeholder-bar--height: 8px !default;
+$placeholder-bar--width: 80% !default;
+$placeholder-bar--margin-top: 0.55rem !default;
+$placeholder-title--height: 12px;
+$placeholder-bolt--width: 70px;
+$placeholder-bolt--bg-color: $gray-100;
+$placeholder-bolt--bg-image: linear-gradient(
+  90deg,
+  $placeholder-bar--bg-color,
+  $placeholder-bolt--bg-color,
+  $placeholder-bar--bg-color
+);
+
+// CARDS
+$card-box-shadow: 0 0.75rem 1.5rem rgba($black, 0.03);
+
+// TIME LINE
+$time-line-color: $border-color;
+$time-line-top-pos: $checkbox-size + 8; // use the checkbox size as the basis for the top pos
+$time-line-time-width: 32px;
+$time-line-left-pos: $time-line-time-width + $checkbox-size - 1;
+
+// NOUI SLIDER
+$nouislider-handle-size: 16px;
+$nouislider-border-radius: 50%;
+
+$nouislider-target-border: none;
+$nouislider-target-bg-color: $gray-300;
+$nouislider-target-height: 6px;
+
+$nouislider-handle-border-color: $input-border-color;
+$nouislider-handle-box-shadow: 0 3px 6px -3px rgba($color-gray, 0.8);
+$nouislider-handle-box-shadow-focus: 0 0 3px 4px rgba($color-gray, 0.2);
+
+// NGX-DATATABLE
+
+$datatable-header-color: $table-head-color !default;
+$datatable-header-font-size: $font-size-small !default;
+$datatable-header-font-weight: $font-weight-bold !default;
+
+$datatable-row-box-shadow: 0 0.25rem 0.5rem rgba($black, 0.03) !default;
+$datatable-row-wrapper-box-shadow: 2px 2px 0.35rem 0px rgba($color-dark, 0.35);
+$datatable-row-border-radius: $border-radius !default;
+$datatable-row-border-color: $table-border-color !default;
+$datatable-row-margin-bottom: 0.5rem !default;
+$datatable-row-padding-x: $table-cell-padding !default;
+$datatable-row-padding-y: $table-cell-padding !default;
+
+$datatable-sort-active-color: $color-primary !default;
+$datatable-vertical-scroll-height: 480px !default;
+
+$datatable-pager-bg-color: $color-primary;
+$datatable-pager-color: $color-contrast;
+$datatable-pager--button-border-radius: 50%;
+$datatable-pager--button-height: 2rem;
+$datatable-pager--button-min-width: $datatable-pager--button-height;
+$datatable-pager--button-padding: 0.5rem;
+$datatable-pager--button-font-weight: $font-weight-normal;
+$datatable-pager--button-color: $gray-400;
+$datatable-pager--button-arrow-bg-color: $gray-200;
+
+$datatable-group-header-background: $gray-200;
+
+// CHARTS
+
+$chart-height: 300px !default;
+$chart-height-sm: 225px !default;
+
+$chart-sparkline-width: 75px !default;
+$chart-sparkline-height: 35px !default;
+
+$chart-legend-margin-top: 2.5rem !default;
+$chart-legend-font-size: $font-size-sm !default;
+$chart-legend-color: $text-muted !default;
+$chart-legend-height: $chart-legend-margin-top + $chart-legend-font-size *
+  $line-height-base !default;
+
+// CARDS
+$card-fade-height: 300px;

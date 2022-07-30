@@ -1,0 +1,45 @@
+<ul class="list-group list-group-clean list-group-timeline">
+  <li
+    class="list-group-item"
+    [class.has-indicator]="!editable"
+    *ngFor="let task of items"
+  >
+    <div class="media" [ngClass]="{ 'task-done': task.done }">
+      <small class="task-time mr-2"
+        >{{ task.time.hour | number: '2.0' }}:{{
+          task.time.minutes | number: '2.0'
+        }}
+        <br />{{ task.time.period }}</small
+      >
+
+      <div
+        [class]="
+          (indicator === 'solid' ? 'bg' : 'border') + '-' + task.priority
+        "
+        ngClass="indicator bw-2 mr-2"
+        *ngIf="!editable; else checkbox"
+      ></div>
+
+      <ng-template #checkbox>
+        <prx-checkbox
+          [(ngModel)]="task.done"
+          [shadow]="true"
+          id="task-{{ task.id }}"
+          class="checkbox-outlined checkbox-{{ task.priority }} bw-2 mr-2"
+          (onChanged)="onCheckChanged($event, task)"
+        ></prx-checkbox>
+      </ng-template>
+
+      <div class="media-body">
+        <label
+          for="task-{{ task.id }}"
+          class="task-title text-dark semi-bold"
+          >{{ task.title }}</label
+        >
+        <p class="task-description text-muted small italic mb-0">
+          {{ task.description }}
+        </p>
+      </div>
+    </div>
+  </li>
+</ul>

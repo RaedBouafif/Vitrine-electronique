@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-gallery-service
+  labels:
+    run: market-gallery-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-gallery-service
+    spec:
+      containers:
+      - name: market-gallery-service
+        image: anonyme5/mgsimage:latest
+        ports:
+        - containerPort: 4005

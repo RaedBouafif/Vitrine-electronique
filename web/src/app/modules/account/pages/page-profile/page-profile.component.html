@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Editer Profile</h5>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+        <div class="row no-gutters">
+            <div class="col-12 col-lg-12 col-xl-12">
+                <app-alert *ngIf="message===1" class="mb-3" type="success">Mise a jour avec succées</app-alert>
+                <app-alert *ngIf="message===2" class="mb-3" type="danger">le mise a jour a echoué</app-alert>
+                <form (ngSubmit)="submit(form)" #form="ngForm">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="profile-first-name">Nom</label>
+                        <input [class.is-invalid]=" name.invalid && (name.dirty || name.touched)" required #name="ngModel"
+                         type="text" class="form-control" id="profile-first-name" name="lastname" [(ngModel)]="user.lastname" >
+                         <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
+                            <span *ngIf="name.errors.required" >Nom requis</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="profile-last-name">Prenom</label>
+                        <input [class.is-invalid]=" firstname.invalid && (firstname.dirty || firstname.touched)" required #firstname="ngModel"
+                        type="text" class="form-control" id="profile-last-name" name="firstname" [(ngModel)]="user.firstname" >
+                        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="invalid-feedback">
+                            <span *ngIf="firstname.errors.required" >Prenom requis</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="profile-phone-number">Numero de telephone</label>
+                        <input type="text" class="form-control" id="profile-phone-number" name="phoneNumber" [(ngModel)]="user.phoneNumber" >
+                    </div>
+                    <div class="col-md-6">
+                        <label for="profile-function">Fonction</label>
+                        <input type="text" class="form-control" id="profile-function" name="function" [(ngModel)]="user.function" >
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="profile-mail">Email</label>
+                        <input type="email" class="form-control" id="profile-mail" name="mail" [(ngModel)]="user.mail" disabled >
+                    </div>
+                    <div class="col-md-6">
+                        <label for="profile-login">Identifiant</label>
+                        <input type="text" class="form-control" id="profile-login" name="login" [(ngModel)]="user.login" disabled >
+                    </div>
+                </div>
+              
+
+                <div class="form-group mt-5 mb-0">
+                    <button [class.disabled]="form.invalid" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>

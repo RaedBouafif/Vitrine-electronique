@@ -1,0 +1,26 @@
+<prx-card [class.disabled]="isDisabled" [class.overflow-hidden]="!isOpen">
+  <prx-card-header
+    class="accordion-group-header"
+    (click)="toggleOpen()"
+    [border]="false"
+  >
+    <div class="accordion-heading-content">
+      <a href="javascript:;" class="card-title">
+        <span *ngIf="heading">{{ heading }}</span>
+        <ng-content select="[accordion-heading]"></ng-content>
+      </a>
+    </div>
+
+    <prx-dropdown-icon class="ml-auto" [open]="isOpen"></prx-dropdown-icon>
+  </prx-card-header>
+
+  <div
+    class="accordion-group-content"
+    [collapse]="!isOpen"
+    [isAnimated]="isAnimated"
+  >
+    <prx-card-body>
+      <ng-content></ng-content>
+    </prx-card-body>
+  </div>
+</prx-card>

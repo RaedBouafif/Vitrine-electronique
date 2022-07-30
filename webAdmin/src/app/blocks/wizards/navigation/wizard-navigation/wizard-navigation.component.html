@@ -1,0 +1,20 @@
+<div [ngSwitch]="style" class="navigation-container">
+  <ng-container *ngSwitchCase="NavigationStyle.PrevNext">
+    <prx-wizard-navigation-prev-next
+      [selectedIndex]="selectedIndex"
+      [doneUrl]="doneUrl"
+      [doneText]="doneText"
+      [isLastStep]="selectedIndex === steps.length - 1"
+    ></prx-wizard-navigation-prev-next>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="NavigationStyle.Bullet">
+    <prx-wizard-navigation-bullet
+      [selectedIndex]="selectedIndex"
+      [doneUrl]="doneUrl"
+      [doneText]="doneText"
+      [isLastStep]="selectedIndex === steps.length - 1"
+      [steps]="steps"
+    ></prx-wizard-navigation-bullet>
+  </ng-container>
+</div>

@@ -1,0 +1,172 @@
+<prx-page-header title="Liste Commandes" pre="Commandes"> </prx-page-header>
+
+<div class="container-fluid">
+  <ng-container *ngIf="invoices && invoices.length; else loading">
+    <prx-card *ngFor="let invoice of invoices" class="mb-2">
+      <prx-card-header>
+        <ng-container card-title>
+          <div class="row gap-y align-items-center">
+            <div class="col-md-6">
+              <h5 class="mb-0">#{{ invoice.reference }}</h5>
+              <span
+                class="badge badge-{{
+                  getStatus(invoice.status).badge
+                }} badge-pill text-capitalize"
+                >{{ getStatus(invoice.status).name }}</span
+              >
+            </div>
+
+            <div class="col-md-6">
+              <div class="row gap-y">
+                <div class="col-md-6 col-xl-5 d-flex flex-wrap">
+                  <prx-label-info label="Date">
+                    <prx-icon [icon]="icons.calendar" class="mr-2"></prx-icon>
+                    <span>{{ invoice.orderDate | date: 'mediumDate' }} </span>
+                  </prx-label-info>
+                </div>
+                <div class="col-md-3 col-xl-4">
+                  <prx-label-info class="flex-fill">
+                    <ng-container title-label>
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        Paiement
+                      </div>
+                    </ng-container>
+
+                    <span
+                      *ngIf="!invoice.paymentStatus"
+                      class="badge badge-danger badge-pill text-capitalize"
+                      >Non Payé</span
+                    >
+                    <span
+                      *ngIf="invoice.paymentStatus"
+                      class="badge badge-success badge-pill text-capitalize"
+                      >Payé</span
+                    >
+                  </prx-label-info>
+                </div>
+                <div class="col-md-3 col-xl-3">
+                  <prx-label-info class="flex-fill">
+                    <ng-container title-label>
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        Total TTC
+                      </div>
+                    </ng-container>
+
+                    <span *ngIf="!invoice.totalTTC" class=" text-capitalize"
+                      >{{ invoice.total | number }} TND</span
+                    >
+                    <span *ngIf="invoice.totalTTC" class=" text-capitalize"
+                      >{{ invoice.totalTTC | number }} TND</span
+                    >
+                  </prx-label-info>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <nav class="nav" card-tools>
+          <prx-vertical-toggler
+            [toggled]="invoice.expanded"
+            (click)="invoice.expanded = !invoice.expanded"
+          ></prx-vertical-toggler>
+
+          <prx-context-menu>
+            <ng-container menu-icon>
+              <prx-icon icon="more-horizontal"></prx-icon>
+            </ng-container>
+
+            <a
+              class="dropdown-item bold"
+              [routerLink]="['invoice', invoice._id]"
+            >
+              <prx-icon [icon]="icons.eye" class="context-menu-icon"></prx-icon>
+              Ouvrir
+            </a>
+            <a
+              *ngIf="invoice.status === 'new'"
+              class="dropdown-item"
+              href="javascript:;"
+              (click)="update(invoice, 'confirmed')"
+            >
+              <prx-icon [icon]="icons.ok" class="context-menu-icon"></prx-icon>
+              Approuver
+            </a>
+            <a
+              *ngIf="invoice.status === 'confirmed'"
+              class="dropdown-item"
+              href="javascript:;"
+              (click)="update(invoice, 'sent')"
+            >
+              <prx-icon [icon]="icons.ok" class="context-menu-icon"></prx-icon>
+              Expédier
+            </a>
+            <a
+              *ngIf="
+                (invoice.status === 'confirmed' || invoice.status === 'sent') &&
+                paymentStatus === false
+              "
+              class="dropdown-item"
+              href="javascript:;"
+              (click)="payed(invoice)"
+            >
+              <prx-icon [icon]="icons.ok" class="context-menu-icon"></prx-icon>
+              Payée
+            </a>
+            <a
+              *ngIf="invoice.status === 'new'"
+              class="dropdown-item"
+              href="javascript:;"
+              (click)="update(invoice, 'refused')"
+            >
+              <prx-icon [icon]="icons.no" class="context-menu-icon"></prx-icon>
+              Refuser
+            </a>
+            <!--  <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="javascript:;">
+              <prx-icon [icon]="icons.trash" class="context-menu-icon text-danger"></prx-icon>
+              Delete
+            </a> -->
+          </prx-context-menu>
+        </nav>
+      </prx-card-header>
+
+      <prx-card-body
+        [collapse]="!invoice.expanded"
+        [isAnimated]="true"
+        (expanded)="onShown(invoice)"
+      >
+        <prx-invoice-details [invoice]="invoice"></prx-invoice-details>
+      </prx-card-body>
+    </prx-card>
+  </ng-container>
+  <div class="d-flex justify-content-md-end">
+    <pagination
+      [totalItems]="totalPages"
+      (pageChanged)="pageChanged($event)"
+      [(ngModel)]="currentPage"
+      [itemsPerPage]="itemsPerPage"
+      [boundaryLinks]="true"
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;"
+      [maxSize]="5"
+    ></pagination>
+  </div>
+  <ng-template #loading>
+    <div class="row">
+      <div class="col-md-6">
+        <prx-loader
+          [template]="'list'"
+          [isLoading]="isLoading"
+          [count]="4"
+        ></prx-loader>
+      </div>
+    </div>
+  </ng-template>
+</div>

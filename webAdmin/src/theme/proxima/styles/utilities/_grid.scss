@@ -1,0 +1,10 @@
+@import "import";
+
+.main-body {
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    .container-fluid {
+      padding-left: $grid-gutter-width;
+      padding-right: $grid-gutter-width;
+    }
+  }
+}

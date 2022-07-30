@@ -1,0 +1,27 @@
+/* Progress bars ======================================================= */
+
+.progress {
+  @each $i, $color in $theme-colors {
+    &.progress-#{"" + $i} {
+      background-color: rgba($color, 0.3);
+
+      .progress-bar {
+        background-color: $color;
+      }
+    }
+  }
+
+  .progress-bar {
+    border-radius: $progress-border-radius;
+  }
+}
+
+.sidenav-progress {
+  .progress {
+    background-color: $mz-sidenav-progress-bg-color;
+  }
+
+  .progress-bar {
+    background-color: $mz-sidenav-progress-bar-bg-color;
+  }
+}

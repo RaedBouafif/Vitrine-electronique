@@ -1,0 +1,14 @@
+<p
+  class="small task d-flex justify-content-between mb-1"
+  [ngClass]="labelClass"
+  *ngIf="label"
+>
+  <span>{{ label }}</span>
+  <span class="bold percent">{{ value | number: '1.0-0' }}{{ suffix }}</span>
+</p>
+<progressbar
+  [value]="value"
+  [class]="size"
+  [type]="color"
+  [max]="max"
+></progressbar>

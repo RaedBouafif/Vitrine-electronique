@@ -1,0 +1,59 @@
+/* 2.10 Text ======================================================= */
+
+.italic {
+  font-style: italic !important;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+.dotted {
+  border-bottom: 1px dotted;
+}
+
+.strike-through,
+s {
+  text-decoration: line-through !important;
+  color: $strike-color;
+  font-weight: $font-weight-light;
+}
+
+.text-wrap {
+  white-space: normal !important;
+}
+
+.font-thin,
+.thin {
+  font-weight: $font-weight-lighter !important;
+}
+
+.font-light,
+.light {
+  font-weight: $font-weight-light !important;
+}
+
+.font-base {
+  font-weight: $font-weight-base !important;
+}
+
+.font-regular,
+.regular {
+  font-weight: $font-weight-normal !important;
+}
+
+.font-semi-bold,
+.semi-bold {
+  font-weight: $font-weight-semi-bold !important;
+}
+
+.font-bold,
+.bold,
+strong {
+  font-weight: $font-weight-bold !important;
+}
+
+.font-extra-bold,
+.extra-bold {
+  font-weight: $font-weight-bolder !important;
+}

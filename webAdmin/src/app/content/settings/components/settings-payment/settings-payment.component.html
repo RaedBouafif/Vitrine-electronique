@@ -1,0 +1,178 @@
+<prx-card class="overflow-hidden">
+  <prx-card-body class="pb-6 p-md-5">
+    <prx-alert
+      [hidden]="!error"
+      [scheme]="ColorScheme.Danger"
+      [withIcon]="true"
+      [dismissible]="true"
+    >
+      Le mise a jour a échoué
+    </prx-alert>
+    <prx-alert
+      [hidden]="!success"
+      [scheme]="ColorScheme.Success"
+      [withIcon]="true"
+      [dismissible]="true"
+    >
+      Mise a jour aves succées
+    </prx-alert>
+
+    <div class="row">
+      <div class="col-md-9 mx-auto">
+        <div class="form-group form-row">
+          <div class="col-md-8">
+            <label class="control-label">Nom*</label>
+            <input
+              [class.is-invalid]="
+                nameI.invalid && (nameI.dirty || nameI.touched)
+              "
+              class="form-control"
+              type="text"
+              name="name"
+              #nameI="ngModel"
+              [(ngModel)]="method.name"
+              required
+            />
+            <small
+              *ngIf="nameI.invalid && (nameI.dirty || nameI.touched)"
+              class="form-text text-danger"
+              >Nom requis</small
+            >
+          </div>
+
+          <div class="col-md-4">
+            <label class="control-label text-white">t</label>
+            <br />
+            <prx-button
+              type="button"
+              color="primary"
+              [icon]="longArrowAltRight"
+              [isLoading]="isLoading"
+              [disabled]="form.invalid"
+              (click)="submit(form)"
+            >
+              <span translate>Enregistrer</span>
+            </prx-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="cozy" #form="ngForm">
+      <div class="row">
+        <div class="col-md-12">
+          <ng-container *ngIf="methods && methods.length">
+            <ngx-datatable
+              class="ngx-datatable responsive  table-striped table-bordered"
+              [rows]="methods"
+              [messages]="{ emptyMessage: 'Aucun résultat disponible.' }"
+              [columnMode]="ColumnMode.force"
+              headerHeight="auto"
+              [rowHeight]="false"
+              footerHeight="auto"
+              [limit]="4"
+            >
+              <!-- Column Definitions -->
+              <ngx-datatable-column name="Nom">
+                <ng-template
+                  let-paymentM="row"
+                  let-value="value"
+                  ngx-datatable-cell-template
+                >
+                  <small class="text-muted d-block d-md-none">Nom</small>
+                  {{ paymentM.name }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Actif">
+                <ng-template
+                  let-paymentM="row"
+                  let-value="value"
+                  ngx-datatable-cell-template
+                >
+                  <small class="text-muted d-block d-md-none">Actif</small>
+                  <span
+                    *ngIf="paymentM.active"
+                    class="text-capitalize text-success"
+                  >
+                    <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                    Actif
+                  </span>
+                  <span
+                    *ngIf="!paymentM.active"
+                    class="text-capitalize text-danger"
+                  >
+                    <prx-icon [icon]="icons.dot" size="sm"></prx-icon>
+                    Non Actif
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <!-- Actions Column -->
+              <ngx-datatable-column
+                [width]="80"
+                [sortable]="false"
+                [canAutoResize]="false"
+                [draggable]="false"
+                [resizeable]="false"
+                cellClass="d-none d-md-flex"
+              >
+                <ng-template
+                  let-paymentM="row"
+                  let-value="value"
+                  ngx-datatable-cell-template
+                >
+                  <div class="d-flex justify-content-end">
+                    <prx-context-menu appendToBody="true">
+                      <a
+                        (click)="method = paymentM; new = false"
+                        class="dropdown-item"
+                        href="javascript:;"
+                      >
+                        <span class="d-inline-block w-20px"
+                          ><prx-icon [icon]="icons.edit"></prx-icon
+                        ></span>
+                        Modifier
+                      </a>
+                      <a
+                        *ngIf="!paymentM.active"
+                        (click)="update(paymentM, true)"
+                        class="dropdown-item"
+                        href="javascript:;"
+                      >
+                        <span class="d-inline-block w-20px"
+                          ><prx-icon [icon]="icons.edit"></prx-icon
+                        ></span>
+                        Activer
+                      </a>
+                      <a
+                        *ngIf="paymentM.active"
+                        (click)="update(paymentM, false)"
+                        class="dropdown-item"
+                        href="javascript:;"
+                      >
+                        <span class="d-inline-block w-20px"
+                          ><prx-icon [icon]="icons.edit"></prx-icon
+                        ></span>
+                        Desactiver
+                      </a>
+                      <div class="divider dropdown-divider"></div>
+                      <a
+                        (click)="delete(paymentM)"
+                        class="dropdown-item text-danger"
+                        href="javascript:;"
+                      >
+                        <span class="d-inline-block w-20px"
+                          ><prx-icon [icon]="icons.delete"></prx-icon
+                        ></span>
+                        Supprimer
+                      </a>
+                    </prx-context-menu>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </ng-container>
+        </div>
+      </div>
+    </form>
+  </prx-card-body>
+</prx-card>

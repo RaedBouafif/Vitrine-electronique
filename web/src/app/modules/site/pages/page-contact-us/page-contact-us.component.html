@@ -1,0 +1,123 @@
+<app-block-map></app-block-map>
+
+<app-page-header [header]="'Contact'" [breadcrumbs]="[
+    {label: 'Accueil',       url: '../../'},
+    {label: 'Contact', url: ''}
+]"></app-page-header>
+
+<div class="block">
+    <div class="container">
+        <div class="card mb-0">
+            <div class="card-body contact-us">
+                <div class="contact-us__container">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 pb-4 pb-lg-0">
+                            <h4 class="contact-us__header card-title">Adresses</h4>
+
+                            <div class="contact-us__address">
+                                <p>
+                                    223 AGBA 5000 Monastir - Tunisie Prés de la Foire de Monastir <br>
+                                  
+                                </p>
+                                <p>
+                                    Service Commercial: tunisie.accastillage@gmail.com<br>
+                                    Support technique : technique@tunisie-accastillage.com<br>
+                                   
+                                </p>
+                                <p>
+                                 
+                                    Tél: +216 98 40 22 55 / +216 95 50 27 45 
+                                </p>
+                               
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <h4 class="contact-us__header card-title">Laissez nous un message</h4>
+
+                            <form (ngSubmit)="send(form)" #form="ngForm">
+                                <app-alert *ngIf="error" class="mb-3" type="danger">L'envoi  du message a échoué</app-alert>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="form-name">Nom et prenom*</label>
+                                        <input [class.is-invalid]=" name.invalid && (name.dirty || name.touched)" required #name="ngModel" type="text" id="form-name" class="form-control" name="name" [(ngModel)]="message.sender.name" >
+                                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
+                                            <span *ngIf="name.errors.required" >Nom requis</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="form-email">Adresses*</label>
+                                        <input [class.is-invalid]=" address.invalid && (address.dirty || address.touched)" required #address="ngModel" type="text" id="form-address" class="form-control" name="address" [(ngModel)]="message.sender.address" >
+                                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="invalid-feedback">
+                                            <span *ngIf="address.errors.required" >Adresse requis</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="form-name">Ville</label>
+                                        <input  #city="ngModel" type="text" id="form-city" class="form-control" name="city" [(ngModel)]="message.sender.city">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="form-email">Code Postal</label>
+                                        <input #code="ngModel" type="text" id="form-postalCode" class="form-control" name="PostalCode" [(ngModel)]="message.sender.PostalCode" >
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="form-name">Numéro de téléphone</label>
+                                        <input #phone="ngModel" type="text" id="form-phoneNumber" class="form-control" name="phoneNumber" [(ngModel)]="message.sender.phoneNumber" >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="form-email">Email*</label>
+                                        <input required  email="true" [class.is-invalid]=" mail.invalid && (mail.dirty || mail.touched)"
+                                         #mail="ngModel" type="email" id="form-email" class="form-control" name="mail" [(ngModel)]="message.sender.mail" >
+                                         <div *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="invalid-feedback">
+                                             <span *ngIf="mail.errors.required" >Email requis</span>
+                                             <span *ngIf="!mail.errors.required" >Email Invalide</span>
+                                         </div>
+                                        </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="form-name">Sujet*</label>
+                                        <input [class.is-invalid]=" subject.invalid && (subject.dirty || subject.touched)"
+                                         required #subject="ngModel" type="text" id="form-subject" class="form-control" name="subject" [(ngModel)]="message.subject" >
+                                         <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="invalid-feedback">
+                                            <span *ngIf="subject.errors.required" >Sujet requis</span>
+                                        </div>
+                                        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="form-email">Destinataire*</label>
+                                        <select [class.is-invalid]="  (recipient.dirty || recipient.touched) && message.recipient==='0'"
+                                         required #recipient="ngModel" class="form-control" name="recipient" [(ngModel)]="message.recipient" >
+                                            <option value="0">Sélectionnez un département</option>
+                                            <option value="commercial@tunisie-accastillage.com">Service Commercial</option>
+                                            <option value="technique@tunisie-accastillage.com">Service Technique</option>
+                                        </select>
+                                        <div *ngIf="(recipient.dirty || recipient.touched) && message.recipient==='0'" class="invalid-feedback">
+                                            Destinataire requis
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-message">Message*</label>
+                                    <textarea [class.is-invalid]=" body.invalid && (body.dirty || body.touched)"
+                                     required #body="ngModel" id="form-message" class="form-control" name="body" rows="4" [(ngModel)]="message.body" ></textarea>
+                                     <div *ngIf="body.invalid && (body.dirty || body.touched)" class="invalid-feedback">
+                                        <span *ngIf="body.errors.required" >Message requis</span>
+                                    </div>
+                                    </div>
+                                <input [class.disabled]="form.invalid||message.recipient==='0'" type="submit" class="btn btn-primary" value="Envoyer"/>
+                                <button *ngIf="isLoading" class="btn btn-primary btn-loading  btn-svg-icon">
+                                    <app-icon name="quickview-16" size="16"></app-icon>
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

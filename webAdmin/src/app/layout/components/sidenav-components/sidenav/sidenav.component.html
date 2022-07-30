@@ -1,0 +1,69 @@
+<div class="sidenav-logo">
+  <a class="sidenav-brand" href="javascript:;"> </a>
+
+  <prx-menu-toggler
+    class="sidenav-toggler"
+    dark="true"
+    (click)="toggleSidenav()"
+  ></prx-menu-toggler>
+</div>
+
+<div perfectScrollbar class="sidenav-content">
+  <nav class="nav flex-column">
+    <!-- USER -->
+    <div class="nav-item user-sidenav nav-dropdown">
+      <a
+        href="javascript:;"
+        class="nav-link"
+        openParent
+        (onToggle)="user.open = $event"
+      >
+        <prx-avatar-info [name]="credential.fullName" [info]="credential.email">
+          <prx-avatar [avatar]="user.avatar" class="user-picture"></prx-avatar>
+        </prx-avatar-info>
+
+        <prx-dropdown-icon
+          [open]="user.open"
+          class="dd-icon"
+        ></prx-dropdown-icon>
+      </a>
+
+      <div class="nav-dropdown-items">
+        <nav class="nav justify-content-between">
+          <a
+            href="javascript:;"
+            class="nav-link text-truncate m-0"
+            [routerLink]="['/inbox']"
+          >
+            <fa-icon [icon]="icons.faInbox" class="mr-1"></fa-icon>
+            <span class="small" translate>Mail</span>
+            <small class="badge badge-primary">{{ messageCount }}</small>
+          </a>
+
+          <a
+            href="javascript:;"
+            class="nav-link text-truncate m-0"
+            (click)="logout()"
+          >
+            <fa-icon [icon]="icons.faSignOutAlt" class="mr-1"></fa-icon>
+            <span class="small" translate>Logout</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ALL NAVIGATION OPTIONS -->
+    <ng-container *ngFor="let group of navGroups">
+      <div class="nav-header">
+        <span>{{ group.title }}</span>
+      </div>
+
+      <prx-sidenav-item
+        *ngFor="let option of group.items"
+        [option]="option"
+        [collapsed]="collapsed"
+        [hover]="hover"
+      ></prx-sidenav-item>
+    </ng-container>
+  </nav>
+</div>

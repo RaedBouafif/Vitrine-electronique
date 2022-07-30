@@ -1,0 +1,78 @@
+<ng-container *ngIf="isLoading">
+  <div
+    *ngFor="let i of items"
+    class="placeholder-container placeholder--{{ template }}"
+  >
+    <ng-container [ngSwitch]="template">
+      <ng-container *ngSwitchCase="'user-messages'">
+        <!-- <div class="placeholder--user-avatar mr-3">
+          <div class="placeholder-bar rounded-circle w-40px h-40px"></div>
+        </div> -->
+
+        <div class="placeholder-content">
+          <div class="placeholder-bar placeholder-title"></div>
+          <div class="placeholder-bar placeholder-item--text w-40"></div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'notifications'">
+        <div class="placeholder--notification-icon mr-3">
+          <div class="placeholder-bar w-20px h-20px"></div>
+        </div>
+
+        <div class="placeholder-content">
+          <div class="placeholder-bar placeholder-title"></div>
+          <div class="placeholder-bar placeholder-item--text w-40"></div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'list'">
+        <prx-card>
+          <prx-card-body>
+            <div class="placeholder-content">
+              <div class="placeholder-bar placeholder-title w-80"></div>
+              <div class="placeholder-bar placeholder-item--text"></div>
+              <div class="placeholder-bar placeholder-item--text w-40"></div>
+            </div>
+          </prx-card-body>
+        </prx-card>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'table'">
+        <div class="placeholder-content">
+          <div class="placeholder-bar placeholder-title"></div>
+          <div class="placeholder-bar placeholder-item--text w-40"></div>
+        </div>
+
+        <div class="placeholder--table-cell ml-3">
+          <div class="placeholder-bar placeholder-title w-80px"></div>
+        </div>
+
+        <div class="placeholder--table-cell ml-3">
+          <div class="placeholder-bar placeholder-title w-80px"></div>
+        </div>
+
+        <div class="placeholder--table-cell ml-3">
+          <div class="placeholder-bar placeholder-title w-80px"></div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'product'">
+        <div class="placeholder-content">
+          <div class="placeholder--product-img">
+            <div class="placeholder-bar w-100 h-80px mb-4"></div>
+          </div>
+          <div class="placeholder-bar placeholder-title"></div>
+          <div class="placeholder-bar placeholder-item--text w-40"></div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>
+
+<div #noData>
+  <p>
+    {{ emptyMessage }}
+    <a [routerLink]="[emptyUrl]" *ngIf="emptyUrl"> <span>Start</span> </a>
+  </p>
+</div>

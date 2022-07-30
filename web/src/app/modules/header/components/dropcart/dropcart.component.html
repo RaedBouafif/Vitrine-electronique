@@ -1,0 +1,66 @@
+<!-- .dropcart -->
+<div class="dropcart">
+    <div class="dropcart__empty" *ngIf="!(cart.items$|async).length">
+        Votre panier est vide!
+    </div>
+    <ng-container *ngIf="(cart.items$|async).length && articles">
+        <div class="dropcart__products-list">
+            <div *ngFor="let item of cart.items$|async" class="dropcart__product"  [class.soldout]="isSoldOut(item.product._id,item.quantity) ">
+                <div class="dropcart__product-image product-image">
+                    <a
+                        *ngIf="item.product.images?.length"
+                        class="product-image__body"
+                        [routerLink]="root.product(item.product)"
+                        (click)="closeMenu.emit()"
+                    >
+                        <img class="product-image__img" [src]="item.product.images[0].path" alt="">
+                    </a>
+                </div>
+                <div class="dropcart__product-info">
+                    <div class="dropcart__product-name">
+                        <a [routerLink]="root.product(item.product)" (click)="closeMenu.emit()">{{ item.product.title }}</a>
+                    </div>
+
+                    <div class="dropcart__product-meta">
+                        <span class="dropcart__product-quantity">{{ item.quantity }}</span> ×
+                        <span class="dropcart__product-price">{{ item.priceTTC}} TND</span>
+                    </div>
+                    <div *ngIf="isSoldOut(item.product._id,item.quantity) " class="dropcart__product-meta" style="color: red!important;">
+                        épuisé
+                    </div>
+                </div>
+
+                <button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon" (click)="remove(item)" [ngClass]="{'btn-loading': removedItems.includes(item)}">
+                    <app-icon name="cross-10" size="10"></app-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="dropcart__totals">
+            <table>
+              <!--   <tr *ngIf="(cart.totals$|async).length">
+                    <th>Subtotal</th>
+                    <td>{{ cart.subtotal$|async}} TND</td>
+                </tr>
+                <tr *ngFor="let total of cart.totals$|async">
+                    <th>{{ total.title }}</th>
+                    <td>{{ total.price|currencyFormat  }}</td>
+                </tr> -->
+                <tr>
+                    <th>TotalHT</th>
+                    <td>{{ cart.total$|async}} TND</td>
+                </tr>
+                <tr>
+                    <th>TotalTTC</th>
+                    <td>{{ cart.totalTTC$|async}} TND</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="dropcart__buttons">
+            <a class="btn btn-secondary" [routerLink]="root.cart()" (click)="closeMenu.emit()">Panier</a>
+            <button [disabled]="soldout" class="btn btn-primary" [routerLink]="root.checkout()" (click)="closeMenu.emit()">Finaliser</button>
+        </div>
+    </ng-container>
+</div>
+<!-- .dropcart / end -->

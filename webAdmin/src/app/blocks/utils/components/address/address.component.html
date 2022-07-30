@@ -1,0 +1,26 @@
+<address>
+  <div class="address-element" *ngIf="!addressHidden">
+    <prx-icon [icon]="icons.location" class="icon"></prx-icon>
+    <div #addressView>
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div class="address-element" *ngIf="address">
+    <prx-icon [icon]="icons.location" class="icon"></prx-icon>
+    {{ address }}
+  </div>
+  <div class="address-element" *ngIf="url">
+    <prx-icon [icon]="icons.link" class="icon"></prx-icon>
+    {{ url }}
+  </div>
+
+  <div class="address-element" *ngIf="email">
+    <prx-icon [icon]="icons.mail" class="icon"></prx-icon>
+    {{ email }}
+  </div>
+
+  <div class="address-element" *ngIf="phone">
+    <prx-icon [icon]="icons.phone" class="icon"></prx-icon>
+    {{ phone }}
+  </div>
+</address>

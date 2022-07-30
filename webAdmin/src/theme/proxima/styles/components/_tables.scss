@@ -1,0 +1,31 @@
+.thead-light {
+  th {
+    //background-color: $gray-100;
+    font-size: $font-size-small;
+    font-weight: $font-weight-semi-bold;
+    //color: $gray-600;
+    border-bottom-color: $table-border-color;
+  }
+}
+
+.table-card {
+  margin-bottom: 0;
+
+  thead {
+    th {
+      border-top-width: 0;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+  }
+
+  thead th,
+  tbody td {
+    &:first-child {
+      padding-left: $card-spacer-x;
+    }
+    &:last-child {
+      padding-right: $card-spacer-x;
+    }
+  }
+}

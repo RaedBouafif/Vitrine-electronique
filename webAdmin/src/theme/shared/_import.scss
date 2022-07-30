@@ -1,0 +1,11 @@
+// Shared third-party styling components
+@import "~angled-edges/angled-edges";
+
+// Import the theme palette to enable the colors when overriding
+@import "import/palette";
+
+// Shared variables
+@import "import/bootstrap-overwrite";
+@import "import/variables";
+
+@import "import/__mixins";

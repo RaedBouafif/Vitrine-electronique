@@ -1,0 +1,13 @@
+<alert [type]="fullScheme" [dismissible]="dismissible">
+  <div class="alert-wrapper">
+    <ng-content select="[alert-icon]"></ng-content>
+
+    <div class="icon" *ngIf="withIcon">
+      <prx-icon [icon]="icon" size="lg" class="mr-3"></prx-icon>
+    </div>
+
+    <div class="alert-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</alert>

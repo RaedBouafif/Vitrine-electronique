@@ -1,0 +1,9 @@
+<!-- <prx-inbox-sidebar></prx-inbox-sidebar> -->
+
+<div class="emails-ws">
+  <prx-inbox-list (emailSelected)="onEmailSelected($event)"></prx-inbox-list>
+  <prx-inbox-details
+    [email]="selectedEmail"
+    (returnToList)="onReturnToList($event)"
+  ></prx-inbox-details>
+</div>

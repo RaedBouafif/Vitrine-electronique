@@ -1,0 +1,55 @@
+.swiper-button-next,
+.swiper-button-prev {
+  &:after {
+    font-size: $font-size-base !important;
+  }
+}
+
+.swiper-nav-small {
+  [class^="swiper-button"] {
+    background-color: $color-dark;
+    color: $white;
+    top: 50%;
+  }
+}
+
+.swiper-nav-slide {
+  [class^="swiper-button"] {
+    background-color: $color-dark;
+    color: $white;
+
+    &.rounded-circle {
+      background-image: none;
+      width: 3rem;
+      height: 3rem;
+      outline: none;
+      @include center-flex();
+    }
+  }
+
+  @include media-breakpoint-up($grid-float-breakpoint) {
+    [class^="swiper-button"] {
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+      //top: calc(50% - 1.5rem);
+      top: 50%;
+    }
+
+    .swiper-button {
+      &-prev {
+        transform: translateX(-100%);
+      }
+
+      &-next {
+        transform: translateX(100%);
+      }
+    }
+
+    &:hover {
+      [class^="swiper-button"] {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+}

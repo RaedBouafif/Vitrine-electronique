@@ -1,0 +1,24 @@
+.auth-form-container {
+  background-color: $auth-form-container-bg-color;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+
+  .container-fluid {
+    @include media-breakpoint-up($grid-float-breakpoint) {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  .gradient {
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+    @include media-breakpoint-up($grid-float-breakpoint) {
+      display: flex;
+      min-height: 100vh;
+    }
+  }
+}

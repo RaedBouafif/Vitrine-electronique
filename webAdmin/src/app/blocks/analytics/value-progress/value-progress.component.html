@@ -1,0 +1,29 @@
+<prx-card>
+  <prx-card-header [title]="title" [border]="false"></prx-card-header>
+
+  <prx-card-body>
+    <div class="row d-flex align-items-center mb-3">
+      <div class="col-md-8">
+        <h2 class="font-weight-light mb-0">
+          <div [ngSwitch]="pipe">
+            <div *ngSwitchCase="'currency'">
+              {{ value | currency: format }}
+            </div>
+            <div *ngSwitchCase="'number'">
+              {{ value | number: format }}
+            </div>
+            <div *ngSwitchDefault>
+              {{ value }}
+            </div>
+          </div>
+        </h2>
+      </div>
+
+      <div class="col-md-4 text-md-right">
+        <span class="text-muted">{{ percent }}%</span>
+      </div>
+    </div>
+
+    <prx-progress-solid [value]="percent" [color]="scheme"></prx-progress-solid>
+  </prx-card-body>
+</prx-card>

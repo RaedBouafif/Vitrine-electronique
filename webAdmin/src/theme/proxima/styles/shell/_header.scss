@@ -1,0 +1,68 @@
+@import "import";
+
+.main-header {
+  .dropdown-menu {
+    min-width: $mz-header-dropdown-min-width;
+
+    .arrow {
+      &.top:after {
+        left: auto;
+        right: $arrow-size + $arrow-size-gap-size;
+      }
+    }
+
+    // Styling dropdown
+    perfect-scrollbar {
+      &.ps-show-active > .ps.ps--active-y > {
+        // show bottom fade
+        .ps-overlay:not(.ps-at-bottom) .ps-indicator-bottom {
+          background: linear-gradient(
+            to top,
+            $dropdown-footer-bg-color 0,
+            rgba($white, 0.1)
+          ) !important;
+        }
+      }
+    }
+  }
+
+  .navbar-nav {
+    .avatar {
+      max-height: $mz-header-avatar-size;
+      max-width: $mz-header-avatar-size;
+    }
+
+    .nav-link {
+      padding: $mz-header-navlink-padding-y;
+
+      .badge {
+        position: absolute;
+        font-weight: $font-weight-light;
+        padding: 3px 6px;
+        top: $mz-header-badge-pos-top;
+        right: 0.5rem;
+      }
+    }
+
+    .progress-xs {
+      margin: 8px 0 2px;
+    }
+
+    .list-group-item {
+      border-color: $mz-header-list-group-item-border-color;
+    }
+
+    @include media-breakpoint-down($grid-float-breakpoint-max) {
+      padding: 0;
+
+      // what's this for?
+      .dropdown-menu-right {
+        left: 0 !important;
+        position: fixed;
+        right: 0;
+        top: ($mz-header-height - 5px) !important;
+        margin: 0 15px;
+      }
+    }
+  }
+}

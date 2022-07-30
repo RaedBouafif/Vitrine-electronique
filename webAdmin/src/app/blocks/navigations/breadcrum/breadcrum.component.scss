@@ -1,0 +1,43 @@
+@import "import";
+
+:host {
+  &.no-margin {
+    .breadcrumb {
+      margin: 0;
+    }
+  }
+
+  &.clean {
+    .breadcrumb {
+      border-radius: 0;
+      background-color: transparent;
+    }
+  }
+
+  &.dark {
+    .breadcrumb-link {
+      color: $gray-300;
+    }
+
+    .breadcrumb-item {
+      &.active {
+        color: $color-contrast;
+      }
+    }
+  }
+}
+
+.custom-separator {
+  .breadcrumb-item {
+    + .breadcrumb-item {
+      &:before {
+        display: none;
+      }
+    }
+  }
+
+  .breadcrumb-separator {
+    padding-right: $breadcrumb-item-padding;
+    color: $breadcrumb-divider-color;
+  }
+}

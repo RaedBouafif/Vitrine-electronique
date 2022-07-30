@@ -1,0 +1,55 @@
+@import "import";
+
+.card {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.placeholder-container {
+  display: flex;
+  align-items: center;
+
+  + .placeholder-container {
+    margin-top: $placeholder-container--margin-top;
+  }
+}
+
+.placeholder-bar {
+  position: relative;
+  //width: $placeholder-bar--width;
+  height: $placeholder-bar--height;
+  overflow: hidden;
+  background-color: $placeholder-bar--bg-color;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: $placeholder-bolt--width;
+    height: 100%;
+    transition: all 0.5s linear;
+    margin-left: 100%;
+    background-image: $placeholder-bolt--bg-image;
+    animation: loading-bar 1s 0.3s both infinite;
+  }
+
+  + .placeholder-bar {
+    margin-top: $placeholder-bar--margin-top;
+  }
+}
+
+.placeholder-title {
+  height: $placeholder-title--height;
+}
+
+.placeholder-content {
+  flex: 1;
+}
+
+// Specific placeholder styles
+
+.placeholder--table {
+  align-items: flex-start;
+}

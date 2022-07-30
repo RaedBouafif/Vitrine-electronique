@@ -1,0 +1,19 @@
+@import "import";
+
+:host {
+  position: relative;
+  display: block;
+
+  &.full-card {
+    padding-bottom: $card-spacer-x;
+
+    .fade-content {
+      max-height: calc(#{$card-fade-height} + #{$card-spacer-x});
+    }
+  }
+}
+
+.fade-content {
+  outline: none;
+  position: relative;
+}

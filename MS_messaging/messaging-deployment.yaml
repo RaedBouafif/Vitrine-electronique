@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-messaging-service
+  labels:
+    run: market-messaging-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-messaging-service
+    spec:
+      containers:
+      - name: market-messaging-service
+        image: anonyme5/mmsimage:latest
+        ports:
+        - containerPort: 4004

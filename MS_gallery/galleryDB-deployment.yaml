@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: market-gallerydb
+  labels:
+    run: market-gallerydb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: market-gallerydb
+    spec:
+      containers:
+      - name: market-gallerydb
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-gallerydb
+spec:
+  selector:
+    run: market-gallerydb
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+      nodePort: 32505

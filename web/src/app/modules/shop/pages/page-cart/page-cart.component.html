@@ -1,0 +1,97 @@
+<app-page-header [header]="'Panier'" [breadcrumbs]="[
+    {label: 'Accueil',          url: root.home()},
+    {label: 'Panier', url: ''}
+]"></app-page-header>
+
+<div class="block block-empty" *ngIf="!items.length">
+    <div class="container">
+        <div class="block-empty__body">
+            <div class="block-empty__message">Votre panier est vide!</div>
+            <div class="block-empty__actions">
+                <a [routerLink]="root.shop()" class="btn btn-primary btn-sm">Continuez</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart block" *ngIf="items.length">
+    <div class="container">
+        <table id="htmlData" class="cart__table cart-table">
+            <thead class="cart-table__head">
+            <tr class="cart-table__row">
+                <th class="cart-table__column cart-table__column--image">Image</th>
+                <th class="cart-table__column cart-table__column--image">Ref</th>
+                <th class="cart-table__column cart-table__column--product">Article</th>
+                <th class="cart-table__column cart-table__column--price">Prix</th>
+                <th class="cart-table__column cart-table__column--quantity">Quantité</th>
+                <th class="cart-table__column cart-table__column--total">Total</th>
+                <th class="cart-table__column cart-table__column--remove"></th>
+            </tr>
+            </thead>
+            <tbody class="cart-table__body">
+            <tr *ngFor="let item of items" class="cart-table__row" [class.soldout]="isSoldOut(item.cartItem.product._id,item.cartItem.quantity) ">
+                <td class="cart-table__column cart-table__column--image">
+                    <div *ngIf="item.cartItem.product.images?.length" class="product-image">
+                        <a [routerLink]="root.product(item.cartItem.product)" class="product-image__body">
+                            <img class="product-image__img" [src]="item.cartItem.product.images[0].path" alt="">
+                        </a>
+                    </div>
+                </td>
+                <td class="cart-table__column cart-table__column--product">
+                    {{ item.cartItem.product.reference }}
+                </td>
+                <td class="cart-table__column cart-table__column--product">
+                    <a [routerLink]="root.product(item.cartItem.product)" class="cart-table__product-name">{{ item.cartItem.product.title }}</a>
+             
+                </td>
+                <td class="cart-table__column cart-table__column--price" data-title="Price">{{ item.cartItem.priceTTC }}TND</td>
+                <td *ngIf="!isSoldOut(item.cartItem.product._id,item.cartItem.quantity)" class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+                    <app-input-number  [formControl]="item.quantityControl" [min]="1" [max]="item.cartItem.product.quantity"></app-input-number>
+                </td>
+                <td *ngIf="isSoldOut(item.cartItem.product._id,item.cartItem.quantity)" class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+                <span style="color: red!important;">article épuisé</span>
+                </td>
+                <td class="cart-table__column cart-table__column--total" data-title="Total">{{ item.cartItem.priceTTC * item.quantity }} TND</td>
+                <td class="cart-table__column cart-table__column--remove">
+                    <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="remove(item.cartItem)" [ngClass]="{'btn-loading': removedItems.includes(item.cartItem)}">
+                        <app-icon name="cross-12" size="12"></app-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="cart__actions">
+            <div class="cart__buttons text-right">
+                <a routerLink="/" class="btn btn-light">Continuer vos achats</a>
+                <button type="button" class="btn btn-primary cart__update-button" (click)="update()" [ngClass]="{'btn-loading': updating}" [disabled]="!needUpdate()">mise à jour panier</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-end pt-5">
+            <div class="col-12 col-md-7 col-lg-6 col-xl-5">
+                <div class="card">
+                    <div class="card-body">
+                        
+
+                        <table class="cart__totals">
+                           <tfoot class="cart__totals-footer">
+                            <tr>
+                                <th>TotalHT</th>
+                                <td>{{ cart.total$|async }} TND</td>
+                            </tr>
+                            <tr>
+                                <th>TotalTTC</th>
+                                <td>{{ cart.totalTTC$|async }} TND</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <button [disabled]="soldout"  class="btn btn-primary btn-l btn-block cart__checkout-button" routerLink="./checkout">Confirmer votre commande</button>
+                        <button [disabled]="soldout || !credential"  class="btn btn-secondary  btn-l btn-block cart__checkout-button" (click)="download()">Générer devis</button>
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

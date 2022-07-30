@@ -1,0 +1,41 @@
+/* 8.2 Inputs ======================================================= */
+.form-control {
+  &.form-control-rounded {
+    border-radius: $input-border-rounded;
+  }
+
+  &::placeholder {
+    opacity: 0.5;
+    font-size: $font-size-sm;
+  }
+
+  &:hover:not(:focus) {
+    border-color: $input-hover-border-color;
+  }
+
+  &.shadowed {
+    box-shadow: $checkbox-check-shadow;
+  }
+}
+
+select[multiple],
+textarea {
+  &.form-control {
+    &.form-control-rounded {
+      padding-left: 1rem;
+      border-radius: 1rem;
+    }
+  }
+}
+
+.control-label {
+  color: $gray-700;
+  font-weight: $font-weight-normal;
+}
+
+.label-content {
+  position: relative;
+  display: block;
+  padding: 1.6em 0;
+  width: 100%;
+}
